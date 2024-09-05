@@ -1,24 +1,56 @@
 /* styles.css */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     background-color: #282c34;
     color: #ffffff;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 #game {
-    text-align: center;
     background-color: #3a3f47;
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
+    width: 90%;
+    max-width: 500px; /* Limits the max width for better viewing */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Adds a shadow for depth */
+    text-align: center;
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4 {
+    margin: 10px 0;
+    font-weight: normal;
+}
+
+/* Styling for stats (money and EPS) at the top */
+#stats {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #454b57; /* Background color for stats section */
+    border-radius: 8px;
+}
+
+#eps {
+    margin-top: 10px;
+    text-align: left;
+}
+
+#eps p {
+    margin: 5px 0;
 }
 
 .resource {
-    margin-bottom: 20px;
+    margin-bottom: 30px; /* Adds space between resource sections */
+    padding: 15px;
+    background-color: #454b57; /* Different background color for sections */
+    border-radius: 8px;
+    box-sizing: border-box;
 }
 
 button {
@@ -30,15 +62,24 @@ button {
     color: #282c34;
     cursor: pointer;
     font-size: 16px;
+    margin: 5px; /* Adds margin between buttons */
+    transition: background-color 0.3s; /* Smooth hover effect */
 }
 
 button:hover {
     background-color: #21a1f1;
 }
 
+#marketing {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #454b57;
+    border-radius: 8px;
+}
+
 .progress {
     width: 100%;
-    height: 10px;
+    height: 15px;
     background-color: #555;
     margin-top: 10px;
     border-radius: 5px;
@@ -53,5 +94,17 @@ button:hover {
     position: absolute;
     left: 0;
     top: 0;
-    transition: width 0.3s; /* Smooth transition */
+    transition: width 0.3s; /* Smooth transition for progress */
+}
+
+@media (max-width: 600px) {
+    #game {
+        width: 95%;
+        padding: 20px;
+    }
+
+    button {
+        width: 100%; /* Full-width buttons for smaller screens */
+        margin: 5px 0;
+    }
 }
