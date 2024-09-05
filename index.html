@@ -9,7 +9,19 @@
 <body>
     <div id="game">
         <h1>Elemental Tycoon</h1>
-        
+
+        <!-- Total Money Counter at the Top -->
+        <div id="stats">
+            <h3>Total Money: $<span id="money">0</span></h3>
+            <h4>Elements per Second (EPS)</h4>
+            <div id="eps">
+                <p>Fire: <span id="fire-eps">0</span> EPS</p>
+                <p>Water: <span id="water-eps">0</span> EPS</p>
+                <p>Earth: <span id="earth-eps">0</span> EPS</p>
+                <p>Air: <span id="air-eps">0</span> EPS</p>
+            </div>
+        </div>
+
         <div id="resources">
             <div class="resource">
                 <h2>Fire: <span id="fire">0</span></h2>
@@ -45,7 +57,10 @@
             <button onclick="buyMarketing('air')">Promote Air ($10)</button>
         </div>
 
-        <h3>Total Money: $<span id="money">0</span></h3>
+        <!-- Delete Progress Button -->
+        <div id="reset">
+            <button onclick="deleteProgress()">Delete Progress</button>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
