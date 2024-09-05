@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elemental Tycoon</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game">
+        <h1>Elemental Tycoon</h1>
+        
+        <div id="resources">
+            <div class="resource">
+                <h2>Fire: <span id="fire">0</span></h2>
+                <button onclick="gather('fire')">Gather Fire</button>
+                <button onclick="buyAutomation('fire')">Automate Fire ($50)</button>
+                <div class="progress" id="fire-progress"><div class="progress-bar"></div></div>
+            </div>
+            <div class="resource">
+                <h2>Water: <span id="water">0</span></h2>
+                <button onclick="gather('water')">Gather Water</button>
+                <button onclick="buyAutomation('water')">Automate Water ($50)</button>
+                <div class="progress" id="water-progress"><div class="progress-bar"></div></div>
+            </div>
+            <div class="resource">
+                <h2>Earth: <span id="earth">0</span></h2>
+                <button onclick="gather('earth')">Gather Earth</button>
+                <button onclick="buyAutomation('earth')">Automate Earth ($50)</button>
+                <div class="progress" id="earth-progress"><div class="progress-bar"></div></div>
+            </div>
+            <div class="resource">
+                <h2>Air: <span id="air">0</span></h2>
+                <button onclick="gather('air')">Gather Air</button>
+                <button onclick="buyAutomation('air')">Automate Air ($50)</button>
+                <div class="progress" id="air-progress"><div class="progress-bar"></div></div>
+            </div>
+        </div>
+
+        <h2>Marketing Strategies</h2>
+        <div id="marketing">
+            <button onclick="buyMarketing('fire')">Promote Fire ($10)</button>
+            <button onclick="buyMarketing('water')">Promote Water ($10)</button>
+            <button onclick="buyMarketing('earth')">Promote Earth ($10)</button>
+            <button onclick="buyMarketing('air')">Promote Air ($10)</button>
+        </div>
+
+        <h3>Total Money: $<span id="money">0</span></h3>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
