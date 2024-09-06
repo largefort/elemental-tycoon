@@ -14,6 +14,7 @@
         <div id="stats">
             <div id="money-container">
                 <h3>Total Money: $<span id="money">0</span></h3>
+                <h3>Prestige Currency: <span id="essence">0</span> Essence</h3>
             </div>
             <div id="eps-container">
                 <h4>Elements per Second (EPS)</h4>
@@ -22,12 +23,17 @@
                     <p>Water: <span id="water-eps">0</span> EPS</p>
                     <p>Earth: <span id="earth-eps">0</span> EPS</p>
                     <p>Air: <span id="air-eps">0</span> EPS</p>
+                    <!-- Additional Elements -->
+                    <p>Light: <span id="light-eps">0</span> EPS</p>
+                    <p>Dark: <span id="dark-eps">0</span> EPS</p>
+                    <p>Void: <span id="void-eps">0</span> EPS</p>
                 </div>
             </div>
         </div>
 
         <!-- Element Resource Sections -->
         <div id="resources">
+            <!-- Existing Elements -->
             <div class="resource" id="fire-resource">
                 <h2>Fire: <span id="fire">0</span></h2>
                 <div class="resource-buttons">
@@ -72,6 +78,41 @@
                     <span>0%</span>
                 </div>
             </div>
+            
+            <!-- New Elements -->
+            <div class="resource" id="light-resource">
+                <h2>Light: <span id="light">0</span></h2>
+                <div class="resource-buttons">
+                    <button onclick="gather('light')">Gather Light</button>
+                    <button onclick="buyAutomation('light')">Automate Light ($50)</button>
+                </div>
+                <div class="progress" id="light-progress">
+                    <div class="progress-bar"></div>
+                    <span>0%</span>
+                </div>
+            </div>
+            <div class="resource" id="dark-resource">
+                <h2>Dark: <span id="dark">0</span></h2>
+                <div class="resource-buttons">
+                    <button onclick="gather('dark')">Gather Dark</button>
+                    <button onclick="buyAutomation('dark')">Automate Dark ($50)</button>
+                </div>
+                <div class="progress" id="dark-progress">
+                    <div class="progress-bar"></div>
+                    <span>0%</span>
+                </div>
+            </div>
+            <div class="resource" id="void-resource">
+                <h2>Void: <span id="void">0</span></h2>
+                <div class="resource-buttons">
+                    <button onclick="gather('void')">Gather Void</button>
+                    <button onclick="buyAutomation('void')">Automate Void ($50)</button>
+                </div>
+                <div class="progress" id="void-progress">
+                    <div class="progress-bar"></div>
+                    <span>0%</span>
+                </div>
+            </div>
         </div>
 
         <!-- Marketing Strategies Section -->
@@ -81,6 +122,24 @@
             <button onclick="buyMarketing('water')">Promote Water ($10)</button>
             <button onclick="buyMarketing('earth')">Promote Earth ($10)</button>
             <button onclick="buyMarketing('air')">Promote Air ($10)</button>
+            <!-- Marketing for New Elements -->
+            <button onclick="buyMarketing('light')">Promote Light ($10)</button>
+            <button onclick="buyMarketing('dark')">Promote Dark ($10)</button>
+            <button onclick="buyMarketing('void')">Promote Void ($10)</button>
+        </div>
+
+        <!-- Prestige System Section -->
+        <h2>Prestige System</h2>
+        <div id="prestige">
+            <button onclick="prestige()">Prestige (Requires $100,000)</button>
+        </div>
+
+        <!-- Version Switching Section -->
+        <h2>Version Switching</h2>
+        <div id="version-switching">
+            <button onclick="switchVersion('live')">Switch to Live Version</button>
+            <button onclick="switchVersion('alpha')">Switch to Alpha Version</button>
+            <button onclick="switchVersion('beta')">Switch to Beta Version</button>
         </div>
 
         <!-- Delete Progress Button -->
