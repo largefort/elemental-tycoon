@@ -10,45 +10,71 @@
     <div id="game">
         <h1>Elemental Tycoon</h1>
 
-        <!-- Total Money Counter at the Top -->
+        <!-- Total Money and EPS Section -->
         <div id="stats">
-            <h3>Total Money: $<span id="money">0</span></h3>
-            <h4>Elements per Second (EPS)</h4>
-            <div id="eps">
-                <p>Fire: <span id="fire-eps">0</span> EPS</p>
-                <p>Water: <span id="water-eps">0</span> EPS</p>
-                <p>Earth: <span id="earth-eps">0</span> EPS</p>
-                <p>Air: <span id="air-eps">0</span> EPS</p>
+            <div id="money-container">
+                <h3>Total Money: $<span id="money">0</span></h3>
+            </div>
+            <div id="eps-container">
+                <h4>Elements per Second (EPS)</h4>
+                <div id="eps">
+                    <p>Fire: <span id="fire-eps">0</span> EPS</p>
+                    <p>Water: <span id="water-eps">0</span> EPS</p>
+                    <p>Earth: <span id="earth-eps">0</span> EPS</p>
+                    <p>Air: <span id="air-eps">0</span> EPS</p>
+                </div>
             </div>
         </div>
 
+        <!-- Element Resource Sections -->
         <div id="resources">
-            <div class="resource">
+            <div class="resource" id="fire-resource">
                 <h2>Fire: <span id="fire">0</span></h2>
-                <button onclick="gather('fire')">Gather Fire</button>
-                <button onclick="buyAutomation('fire')">Automate Fire ($50)</button>
-                <div class="progress" id="fire-progress"><div class="progress-bar"></div></div>
+                <div class="resource-buttons">
+                    <button onclick="gather('fire')">Gather Fire</button>
+                    <button onclick="buyAutomation('fire')">Automate Fire ($50)</button>
+                </div>
+                <div class="progress" id="fire-progress">
+                    <div class="progress-bar"></div>
+                    <span>0%</span>
+                </div>
             </div>
-            <div class="resource">
+            <div class="resource" id="water-resource">
                 <h2>Water: <span id="water">0</span></h2>
-                <button onclick="gather('water')">Gather Water</button>
-                <button onclick="buyAutomation('water')">Automate Water ($50)</button>
-                <div class="progress" id="water-progress"><div class="progress-bar"></div></div>
+                <div class="resource-buttons">
+                    <button onclick="gather('water')">Gather Water</button>
+                    <button onclick="buyAutomation('water')">Automate Water ($50)</button>
+                </div>
+                <div class="progress" id="water-progress">
+                    <div class="progress-bar"></div>
+                    <span>0%</span>
+                </div>
             </div>
-            <div class="resource">
+            <div class="resource" id="earth-resource">
                 <h2>Earth: <span id="earth">0</span></h2>
-                <button onclick="gather('earth')">Gather Earth</button>
-                <button onclick="buyAutomation('earth')">Automate Earth ($50)</button>
-                <div class="progress" id="earth-progress"><div class="progress-bar"></div></div>
+                <div class="resource-buttons">
+                    <button onclick="gather('earth')">Gather Earth</button>
+                    <button onclick="buyAutomation('earth')">Automate Earth ($50)</button>
+                </div>
+                <div class="progress" id="earth-progress">
+                    <div class="progress-bar"></div>
+                    <span>0%</span>
+                </div>
             </div>
-            <div class="resource">
+            <div class="resource" id="air-resource">
                 <h2>Air: <span id="air">0</span></h2>
-                <button onclick="gather('air')">Gather Air</button>
-                <button onclick="buyAutomation('air')">Automate Air ($50)</button>
-                <div class="progress" id="air-progress"><div class="progress-bar"></div></div>
+                <div class="resource-buttons">
+                    <button onclick="gather('air')">Gather Air</button>
+                    <button onclick="buyAutomation('air')">Automate Air ($50)</button>
+                </div>
+                <div class="progress" id="air-progress">
+                    <div class="progress-bar"></div>
+                    <span>0%</span>
+                </div>
             </div>
         </div>
 
+        <!-- Marketing Strategies Section -->
         <h2>Marketing Strategies</h2>
         <div id="marketing">
             <button onclick="buyMarketing('fire')">Promote Fire ($10)</button>
@@ -65,3 +91,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
