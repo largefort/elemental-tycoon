@@ -48,7 +48,7 @@ const prefixes = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'D
 
 // Format numbers using compact notation with extended prefixes
 function formatNumber(number) {
-    if (number < 1000) return number.toString();
+    if (number < 1000) return number.toFixed(1); // Ensure small numbers are formatted correctly
     let tier = Math.floor(Math.log10(number) / 3);
     let suffix = prefixes[tier] || `e${tier * 3}`;
     let scale = Math.pow(10, tier * 3);
@@ -119,7 +119,7 @@ function updateDisplay() {
     }
     document.getElementById('money').textContent = formatNumber(money);
     document.getElementById('essence').textContent = formatNumber(essence);
-    document.getElementById('prestige-multiplier').textContent = formatNumber(prestigeMultiplier); // Update Prestige Multiplier Display
+    document.getElementById('prestige-multiplier').textContent = prestigeMultiplier.toFixed(1); // Update Prestige Multiplier Display
 }
 
 // Recalculate the EPS for an element
@@ -146,7 +146,7 @@ function updateProgressBar(element) {
     if (progressBar && progressText) {
         const progress = (resources[element] % 100); // Get progress as a percentage (0-99)
         progressBar.style.width = `${progress}%`; // Update the width of the inner bar
-        progressText.textContent = `${progress}%`; // Update the percentage text
+        progressText.textContent = `${progress.toFixed(1)}%`; // Update the percentage text
     }
 }
 
