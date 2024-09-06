@@ -87,14 +87,14 @@ function saveGame() {
 function deleteProgress() {
     if (confirm("Are you sure you want to delete your progress? This action cannot be undone.")) {
         localStorage.removeItem('elementalTycoon'); // Clear localStorage
-        resetGame(); // Reset all game variables
+        resetGame(true); // Reset all game variables including essence
         updateDisplay(); // Update display after resetting
         alert("Progress deleted! The game has been reset.");
     }
 }
 
 // Reset all game variables to their initial state
-function resetGame() {
+function resetGame(includeEssence = false) {
     for (let element in resources) {
         resources[element] = 0;
         marketing[element] = 0;
@@ -102,7 +102,9 @@ function resetGame() {
         eps[element] = 0;
     }
     money = 0;
-    essence = 0;
+    if (includeEssence) {
+        essence = 0;
+    }
 }
 
 // Update the display for all resources, money, and EPS
@@ -194,9 +196,10 @@ function startAutomation() {
 // Prestige function
 function prestige() {
     if (money >= 100000) {  // Requirement to prestige
-        essence += Math.floor(money / 100000);  // Calculate how much essence is earned
-        alert(`Prestiged! You earned ${Math.floor(money / 100000)} Essence.`);
-        resetGame(); // Reset the game progress
+        const earnedEssence = Math.floor(money / 100000);
+        essence += earnedEssence;  // Calculate how much essence is earned
+        alert(`Prestiged! You earned ${earnedEssence} Essence.`);
+        resetGame(); // Reset the game progress but keep essence
         updateDisplay(); // Update the display
     } else {
         alert("You need $100,000 to prestige!");
