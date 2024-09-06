@@ -127,9 +127,11 @@ function gather(element) {
 // Update progress bar for a specific element
 function updateProgressBar(element) {
     const progressBar = document.querySelector(`#${element}-progress .progress-bar`);
-    if (progressBar) {
+    const progressText = document.querySelector(`#${element}-progress span`);
+    if (progressBar && progressText) {
         const progress = (resources[element] % 100); // Get progress as a percentage (0-99)
         progressBar.style.width = `${progress}%`; // Update the width of the inner bar
+        progressText.textContent = `${progress}%`; // Update the percentage text
     }
 }
 
