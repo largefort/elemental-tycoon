@@ -3,43 +3,48 @@ const resources = {
     fire: 0,
     water: 0,
     earth: 0,
-    air: 0
+    air: 0,
+    light: 0,
+    dark: 0,
+    void: 0
 };
 
 const marketing = {
     fire: 0,
     water: 0,
     earth: 0,
-    air: 0
+    air: 0,
+    light: 0,
+    dark: 0,
+    void: 0
 };
 
 const automation = {
     fire: false,
     water: false,
     earth: false,
-    air: false
+    air: false,
+    light: false,
+    dark: false,
+    void: false
 };
 
 const eps = {
     fire: 0,
     water: 0,
     earth: 0,
-    air: 0
+    air: 0,
+    light: 0,
+    dark: 0,
+    void: 0
 };
 
 let money = 0;
+let essence = 0; // Prestige currency
 
 // Extended prefixes for compact notation
 const prefixes = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'Ud', 'Dd', 'Td', 'Qad', 'Qid', 'Sxd', 'Spd', 'Ocd', 'Nod',
-    'Vg', 'Uvg', 'Dvg', 'Tvg', 'Qavg', 'Qivg', 'Sxvg', 'Spvg', 'Ocvg', 'Novg', 'Tr', 'Utr', 'Dtr', 'Ttr', 'Qatr', 'Qitr', 'Sxtr', 'Sptr', 'Octr', 'Notr',
-    'Qag', 'Uqag', 'Dqag', 'Tqag', 'Qaqag', 'Qiqag', 'Sxqag', 'Spqag', 'Ocqag', 'Noqag', 'Ce', 'Uce', 'Dce', 'Tce', 'Qace', 'Qice', 'Sxce', 'Spce', 'Occe', 'Noce',
-    'Mi', 'Umi', 'Dmi', 'Tmi', 'Qami', 'Qimi', 'Sxmi', 'Spmi', 'Ocmi', 'Nomi', 'Na', 'Una', 'Dna', 'Tna', 'Qana', 'Qina', 'Sxna', 'Spna', 'Ocna', 'Nona',
-    'Ct', 'Uct', 'Dct', 'Tct', 'Qact', 'Qict', 'Sxct', 'Spct', 'Occt', 'Noct', 'At', 'AAt', 'ABt', 'ACt', 'ADt', 'AEt', 'AFt', 'AGt', 'AHt', 'AIt',
-    'AJt', 'AKt', 'ALt', 'AMt', 'ANt', 'AOt', 'APt', 'ARt', 'ASt', 'ATt', 'AUt', 'AVt', 'AWt', 'AXt', 'AYt', 'AZt', 'BAt', 'BBt', 'BCt', 'BDt',
-    'BEt', 'BFt', 'BGt', 'BHt', 'BIt', 'BJt', 'BKt', 'BLt', 'BMt', 'BNt', 'BOt', 'BPt', 'BRt', 'BSt', 'BTt', 'BUt', 'BVt', 'BWt', 'BXt', 'BYt', 'BZt',
-    'CAt', 'CBt', 'CCt', 'CDt', 'CEt', 'CFt', 'CGt', 'CHt', 'CIt', 'CJt', 'CKt', 'CLt', 'CMt', 'CNt', 'COt', 'CPt', 'CRt', 'CSt', 'CTt', 'CUt', 'CVt', 
-    'CWt', 'CXt', 'CYt', 'CZt', // And so on for more prefixes...
-];
+    'Vg', 'Uvg', 'Dvg', 'Tvg', 'Qavg', 'Qivg', 'Sxvg', 'Spvg', 'Ocvg', 'Novg', 'Tr', 'Utr', 'Dtr', 'Ttr', 'Qatr', 'Qitr', 'Sxtr', 'Sptr', 'Octr', 'Notr'];
 
 // Format numbers using compact notation with extended prefixes
 function formatNumber(number) {
@@ -60,6 +65,7 @@ function loadGame() {
         Object.assign(automation, savedData.automation);
         Object.assign(eps, savedData.eps);
         money = savedData.money;
+        essence = savedData.essence;
         updateDisplay();
         startAutomation(); // Start automation if previously purchased
     }
@@ -72,7 +78,8 @@ function saveGame() {
         marketing,
         automation,
         eps,
-        money
+        money,
+        essence
     }));
 }
 
@@ -95,6 +102,7 @@ function resetGame() {
         eps[element] = 0;
     }
     money = 0;
+    essence = 0;
 }
 
 // Update the display for all resources, money, and EPS
@@ -105,6 +113,7 @@ function updateDisplay() {
         updateProgressBar(element);
     }
     document.getElementById('money').textContent = formatNumber(money);
+    document.getElementById('essence').textContent = formatNumber(essence);
 }
 
 // Recalculate the EPS for an element
@@ -179,6 +188,35 @@ function startAutomation() {
         if (automation[element]) {
             startAutomationForElement(element);
         }
+    }
+}
+
+// Prestige function
+function prestige() {
+    if (money >= 100000) {  // Requirement to prestige
+        essence += Math.floor(money / 100000);  // Calculate how much essence is earned
+        alert(`Prestiged! You earned ${Math.floor(money / 100000)} Essence.`);
+        resetGame(); // Reset the game progress
+        updateDisplay(); // Update the display
+    } else {
+        alert("You need $100,000 to prestige!");
+    }
+}
+
+// Function to switch versions
+function switchVersion(version) {
+    switch (version) {
+        case 'live':
+            window.location.href = 'index_live.html';
+            break;
+        case 'alpha':
+            window.location.href = 'index_alpha.html';
+            break;
+        case 'beta':
+            window.location.href = 'index_beta.html';
+            break;
+        default:
+            alert('Version not recognized.');
     }
 }
 
