@@ -16,7 +16,7 @@ body {
     background-color: #3a3f47;
     padding: 30px;
     border-radius: 10px;
-    width: 850px; /* Fixed width for PC screens */
+    width: 850px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     text-align: center;
     box-sizing: border-box;
@@ -37,7 +37,7 @@ h1, h2, h3, h4 {
     border-radius: 8px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start; /* Align items at the top */
+    align-items: flex-start;
 }
 
 #money-container {
@@ -74,7 +74,7 @@ h1, h2, h3, h4 {
     margin-top: 10px;
     display: flex;
     justify-content: center;
-    gap: 10px; /* Adds space between buttons */
+    gap: 10px;
 }
 
 /* Fire Element Style */
@@ -107,6 +107,28 @@ h1, h2, h3, h4 {
 }
 #air-resource .progress .progress-bar {
     background-color: #e0e0e0;
+}
+
+/* New Elements Styles */
+#light-resource {
+    background-color: #fdd835; /* Light color */
+}
+#light-resource .progress .progress-bar {
+    background-color: #ffee58; /* Light progress bar color */
+}
+
+#dark-resource {
+    background-color: #6d4c41; /* Dark color */
+}
+#dark-resource .progress .progress-bar {
+    background-color: #8d6e63; /* Dark progress bar color */
+}
+
+#void-resource {
+    background-color: #5c6bc0; /* Void color */
+}
+#void-resource .progress .progress-bar {
+    background-color: #7986cb; /* Void progress bar color */
 }
 
 /* Redesigned Button Styles */
@@ -144,6 +166,17 @@ button:active {
 
 #marketing button {
     margin: 10px 5px;
+}
+
+/* Prestige and Version Switching Section Styles */
+#prestige, #version-switching {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #454b57;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
 }
 
 /* Progress Bar Styles */
