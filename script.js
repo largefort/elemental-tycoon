@@ -1,4 +1,3 @@
-// script.js
 const resources = {
     fire: 0,
     water: 0,
@@ -41,6 +40,7 @@ const eps = {
 
 let money = 0;
 let essence = 0; // Prestige currency
+let prestigeMultiplier = 1; // Prestige multiplier
 
 // Extended prefixes for compact notation
 const prefixes = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'Ud', 'Dd', 'Td', 'Qad', 'Qid', 'Sxd', 'Spd', 'Ocd', 'Nod',
@@ -66,6 +66,7 @@ function loadGame() {
         Object.assign(eps, savedData.eps);
         money = savedData.money;
         essence = savedData.essence;
+        updatePrestigeMultiplier(); // Calculate prestige multiplier after loading
         updateDisplay();
         startAutomation(); // Start automation if previously purchased
     }
@@ -87,14 +88,16 @@ function saveGame() {
 function deleteProgress() {
     if (confirm("Are you sure you want to delete your progress? This action cannot be undone.")) {
         localStorage.removeItem('elementalTycoon'); // Clear localStorage
-        resetGame(true); // Reset all game variables including essence
+        resetGame(); // Reset all game variables
+        essence = 0; // Reset prestige currency as well
+        updatePrestigeMultiplier(); // Update multiplier after resetting essence
         updateDisplay(); // Update display after resetting
         alert("Progress deleted! The game has been reset.");
     }
 }
 
-// Reset all game variables to their initial state
-function resetGame(includeEssence = false) {
+// Reset game variables except for prestige currency
+function resetGame(keepEssence = true) {
     for (let element in resources) {
         resources[element] = 0;
         marketing[element] = 0;
@@ -102,7 +105,7 @@ function resetGame(includeEssence = false) {
         eps[element] = 0;
     }
     money = 0;
-    if (includeEssence) {
+    if (!keepEssence) {
         essence = 0;
     }
 }
@@ -116,12 +119,13 @@ function updateDisplay() {
     }
     document.getElementById('money').textContent = formatNumber(money);
     document.getElementById('essence').textContent = formatNumber(essence);
+    document.getElementById('prestige-multiplier').textContent = formatNumber(prestigeMultiplier); // Update Prestige Multiplier Display
 }
 
 // Recalculate the EPS for an element
 function recalculateEPS(element) {
     if (automation[element]) {
-        eps[element] = 1 + marketing[element]; // Base EPS + additional EPS from marketing
+        eps[element] = (1 + marketing[element]) * prestigeMultiplier; // Apply Prestige Multiplier
     } else {
         eps[element] = 0; // If not automated, EPS is 0
     }
@@ -131,7 +135,7 @@ function recalculateEPS(element) {
 // Gather a resource and update the display
 function gather(element) {
     resources[element]++;
-    money += 1 + marketing[element];  // Marketing increases resource production
+    money += (1 + marketing[element]) * prestigeMultiplier;  // Apply Prestige Multiplier
     updateDisplay();
 }
 
@@ -178,7 +182,7 @@ function startAutomationForElement(element) {
     if (automation[element]) {
         setInterval(() => {
             resources[element] += eps[element]; // Automate gathering every 1 second
-            money += eps[element] * (1 + marketing[element]); // Gain money from automated gathering
+            money += eps[element] * (1 + marketing[element]) * prestigeMultiplier; // Gain money from automated gathering with multiplier
             updateDisplay();
         }, 1000);
     }
@@ -196,14 +200,20 @@ function startAutomation() {
 // Prestige function
 function prestige() {
     if (money >= 100000) {  // Requirement to prestige
-        const earnedEssence = Math.floor(money / 100000);
-        essence += earnedEssence;  // Calculate how much essence is earned
+        const earnedEssence = Math.floor(money / 100000);  // Calculate how much essence is earned
+        essence += earnedEssence;  // Add earned essence to the current amount
         alert(`Prestiged! You earned ${earnedEssence} Essence.`);
-        resetGame(); // Reset the game progress but keep essence
+        updatePrestigeMultiplier(); // Update the multiplier after earning essence
+        resetGame(true); // Reset the game progress, keeping essence
         updateDisplay(); // Update the display
     } else {
         alert("You need $100,000 to prestige!");
     }
+}
+
+// Update prestige multiplier based on essence
+function updatePrestigeMultiplier() {
+    prestigeMultiplier = 1 + (essence * 0.1); // Each essence adds a 10% bonus
 }
 
 // Function to switch versions
