@@ -16,95 +16,163 @@ body {
     background-color: #3a3f47;
     padding: 30px;
     border-radius: 10px;
-    width: 90%;
-    max-width: 500px; /* Limits the max width for better viewing */
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Adds a shadow for depth */
+    width: 850px; /* Fixed width for PC screens */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     text-align: center;
     box-sizing: border-box;
+    margin: 20px;
 }
 
 h1, h2, h3, h4 {
     margin: 10px 0;
     font-weight: normal;
+    color: #ffffff;
 }
 
-/* Styling for stats (money and EPS) at the top */
+/* Stats and EPS Section */
 #stats {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     padding: 15px;
-    background-color: #454b57; /* Background color for stats section */
+    background-color: #454b57;
     border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align items at the top */
+}
+
+#money-container {
+    flex: 1;
+    text-align: left;
+}
+
+#eps-container {
+    flex: 1;
+    text-align: right;
 }
 
 #eps {
     margin-top: 10px;
-    text-align: left;
+    padding: 10px;
+    background-color: #555;
+    border-radius: 8px;
 }
 
 #eps p {
     margin: 5px 0;
 }
 
+/* Element Section Styles */
 .resource {
-    margin-bottom: 30px; /* Adds space between resource sections */
+    margin-bottom: 30px;
     padding: 15px;
-    background-color: #454b57; /* Different background color for sections */
     border-radius: 8px;
     box-sizing: border-box;
+    text-align: center;
 }
 
-button {
-    padding: 10px 20px;
+.resource-buttons {
     margin-top: 10px;
-    background-color: #61dafb;
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Adds space between buttons */
+}
+
+/* Fire Element Style */
+#fire-resource {
+    background-color: #ff7043;
+}
+#fire-resource .progress .progress-bar {
+    background-color: #ff8a65;
+}
+
+/* Water Element Style */
+#water-resource {
+    background-color: #42a5f5;
+}
+#water-resource .progress .progress-bar {
+    background-color: #64b5f6;
+}
+
+/* Earth Element Style */
+#earth-resource {
+    background-color: #8d6e63;
+}
+#earth-resource .progress .progress-bar {
+    background-color: #a1887f;
+}
+
+/* Air Element Style */
+#air-resource {
+    background-color: #bdbdbd;
+}
+#air-resource .progress .progress-bar {
+    background-color: #e0e0e0;
+}
+
+/* Redesigned Button Styles */
+button {
+    padding: 12px 20px;
+    background: linear-gradient(145deg, #6dc7f1, #338eda);
     border: none;
-    border-radius: 5px;
-    color: #282c34;
+    border-radius: 8px;
+    color: #ffffff;
     cursor: pointer;
     font-size: 16px;
-    margin: 5px; /* Adds margin between buttons */
-    transition: background-color 0.3s; /* Smooth hover effect */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s, transform 0.2s;
 }
 
 button:hover {
-    background-color: #21a1f1;
+    background: linear-gradient(145deg, #338eda, #6dc7f1);
+    transform: translateY(-2px);
 }
 
+button:active {
+    transform: translateY(0);
+}
+
+/* Marketing Section Styles */
 #marketing {
     margin-top: 20px;
     padding: 15px;
     background-color: #454b57;
     border-radius: 8px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
+#marketing button {
+    margin: 10px 5px;
+}
+
+/* Progress Bar Styles */
 .progress {
     width: 100%;
-    height: 15px;
+    height: 25px;
     background-color: #555;
     margin-top: 10px;
     border-radius: 5px;
     overflow: hidden;
     position: relative;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
 .progress .progress-bar {
     width: 0;
     height: 100%;
-    background-color: #61dafb;
     position: absolute;
     left: 0;
     top: 0;
-    transition: width 0.3s; /* Smooth transition for progress */
+    transition: width 0.3s;
+    z-index: 1;
 }
 
-@media (max-width: 600px) {
-    #game {
-        width: 95%;
-        padding: 20px;
-    }
-
-    button {
-        width: 100%; /* Full-width buttons for smaller screens */
-        margin: 5px 0;
-    }
+.progress span {
+    z-index: 2;
+    font-weight: bold;
 }
