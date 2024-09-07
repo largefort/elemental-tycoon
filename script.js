@@ -38,7 +38,6 @@ const eps = {
     void: 0
 };
 
-let money = 0;
 let essence = 0; // Prestige currency
 let prestigeMultiplier = 1; // Prestige multiplier
 
@@ -64,7 +63,6 @@ function loadGame() {
         Object.assign(marketing, savedData.marketing);
         Object.assign(automation, savedData.automation);
         Object.assign(eps, savedData.eps);
-        money = savedData.money;
         essence = savedData.essence;
         updatePrestigeMultiplier(); // Calculate prestige multiplier after loading
         updateDisplay();
@@ -79,7 +77,6 @@ function saveGame() {
         marketing,
         automation,
         eps,
-        money,
         essence
     }));
 }
@@ -104,30 +101,30 @@ function resetGame(keepEssence = true) {
         automation[element] = false;
         eps[element] = 0;
     }
-    money = 0;
     if (!keepEssence) {
         essence = 0;
     }
 }
 
-// Update the display for all resources, money, and EPS
+// Update the display for all resources and EPS
 function updateDisplay() {
+    let totalElements = 0;
     let totalEPS = 0;
 
     for (let element in resources) {
         document.getElementById(element).textContent = formatNumber(resources[element]);
         
-        // Check if the EPS element exists before updating it
         const epsElement = document.getElementById(`${element}-eps`);
         if (epsElement) {
             epsElement.textContent = formatNumber(eps[element]);
         }
 
         updateProgressBar(element);
+        totalElements += resources[element];
         totalEPS += eps[element];
     }
 
-    document.getElementById('money').textContent = formatNumber(money);
+    document.getElementById('total-elements').textContent = `⚛️ ${formatNumber(totalElements)}`;
     document.getElementById('essence').textContent = formatNumber(essence);
     document.getElementById('prestige-multiplier').textContent = prestigeMultiplier.toFixed(1); // Update Prestige Multiplier Display
     document.getElementById('total-eps').textContent = `${formatNumber(totalEPS)} EPS`; // Display total EPS
@@ -146,7 +143,6 @@ function recalculateEPS(element) {
 // Gather a resource and update the display
 function gather(element) {
     resources[element]++;
-    money += (1 + marketing[element]) * prestigeMultiplier;  // Apply Prestige Multiplier
     updateDisplay();
 }
 
@@ -163,20 +159,20 @@ function updateProgressBar(element) {
 
 // Buy marketing for an element and update the display
 function buyMarketing(element) {
-    if (money >= 10) {
-        money -= 10; // Deduct money correctly
+    if (resources[element] >= 10) {
+        resources[element] -= 10; // Deduct resources correctly
         marketing[element]++; // Increment the marketing level correctly
         recalculateEPS(element); // Recalculate EPS after buying marketing
         updateDisplay(); // Update the display to reflect changes
     } else {
-        alert("Not enough money!"); // Inform the player if they don't have enough money
+        alert("Not enough resources!"); // Inform the player if they don't have enough resources
     }
 }
 
 // Buy automation for an element and start its interval
 function buyAutomation(element) {
-    if (money >= 50 && !automation[element]) {
-        money -= 50;
+    if (resources[element] >= 50 && !automation[element]) {
+        resources[element] -= 50;
         automation[element] = true;
         recalculateEPS(element); // Recalculate EPS after buying automation
         updateDisplay();
@@ -184,7 +180,7 @@ function buyAutomation(element) {
     } else if (automation[element]) {
         alert(`${element.charAt(0).toUpperCase() + element.slice(1)} is already automated!`);
     } else {
-        alert("Not enough money!");
+        alert("Not enough resources!");
     }
 }
 
@@ -193,7 +189,6 @@ function startAutomationForElement(element) {
     if (automation[element]) {
         setInterval(() => {
             resources[element] += eps[element]; // Automate gathering every 1 second
-            money += eps[element] * (1 + marketing[element]) * prestigeMultiplier; // Gain money from automated gathering with multiplier
             updateDisplay();
         }, 1000);
     }
@@ -210,15 +205,16 @@ function startAutomation() {
 
 // Prestige function
 function prestige() {
-    if (money >= 100000) {  // Requirement to prestige
-        const earnedEssence = Math.floor(money / 100000);  // Calculate how much essence is earned
+    const totalElements = Object.values(resources).reduce((sum, val) => sum + val, 0);
+    if (totalElements >= 100000) {  // Requirement to prestige
+        const earnedEssence = Math.floor(totalElements / 100000);  // Calculate how much essence is earned
         essence += earnedEssence;  // Add earned essence to the current amount
         alert(`Prestiged! You earned ${earnedEssence} Essence.`);
         updatePrestigeMultiplier(); // Update the multiplier after earning essence
         resetGame(true); // Reset the game progress, keeping essence
         updateDisplay(); // Update the display
     } else {
-        alert("You need $100,000 to prestige!");
+        alert("You need 100,000 total elements to prestige!");
     }
 }
 
@@ -249,3 +245,4 @@ setInterval(saveGame, 10000);
 
 // Load the game when the page loads
 window.onload = loadGame;
+
