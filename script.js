@@ -112,14 +112,19 @@ function resetGame(keepEssence = true) {
 
 // Update the display for all resources, money, and EPS
 function updateDisplay() {
+    let totalEPS = 0;
+
     for (let element in resources) {
         document.getElementById(element).textContent = formatNumber(resources[element]);
         document.getElementById(`${element}-eps`).textContent = formatNumber(eps[element]);
         updateProgressBar(element);
+        totalEPS += eps[element];
     }
+
     document.getElementById('money').textContent = formatNumber(money);
     document.getElementById('essence').textContent = formatNumber(essence);
     document.getElementById('prestige-multiplier').textContent = prestigeMultiplier.toFixed(1); // Update Prestige Multiplier Display
+    document.getElementById('total-eps').textContent = `${formatNumber(totalEPS)} EPS`; // Display total EPS
 }
 
 // Recalculate the EPS for an element
