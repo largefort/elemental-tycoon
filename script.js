@@ -116,7 +116,13 @@ function updateDisplay() {
 
     for (let element in resources) {
         document.getElementById(element).textContent = formatNumber(resources[element]);
-        document.getElementById(`${element}-eps`).textContent = formatNumber(eps[element]);
+        
+        // Check if the EPS element exists before updating it
+        const epsElement = document.getElementById(`${element}-eps`);
+        if (epsElement) {
+            epsElement.textContent = formatNumber(eps[element]);
+        }
+
         updateProgressBar(element);
         totalEPS += eps[element];
     }
