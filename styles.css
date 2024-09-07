@@ -122,6 +122,7 @@ h1, h2, h3, h4 {
     background-image: url('air.gif'); /* Replace 'air.gif' with the path to your air GIF */
     background-size: cover;
     background-position: center;
+    filter: brightness(0.85); /* Adjusted brightness for better visibility */
     animation: breeze 6s infinite; /* Air breeze animation */
 }
 #light-resource {
