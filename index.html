@@ -3,152 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elemental Tycoon</title>
+    <title>Elemental Tycoon - Mobile Version</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="game">
-        <h1>Elemental Tycoon</h1>
+    <div id="game-container">
+        <!-- Game Content -->
+        <div class="tab-content" id="game-tab">
+            <h1>Elemental Tycoon</h1>
 
-        <!-- Total Money and EPS Section -->
-        <div id="stats">
-            <div id="money-container">
-                <h3>Total Money: $<span id="money">0</span></h3>
-                <h3>Prestige Currency: <span id="essence">0</span> Essence</h3>
-                <h3>Prestige Multiplier: x<span id="prestige-multiplier">1</span></h3> <!-- New Prestige Multiplier Display -->
-            </div>
-            <div id="eps-container">
-                <h4>Elements per Second (EPS)</h4>
-                <div id="eps">
-                    <p>Fire: <span id="fire-eps">0</span> EPS</p>
-                    <p>Water: <span id="water-eps">0</span> EPS</p>
-                    <p>Earth: <span id="earth-eps">0</span> EPS</p>
-                    <p>Air: <span id="air-eps">0</span> EPS</p>
-                    <!-- Additional Elements -->
-                    <p>Light: <span id="light-eps">0</span> EPS</p>
-                    <p>Dark: <span id="dark-eps">0</span> EPS</p>
-                    <p>Void: <span id="void-eps">0</span> EPS</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Element Resource Sections -->
-        <div id="resources">
-            <!-- Existing Elements -->
-            <div class="resource" id="fire-resource">
-                <h2>Fire: <span id="fire">0</span></h2>
-                <div class="resource-buttons">
-                    <button onclick="gather('fire')">Gather Fire</button>
-                    <button onclick="buyAutomation('fire')">Automate Fire ($50)</button>
-                </div>
-                <div class="progress" id="fire-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-            <div class="resource" id="water-resource">
-                <h2>Water: <span id="water">0</span></h2>
-                <div class="resource-buttons">
-                    <button onclick="gather('water')">Gather Water</button>
-                    <button onclick="buyAutomation('water')">Automate Water ($50)</button>
-                </div>
-                <div class="progress" id="water-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-            <div class="resource" id="earth-resource">
-                <h2>Earth: <span id="earth">0</span></h2>
-                <div class="resource-buttons">
-                    <button onclick="gather('earth')">Gather Earth</button>
-                    <button onclick="buyAutomation('earth')">Automate Earth ($50)</button>
-                </div>
-                <div class="progress" id="earth-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-            <div class="resource" id="air-resource">
-                <h2>Air: <span id="air">0</span></h2>
-                <div class="resource-buttons">
-                    <button onclick="gather('air')">Gather Air</button>
-                    <button onclick="buyAutomation('air')">Automate Air ($50)</button>
-                </div>
-                <div class="progress" id="air-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-            
-            <!-- New Elements -->
-            <div class="resource" id="light-resource">
-                <h2>Light: <span id="light">0</span></h2>
-                <div class="resource-buttons">
-                    <button onclick="gather('light')">Gather Light</button>
-                    <button onclick="buyAutomation('light')">Automate Light ($50)</button>
-                </div>
-                <div class="progress" id="light-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-            <div class="resource" id="dark-resource">
-                <h2>Dark: <span id="dark">0</span></h2>
-                <div class="resource-buttons">
-                    <button onclick="gather('dark')">Gather Dark</button>
-                    <button onclick="buyAutomation('dark')">Automate Dark ($50)</button>
-                </div>
-                <div class="progress" id="dark-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-            <div class="resource" id="void-resource">
-                <h2>Void: <span id="void">0</span></h2>
-                <div class="resource-buttons">
-                    <button onclick="gather('void')">Gather Void</button>
-                    <button onclick="buyAutomation('void')">Automate Void ($50)</button>
-                </div>
-                <div class="progress" id="void-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Marketing Strategies Section -->
-        <h2>Marketing Strategies</h2>
-        <div id="marketing">
-            <button onclick="buyMarketing('fire')">Promote Fire ($10)</button>
-            <button onclick="buyMarketing('water')">Promote Water ($10)</button>
-            <button onclick="buyMarketing('earth')">Promote Earth ($10)</button>
-            <button onclick="buyMarketing('air')">Promote Air ($10)</button>
-            <!-- Marketing for New Elements -->
-            <button onclick="buyMarketing('light')">Promote Light ($10)</button>
-            <button onclick="buyMarketing('dark')">Promote Dark ($10)</button>
-            <button onclick="buyMarketing('void')">Promote Void ($10)</button>
-        </div>
-
-        <!-- Prestige System Section -->
-        <h2>Prestige System</h2>
-        <div id="prestige">
-            <button onclick="prestige()">Prestige (Requires $100,000)</button>
-            <p>Prestige Multiplier: x<span id="prestige-multiplier">1</span></p> <!-- New Prestige Multiplier Display -->
-        </div>
-
-        <!-- Version Switching Section -->
-        <h2>Version Switching</h2>
-        <div id="version-switching">
-            <button onclick="switchVersion('live')">Switch to Live Version</button>
-            <button onclick="switchVersion('alpha')">Switch to Alpha Version</button>
-            <button onclick="switchVersion('beta')">Switch to Beta Version</button>
-        </div>
-
-        <!-- Delete Progress Button -->
-        <div id="reset">
-            <button onclick="deleteProgress()">Delete Progress</button>
+           <!-- Elements Counter and EPS Section -->
+    <div id="stats">
+        <div id="elements-container">
+            <h3>Total Elements: <span id="total-elements">0</span></h3>
+            <h3>Elements per Second (EPS): <span id="total-eps">0</span></h3> <!-- Combined EPS Counter -->
+            <h3>Prestige Currency: <span id="essence">0</span> Essence</h3> <!-- Make sure this element exists -->
         </div>
     </div>
+
+            <!-- Element Resource Sections -->
+            <div id="resources">
+                <!-- Fire Element -->
+                <div class="resource" id="fire-resource">
+                    <h2>Fire: <span id="fire">0</span></h2>
+                    <div class="resource-buttons">
+                        <button onclick="gather('fire')">Gather Fire</button>
+                        <button onclick="buyAutomation('fire')">Automate Fire ($50)</button>
+                    </div>
+                    <div class="progress" id="fire-progress">
+                        <div class="progress-bar"></div>
+                        <span>0%</span>
+                    </div>
+                </div>
+
+                <!-- Water Element -->
+                <div class="resource" id="water-resource">
+                    <h2>Water: <span id="water">0</span></h2>
+                    <div class="resource-buttons">
+                        <button onclick="gather('water')">Gather Water</button>
+                        <button onclick="buyAutomation('water')">Automate Water ($50)</button>
+                    </div>
+                    <div class="progress" id="water-progress">
+                        <div class="progress-bar"></div>
+                        <span>0%</span>
+                    </div>
+                </div>
+
+                <!-- Earth Element -->
+                <div class="resource" id="earth-resource">
+                    <h2>Earth: <span id="earth">0</span></h2>
+                    <div class="resource-buttons">
+                        <button onclick="gather('earth')">Gather Earth</button>
+                        <button onclick="buyAutomation('earth')">Automate Earth ($50)</button>
+                    </div>
+                    <div class="progress" id="earth-progress">
+                        <div class="progress-bar"></div>
+                        <span>0%</span>
+                    </div>
+                </div>
+
+                <!-- Air Element -->
+                <div class="resource" id="air-resource">
+                    <h2>Air: <span id="air">0</span></h2>
+                    <div class="resource-buttons">
+                        <button onclick="gather('air')">Gather Air</button>
+                        <button onclick="buyAutomation('air')">Automate Air ($50)</button>
+                    </div>
+                    <div class="progress" id="air-progress">
+                        <div class="progress-bar"></div>
+                        <span>0%</span>
+                    </div>
+                </div>
+
+                <!-- Light Element -->
+                <div class="resource" id="light-resource">
+                    <h2>Light: <span id="light">0</span></h2>
+                    <div class="resource-buttons">
+                        <button onclick="gather('light')">Gather Light</button>
+                        <button onclick="buyAutomation('light')">Automate Light ($50)</button>
+                    </div>
+                    <div class="progress" id="light-progress">
+                        <div class="progress-bar"></div>
+                        <span>0%</span>
+                    </div>
+                </div>
+
+                <!-- Dark Element -->
+                <div class="resource" id="dark-resource">
+                    <h2>Dark: <span id="dark">0</span></h2>
+                    <div class="resource-buttons">
+                        <button onclick="gather('dark')">Gather Dark</button>
+                        <button onclick="buyAutomation('dark')">Automate Dark ($50)</button>
+                    </div>
+                    <div class="progress" id="dark-progress">
+                        <div class="progress-bar"></div>
+                        <span>0%</span>
+                    </div>
+                </div>
+
+                <!-- Void Element -->
+                <div class="resource" id="void-resource">
+                    <h2>Void: <span id="void">0</span></h2>
+                    <div class="resource-buttons">
+                        <button onclick="gather('void')">Gather Void</button>
+                        <button onclick="buyAutomation('void')">Automate Void ($50)</button>
+                    </div>
+                    <div class="progress" id="void-progress">
+                        <div class="progress-bar"></div>
+                        <span>0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prestige Content -->
+        <div class="tab-content" id="prestige-tab" style="display: none;">
+            <h2>Prestige System</h2>
+            <div id="prestige">
+                <button onclick="prestige()">Prestige (Requires $100,000)</button>
+                <p>Prestige Multiplier: x<span id="prestige-multiplier">1</span></p>
+            </div>
+        </div>
+
+        <!-- Marketing Content -->
+        <div class="tab-content" id="marketing-tab" style="display: none;">
+            <h2>Marketing Strategies</h2>
+            <div id="marketing">
+                <button onclick="buyMarketing('fire')">Promote Fire ($10)</button>
+                <button onclick="buyMarketing('water')">Promote Water ($10)</button>
+                <button onclick="buyMarketing('earth')">Promote Earth ($10)</button>
+                <button onclick="buyMarketing('air')">Promote Air ($10)</button>
+                <!-- Marketing for New Elements -->
+                <button onclick="buyMarketing('light')">Promote Light ($10)</button>
+                <button onclick="buyMarketing('dark')">Promote Dark ($10)</button>
+                <button onclick="buyMarketing('void')">Promote Void ($10)</button>
+            </div>
+        </div>
+
+        <!-- Version Switching Content -->
+        <div class="tab-content" id="version-tab" style="display: none;">
+            <h2>Version Switching</h2>
+            <div id="version-switching">
+                <button onclick="switchVersion('live')">Switch to Live Version</button>
+                <button onclick="switchVersion('alpha')">Switch to Alpha Version</button>
+                <button onclick="switchVersion('beta')">Switch to Beta Version</button>
+            </div>
+        </div>
+
+        <!-- Reset Content -->
+        <div class="tab-content" id="reset-tab" style="display: none;">
+            <h2>Reset Progress</h2>
+            <div id="reset">
+                <button onclick="deleteProgress()">Delete Progress</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Tab Bar -->
+<div id="bottom-nav">
+    <button class="nav-btn" onclick="openTab('game-tab', event)">Game</button>
+    <button class="nav-btn" onclick="openTab('prestige-tab', event)">Prestige</button>
+    <button class="nav-btn" onclick="openTab('marketing-tab', event)">Marketing</button>
+    <button class="nav-btn" onclick="openTab('version-tab', event)">Versions</button>
+    <button class="nav-btn" onclick="openTab('reset-tab', event)">Reset</button>
+</div>
+
     <script src="script.js"></script>
 </body>
 </html>
