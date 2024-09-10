@@ -5,36 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elemental Tycoon</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Bottom Navigation Bar Styles */
+        #bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #2c2f38;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 10; /* Make sure it's above other elements */
+        }
+
+        #bottom-nav button {
+            background: none;
+            border: none;
+            color: #e0e0e0;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 8px 16px;
+            transition: color 0.3s;
+        }
+
+        #bottom-nav button:hover {
+            color: #42a5f5;
+        }
+
+        /* Tab Content Styles */
+        .tab-content {
+            display: none; /* Hide all tabs by default */
+            padding: 20px;
+        }
+
+        .tab-content.active {
+            display: block; /* Show the active tab */
+        }
+    </style>
 </head>
 <body>
+    <!-- Main Game Container -->
     <div id="game">
-        <h1>Elemental Tycoon</h1>
+        <!-- Stats Screen -->
+        <section id="stats" class="tab-content active"> <!-- Active by default -->
+            <header>
+                <h1>Elemental Tycoon</h1>
+            </header>
 
-        <!-- Total Money and EPS Section -->
-        <div id="stats">
-            <div id="money-container">
+            <!-- Money and Prestige Information -->
+            <div id="money-container" style="margin-bottom: 20px; text-align: center;">
                 <h3>Total Money: $<span id="money">0</span></h3>
                 <h3>Prestige Currency: <span id="essence">0</span> Essence</h3>
-                <h3>Prestige Multiplier: x<span id="prestige-multiplier">1</span></h3> <!-- New Prestige Multiplier Display -->
+                <h3>Prestige Multiplier: x<span id="prestige-multiplier">1</span></h3>
             </div>
-            <div id="eps-container">
-                <h4>Elements per Second (EPS)</h4>
-                <div id="eps">
-                    <p>Fire: <span id="fire-eps">0</span> EPS</p>
-                    <p>Water: <span id="water-eps">0</span> EPS</p>
-                    <p>Earth: <span id="earth-eps">0</span> EPS</p>
-                    <p>Air: <span id="air-eps">0</span> EPS</p>
+
+            <!-- Elements per Second (EPS) Information -->
+            <div id="eps-container" style="padding: 15px; background-color: #2c2f38; border-radius: 10px;">
+                <h4 style="text-align: center; margin-bottom: 10px;">Elements per Second (EPS)</h4>
+                <div id="eps" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+                    <div style="flex: 1 1 45%; margin-bottom: 10px; text-align: center;">
+                        <p>Fire: <span id="fire-eps">0</span> EPS</p>
+                    </div>
+                    <div style="flex: 1 1 45%; margin-bottom: 10px; text-align: center;">
+                        <p>Water: <span id="water-eps">0</span> EPS</p>
+                    </div>
+                    <div style="flex: 1 1 45%; margin-bottom: 10px; text-align: center;">
+                        <p>Earth: <span id="earth-eps">0</span> EPS</p>
+                    </div>
+                    <div style="flex: 1 1 45%; margin-bottom: 10px; text-align: center;">
+                        <p>Air: <span id="air-eps">0</span> EPS</p>
+                    </div>
                     <!-- Additional Elements -->
-                    <p>Light: <span id="light-eps">0</span> EPS</p>
-                    <p>Dark: <span id="dark-eps">0</span> EPS</p>
-                    <p>Void: <span id="void-eps">0</span> EPS</p>
+                    <div style="flex: 1 1 45%; margin-bottom: 10px; text-align: center;">
+                        <p>Light: <span id="light-eps">0</span> EPS</p>
+                    </div>
+                    <div style="flex: 1 1 45%; margin-bottom: 10px; text-align: center;">
+                        <p>Dark: <span id="dark-eps">0</span> EPS</p>
+                    </div>
+                    <div style="flex: 1 1 45%; margin-bottom: 10px; text-align: center;">
+                        <p>Void: <span id="void-eps">0</span> EPS</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Element Resource Sections -->
-        <div id="resources">
-            <!-- Existing Elements -->
+        <!-- Resources Screen -->
+        <section id="resources" class="tab-content">
+            <h2>Resources</h2>
+            <!-- Fire Resource -->
             <div class="resource" id="fire-resource">
                 <h2>Fire: <span id="fire">0</span></h2>
                 <div class="resource-buttons">
@@ -46,6 +106,8 @@
                     <span>0%</span>
                 </div>
             </div>
+            
+            <!-- Water Resource -->
             <div class="resource" id="water-resource">
                 <h2>Water: <span id="water">0</span></h2>
                 <div class="resource-buttons">
@@ -57,6 +119,8 @@
                     <span>0%</span>
                 </div>
             </div>
+
+            <!-- Earth Resource -->
             <div class="resource" id="earth-resource">
                 <h2>Earth: <span id="earth">0</span></h2>
                 <div class="resource-buttons">
@@ -68,6 +132,8 @@
                     <span>0%</span>
                 </div>
             </div>
+
+            <!-- Air Resource -->
             <div class="resource" id="air-resource">
                 <h2>Air: <span id="air">0</span></h2>
                 <div class="resource-buttons">
@@ -79,8 +145,8 @@
                     <span>0%</span>
                 </div>
             </div>
-            
-            <!-- New Elements -->
+
+            <!-- Light Resource -->
             <div class="resource" id="light-resource">
                 <h2>Light: <span id="light">0</span></h2>
                 <div class="resource-buttons">
@@ -92,6 +158,8 @@
                     <span>0%</span>
                 </div>
             </div>
+
+            <!-- Dark Resource -->
             <div class="resource" id="dark-resource">
                 <h2>Dark: <span id="dark">0</span></h2>
                 <div class="resource-buttons">
@@ -103,6 +171,8 @@
                     <span>0%</span>
                 </div>
             </div>
+
+            <!-- Void Resource -->
             <div class="resource" id="void-resource">
                 <h2>Void: <span id="void">0</span></h2>
                 <div class="resource-buttons">
@@ -114,11 +184,11 @@
                     <span>0%</span>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Marketing Strategies Section -->
-        <h2>Marketing Strategies</h2>
-        <div id="marketing">
+        <!-- Marketing Screen -->
+        <section id="marketing" class="tab-content">
+            <h2>Marketing Strategies</h2>
             <button onclick="buyMarketing('fire')">Promote Fire ($10)</button>
             <button onclick="buyMarketing('water')">Promote Water ($10)</button>
             <button onclick="buyMarketing('earth')">Promote Earth ($10)</button>
@@ -127,28 +197,71 @@
             <button onclick="buyMarketing('light')">Promote Light ($10)</button>
             <button onclick="buyMarketing('dark')">Promote Dark ($10)</button>
             <button onclick="buyMarketing('void')">Promote Void ($10)</button>
-        </div>
+        </section>
 
-        <!-- Prestige System Section -->
-        <h2>Prestige System</h2>
-        <div id="prestige">
+        <!-- Prestige Screen -->
+        <section id="prestige" class="tab-content">
+            <h2>Prestige System</h2>
             <button onclick="prestige()">Prestige (Requires $100,000)</button>
-            <p>Prestige Multiplier: x<span id="prestige-multiplier">1</span></p> <!-- New Prestige Multiplier Display -->
-        </div>
+            <p>Prestige Multiplier: x<span id="prestige-multiplier">1</span></p>
+        </section>
 
-        <!-- Version Switching Section -->
-        <h2>Version Switching</h2>
-        <div id="version-switching">
+        <!-- Version Switching Screen -->
+        <section id="version-switching" class="tab-content">
+            <h2>Version Switching</h2>
             <button onclick="switchVersion('live')">Switch to Live Version</button>
             <button onclick="switchVersion('alpha')">Switch to Alpha Version</button>
             <button onclick="switchVersion('beta')">Switch to Beta Version</button>
-        </div>
-
-        <!-- Delete Progress Button -->
-        <div id="reset">
-            <button onclick="deleteProgress()">Delete Progress</button>
-        </div>
+        </section>
     </div>
-    <script src="script.js"></script>
+
+    <!-- Bottom Navigation Bar -->
+    <nav id="bottom-nav">
+        <button onclick="showTab('stats')">Stats</button>
+        <button onclick="showTab('resources')">Resources</button>
+        <button onclick="showTab('marketing')">Marketing</button>
+        <button onclick="showTab('prestige')">Prestige</button>
+        <button onclick="showTab('version-switching')">Versions</button>
+    </nav>
+
+    <script>
+        function showTab(tabId) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Show the selected tab
+            const activeTab = document.getElementById(tabId);
+            activeTab.classList.add('active');
+        }
+
+        // Example JavaScript functions for game logic
+        function gather(element) {
+            console.log(`Gathering ${element}`);
+        }
+
+        function buyAutomation(element) {
+            console.log(`Buying automation for ${element}`);
+        }
+
+        function buyMarketing(element) {
+            console.log(`Promoting ${element}`);
+        }
+
+        function prestige() {
+            console.log('Prestige activated');
+        }
+
+        function switchVersion(version) {
+            console.log(`Switched to ${version} version`);
+        }
+
+        function deleteProgress() {
+            console.log('Progress deleted');
+        }
+    </script>
 </body>
 </html>
+
