@@ -14,6 +14,10 @@ let essence = 0;
 const prefixes = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'Ud', 'Dd', 'Td', 'Qad', 'Qid', 'Sxd', 'Spd', 'Ocd', 'Nod',
     'Vg', 'Uvg', 'Dvg', 'Tvg', 'Qavg', 'Qivg', 'Sxvg', 'Spvg', 'Ocvg', 'Novg', 'Tr', 'Utr', 'Dtr', 'Ttr', 'Qatr', 'Qitr', 'Sxtr', 'Sptr', 'Octr', 'Notr'];
 
+const promotionCounters = {  // Initialize promotion counters for each element
+    fire: 0, water: 0, earth: 0, air: 0, light: 0, dark: 0, void: 0
+};
+
 function formatNumber(number) {
     if (number < 1000) return number.toString();
     let tier = Math.floor(Math.log10(number) / 3);
@@ -32,6 +36,13 @@ function loadGame() {
         Object.assign(eps, savedData.eps);
         money = savedData.money;
         essence = savedData.essence;
+
+        // Load promotion counters if available
+        if (savedData.promotionCounters) {
+            Object.assign(promotionCounters, savedData.promotionCounters);
+            Object.keys(promotionCounters).forEach(updatePromotionCounterDisplay);
+        }
+
         updateDisplay();
         startAutomation();
     }
@@ -39,7 +50,7 @@ function loadGame() {
 
 function saveGame() {
     localStorage.setItem('elementalTycoon', JSON.stringify({
-        resources, marketing, automation, eps, money, essence
+        resources, marketing, automation, eps, money, essence, promotionCounters
     }));
 }
 
@@ -47,6 +58,8 @@ function resetGame(includeEssence = false) {
     Object.keys(resources).forEach(element => {
         resources[element] = marketing[element] = eps[element] = 0;
         automation[element] = false;
+        promotionCounters[element] = 0;  // Reset promotion counters
+        updatePromotionCounterDisplay(element);  // Update display for each reset
     });
     money = 0;
     if (includeEssence) essence = 0;
@@ -86,11 +99,18 @@ function buyMarketing(element) {
     if (money >= 10) {
         money -= 10;
         marketing[element]++;
+        promotionCounters[element]++;  // Increment the counter for the selected element
+        updatePromotionCounterDisplay(element);  // Update the counter display
         recalculateEPS(element);
         throttleUpdateDisplay();
     } else {
         alert("Not enough money!");
     }
+}
+
+// Function to update promotion counter display for each element
+function updatePromotionCounterDisplay(element) {
+    document.getElementById(`${element}Counter`).textContent = promotionCounters[element];
 }
 
 function buyAutomation(element) {
