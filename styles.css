@@ -13,7 +13,6 @@ body {
     overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
-/* Game Container */
 #game {
     background-color: #2c2f38;
     padding: 30px;
@@ -51,7 +50,6 @@ h1, h2, h3, h4 {
     text-align: center;
 }
 
-/* EPS Section */
 #eps {
     margin-top: 10px;
     padding: 15px;
@@ -76,6 +74,10 @@ h1, h2, h3, h4 {
     overflow: hidden; /* Hide overflow for visual effects */
 }
 
+.resource:hover {
+    transform: translateY(-5px);
+}
+
 .resource-buttons {
     margin-top: 15px;
     display: flex;
@@ -93,12 +95,92 @@ h1, h2, h3, h4 {
     margin-bottom: 30px;
 }
 
-/* Animated Effects for Elements */
-#fire-resource, #water-resource, #earth-resource, #air-resource, #light-resource, #dark-resource, #void-resource {
+/* Element Colors and Animated Backgrounds */
+#fire-resource {
+    background-color: #e57373;
+    background-image: url('fire.gif'); /* Replace 'fire.gif' with the path to your fire GIF */
     background-size: cover;
     background-position: center;
-    animation: flicker 3s infinite; /* Replace with specific animations */
-    filter: brightness(0.85); /* Adjust brightness for better visibility */
+    animation: flicker 3s infinite; /* Fire flicker animation */
+}
+#water-resource {
+    background-color: #64b5f6;
+    background-image: url('water.gif'); /* Replace 'water.gif' with the path to your water GIF */
+    background-size: cover;
+    background-position: center;
+    animation: wave 5s infinite; /* Water wave animation */
+}
+#earth-resource {
+    background-color: #a1887f;
+    background-image: url('earth.gif'); /* Replace 'earth.gif' with the path to your earth GIF */
+    background-size: cover;
+    background-position: center;
+    animation: shake 4s infinite; /* Earth shake animation */
+}
+#air-resource {
+    background-color: #cfd8dc;
+    background-image: url('air.gif'); /* Replace 'air.gif' with the path to your air GIF */
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.85); /* Adjusted brightness for better visibility */
+    animation: breeze 6s infinite; /* Air breeze animation */
+}
+#light-resource {
+    background-color: #fff176;
+    background-image: url('light.gif'); /* Replace 'light.gif' with the path to your light GIF */
+    background-size: cover;
+    background-position: center;
+    animation: glow 3s infinite; /* Light glow animation */
+}
+#dark-resource {
+    background-color: #8d6e63;
+    background-image: url('dark.gif'); /* Replace 'dark.gif' with the path to your dark GIF */
+    background-size: cover;
+    background-position: center;
+    animation: shadowPulse 5s infinite; /* Dark shadow pulse animation */
+}
+#void-resource {
+    background-color: #7986cb;
+    background-image: url('void.gif'); /* Replace 'void.gif' with the path to your void GIF */
+    background-size: cover;
+    background-position: center;
+    animation: voidSwirl 7s infinite; /* Void swirl animation */
+}
+
+/* Animated Effects */
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes wave {
+    0% { background-position: left; }
+    100% { background-position: right; }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-2px); }
+}
+
+@keyframes breeze {
+    0% { background-position: top; }
+    100% { background-position: bottom; }
+}
+
+@keyframes glow {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+@keyframes shadowPulse {
+    0%, 100% { box-shadow: inset 0 0 10px #000000; }
+    50% { box-shadow: inset 0 0 20px #000000; }
+}
+
+@keyframes voidSwirl {
+    0% { background-position: 0 0; }
+    100% { background-position: 100% 100%; }
 }
 
 /* Progress Bar Styles */
@@ -130,6 +212,20 @@ h1, h2, h3, h4 {
     border-radius: 8px;
 }
 
+/* Progress Bar Colors */
+#fire-resource .progress .progress-bar { background-color: #ef9a9a; }
+#water-resource .progress .progress-bar { background-color: #90caf9; }
+#earth-resource .progress .progress-bar { background-color: #bcaaa4; }
+#air-resource .progress .progress-bar { background-color: #e1f5fe; }
+#light-resource .progress .progress-bar { background-color: #fff59d; }
+#dark-resource .progress .progress-bar { background-color: #a1887f; }
+#void-resource .progress .progress-bar { background-color: #9fa8da; }
+
+.progress span {
+    z-index: 4;
+    font-weight: bold;
+}
+
 /* Redesigned Button Styles */
 button {
     padding: 10px 18px; /* Reduced padding for more compact buttons */
@@ -150,6 +246,10 @@ button:hover {
     transform: translateY(-3px);
 }
 
+button:active {
+    transform: translateY(1px);
+}
+
 /* Marketing, Prestige, and Version Switching Section Styles */
 #marketing, #prestige, #version-switching {
     margin-top: 20px;
@@ -164,63 +264,8 @@ button:hover {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
-/* Responsive Design - Mobile Adjustments */
-@media (max-width: 768px) {
-    #game {
-        padding: 15px;
-        margin: 10px;
-    }
-
-    #stats {
-        padding: 15px;
-        grid-template-columns: 1fr; /* Single column on smaller screens */
-        gap: 15px;
-    }
-
-    .elements-container {
-        flex-direction: column; /* Stacks elements vertically */
-        gap: 10px;
-    }
-
-    .resource {
-        max-width: 100%; /* Full width for resources */
-        margin-bottom: 20px;
-    }
-
-    button {
-        font-size: 12px; /* Smaller font size for buttons */
-        padding: 8px 14px;
-    }
-
-    #marketing, #prestige, #version-switching {
-        flex-direction: column; /* Stacks elements vertically */
-        padding: 10px;
-    }
-}
-/* Bottom Navigation Bar Styles */
-#bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #2c2f38;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-    z-index: 10; /* Make sure it's above other elements */
-}
-
-#bottom-nav button {
-    background: none;
-    border: none;
-    color: #e0e0e0;
-    font-size: 14px;
-    cursor: pointer;
-    padding: 8px 16px;
-    transition: color 0.3s;
-}
-
-#bottom-nav button:hover {
-    color: #42a5f5;
+#marketing button {
+    margin: 8px 4px;
+    background: linear-gradient(145deg, #ff8a65, #ff7043);
+    padding: 8px 16px; /* Adjusted padding */
 }
