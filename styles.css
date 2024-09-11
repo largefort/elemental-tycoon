@@ -11,6 +11,7 @@ body {
     min-height: 100vh;
     box-sizing: border-box;
     overflow-x: hidden; /* Prevent horizontal scrolling */
+    transition: background-color 0.5s; /* Smooth background transition */
 }
 
 #game {
@@ -24,13 +25,38 @@ body {
     margin: 20px auto; /* Centered and responsive */
     transition: all 0.3s;
     box-sizing: border-box;
+    animation: fadeIn 1s ease-in-out; /* Fade-in effect on load */
+    position: relative; /* For glossy effect */
+    overflow: hidden; /* Prevent overflow */
+}
+
+#game::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+    pointer-events: none; /* Ensure it doesn't block interactions */
+    z-index: 1; /* Layer above the content for gloss */
+    mix-blend-mode: overlay; /* Glossy effect */
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
 }
 
 /* Titles and Headings */
 h1, h2, h3, h4 {
     margin: 15px 0;
     font-weight: 300;
-    color: #e0e0e0;
+    color: #ffffff; /* Brighter color for better contrast */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Text shadow for depth */
+    position: relative; /* For z-index adjustments */
+    z-index: 2; /* Above gloss effect */
 }
 
 /* Stats and EPS Section */
@@ -44,6 +70,8 @@ h1, h2, h3, h4 {
     gap: 20px;
     align-items: center;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s; /* Smooth transition */
+    position: relative; /* For glossy effect */
 }
 
 #money-container, #eps-container {
@@ -56,6 +84,14 @@ h1, h2, h3, h4 {
     background-color: #4a4f5e;
     border-radius: 10px;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+    position: relative; /* For gloss */
+    overflow: hidden; /* Hide gloss overflow */
+}
+
+#eps:hover {
+    transform: scale(1.05); /* Subtle zoom effect */
+    background-color: #5b6172; /* Slight color change */
 }
 
 /* Element Section Styles */
@@ -72,10 +108,24 @@ h1, h2, h3, h4 {
     margin: 0 auto; /* Center the element */
     position: relative; /* For positioning animated effects */
     overflow: hidden; /* Hide overflow for visual effects */
+    z-index: 1; /* Ensure layering */
 }
 
 .resource:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px) scale(1.02); /* Enhanced hover effect */
+    background-color: rgba(255, 255, 255, 0.1); /* Lighten background on hover */
+}
+
+.resource::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    z-index: 2; /* Gloss effect */
+    pointer-events: none; /* Ensure it doesn't block interactions */
 }
 
 .resource-buttons {
@@ -187,9 +237,9 @@ h1, h2, h3, h4 {
 .progress {
     width: 100%;
     height: 20px; /* Reduced height for sleeker design */
-    background-color: rgba(0, 0, 0, 0.3); /* Transparent background for visual effect */
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)); /* Glossy background */
     margin-top: 10px;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
     position: relative;
     color: #ffffff;
@@ -197,8 +247,15 @@ h1, h2, h3, h4 {
     align-items: center;
     justify-content: center;
     margin-bottom: 15px;
-    box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.15); /* Outer shadow for depth */
     z-index: 2; /* Ensure it is above the animated backgrounds */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Light border for definition */
+    backdrop-filter: blur(5px); /* Gloss effect */
+    transition: background 0.5s, box-shadow 0.5s; /* Smooth transition */
+}
+
+.progress:hover {
+    box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.2); /* Enhanced hover shadow */
 }
 
 .progress .progress-bar {
@@ -209,21 +266,23 @@ h1, h2, h3, h4 {
     top: 0;
     transition: width 0.4s ease-in-out;
     z-index: 3; /* Ensure it is above the animated backgrounds */
-    border-radius: 8px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #ff8a65, #ff7043); /* Gradient effect for modern look */
 }
 
 /* Progress Bar Colors */
-#fire-resource .progress .progress-bar { background-color: #ef9a9a; }
-#water-resource .progress .progress-bar { background-color: #90caf9; }
-#earth-resource .progress .progress-bar { background-color: #bcaaa4; }
-#air-resource .progress .progress-bar { background-color: #e1f5fe; }
-#light-resource .progress .progress-bar { background-color: #fff59d; }
-#dark-resource .progress .progress-bar { background-color: #a1887f; }
-#void-resource .progress .progress-bar { background-color: #9fa8da; }
+#fire-resource .progress .progress-bar { background: linear-gradient(90deg, #ff8a65, #ef5350); }
+#water-resource .progress .progress-bar { background: linear-gradient(90deg, #90caf9, #42a5f5); }
+#earth-resource .progress .progress-bar { background: linear-gradient(90deg, #bcaaa4, #8d6e63); }
+#air-resource .progress .progress-bar { background: linear-gradient(90deg, #e1f5fe, #b3e5fc); }
+#light-resource .progress .progress-bar { background: linear-gradient(90deg, #fff59d, #ffeb3b); }
+#dark-resource .progress .progress-bar { background: linear-gradient(90deg, #a1887f, #5d4037); }
+#void-resource .progress .progress-bar { background: linear-gradient(90deg, #9fa8da, #7986cb); }
 
 .progress span {
     z-index: 4;
     font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow for visibility */
 }
 
 /* Redesigned Button Styles */
@@ -262,10 +321,17 @@ button:active {
     gap: 15px;
     flex-wrap: wrap; /* Allows wrapping on smaller screens */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    position: relative; /* For gloss */
 }
 
 #marketing button {
     margin: 8px 4px;
     background: linear-gradient(145deg, #ff8a65, #ff7043);
     padding: 8px 16px; /* Adjusted padding */
+    transition: transform 0.2s;
 }
+
+#marketing button:hover {
+    transform: scale(1.05); /* Hover scale effect */
+}
+
