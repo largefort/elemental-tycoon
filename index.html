@@ -168,270 +168,302 @@
     </div>
 
     <script>
-        const resources = {
-            fire: 0,
-            water: 0,
-            earth: 0,
-            air: 0,
-            light: 0,
-            dark: 0,
-            void: 0
-        };
+const resources = {
+    fire: 0,
+    water: 0,
+    earth: 0,
+    air: 0,
+    light: 0,
+    dark: 0,
+    void: 0
+};
 
-        const marketing = {
-            fire: 0,
-            water: 0,
-            earth: 0,
-            air: 0,
-            light: 0,
-            dark: 0,
-            void: 0
-        };
+const marketing = {
+    fire: 0,
+    water: 0,
+    earth: 0,
+    air: 0,
+    light: 0,
+    dark: 0,
+    void: 0
+};
 
-        const automation = {
-            fire: false,
-            water: false,
-            earth: false,
-            air: false,
-            light: false,
-            dark: false,
-            void: false
-        };
+const automation = {
+    fire: false,
+    water: false,
+    earth: false,
+    air: false,
+    light: false,
+    dark: false,
+    void: false
+};
 
-        const eps = {
-            fire: 0,
-            water: 0,
-            earth: 0,
-            air: 0,
-            light: 0,
-            dark: 0,
-            void: 0
-        };
+const eps = {
+    fire: 0,
+    water: 0,
+    earth: 0,
+    air: 0,
+    light: 0,
+    dark: 0,
+    void: 0
+};
 
-        let money = 0;
-        let essence = 0; // Prestige currency
-        let prestigeMultiplier = 1.00; // Multiplier from prestige upgrades
-        let upgrades = []; // List of upgrades
+let money = 0;
+let essence = 0; // Prestige currency
+let prestigeMultiplier = 1.00; // Multiplier from prestige upgrades
+let upgrades = []; // List of upgrades
 
-        const prefixes = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'Ud', 'Dd', 'Td', 'Qad', 'Qid', 'Sxd', 'Spd', 'Ocd', 'Nod',
-            'Vg', 'Uvg', 'Dvg', 'Tvg', 'Qavg', 'Qivg', 'Sxvg', 'Spvg', 'Ocvg', 'Novg', 'Tr', 'Utr', 'Dtr', 'Ttr', 'Qatr', 'Qitr', 'Sxtr', 'Sptr', 'Octr', 'Notr'];
+const prefixes = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'Ud', 'Dd', 'Td', 'Qad', 'Qid', 'Sxd', 'Spd', 'Ocd', 'Nod',
+    'Vg', 'Uvg', 'Dvg', 'Tvg', 'Qavg', 'Qivg', 'Sxvg', 'Spvg', 'Ocvg', 'Novg', 'Tr', 'Utr', 'Dtr', 'Ttr', 'Qatr', 'Qitr', 'Sxtr', 'Sptr', 'Octr', 'Notr'];
 
-        function formatNumber(number) {
-            if (number < 1000) return number.toString();
-            let tier = Math.floor(Math.log10(number) / 3);
-            let suffix = prefixes[tier] || `e${tier * 3}`;
-            let scale = Math.pow(10, tier * 3);
-            let scaled = number / scale;
-            return scaled.toFixed(2) + suffix;
-        }
+// List of possible upgrade names
+const upgradeNames = [
+    'Blazing Fury', 'Ocean’s Whisper', 'Earthen Might', 'Aerial Grace', 'Radiant Surge', 'Shadow Veil', 'Void’s Embrace',
+    'Inferno Blast', 'Tidal Wave', 'Quake Strike', 'Zephyr Speed', 'Solar Flare', 'Dark Pulse', 'Abyssal Echo',
+    'Phoenix Ascend', 'Tempest Roar', 'Stone Guardian', 'Wind Dancer', 'Light Bringer', 'Night Stalker', 'Cosmic Reaver'
+];
 
-        function loadGame() {
-            const savedData = JSON.parse(localStorage.getItem('elementalTycoon'));
-            if (savedData) {
-                Object.assign(resources, savedData.resources);
-                Object.assign(marketing, savedData.marketing);
-                Object.assign(automation, savedData.automation);
-                Object.assign(eps, savedData.eps);
-                money = savedData.money;
-                essence = savedData.essence;
-                prestigeMultiplier = savedData.prestigeMultiplier || 1.00;
-                upgrades = savedData.upgrades || [];
-                updateDisplay();
-                displayUpgrades();
-                startAutomation();
-            }
-        }
+// Function to format numbers with suffixes
+function formatNumber(number) {
+    if (number < 1000) return number.toString();
+    let tier = Math.floor(Math.log10(number) / 3);
+    let suffix = prefixes[tier] || `e${tier * 3}`;
+    let scale = Math.pow(10, tier * 3);
+    let scaled = number / scale;
+    return scaled.toFixed(2) + suffix;
+}
 
-        function saveGame() {
-            localStorage.setItem('elementalTycoon', JSON.stringify({
-                resources,
-                marketing,
-                automation,
-                eps,
-                money,
-                essence,
-                prestigeMultiplier,
-                upgrades
-            }));
-        }
+// Function to load game data from local storage
+function loadGame() {
+    const savedData = JSON.parse(localStorage.getItem('elementalTycoon'));
+    if (savedData) {
+        Object.assign(resources, savedData.resources);
+        Object.assign(marketing, savedData.marketing);
+        Object.assign(automation, savedData.automation);
+        Object.assign(eps, savedData.eps);
+        money = savedData.money;
+        essence = savedData.essence;
+        prestigeMultiplier = savedData.prestigeMultiplier || 1.00;
+        upgrades = savedData.upgrades || [];
+        updateDisplay();
+        displayUpgrades();
+        startAutomation();
+    }
+}
 
-        function deleteProgress() {
-            if (confirm("Are you sure you want to delete your progress? This action cannot be undone.")) {
-                localStorage.removeItem('elementalTycoon');
-                resetGame(true);
-                updateDisplay();
-                alert("Progress deleted! The game has been reset.");
-            }
-        }
+// Function to save game data to local storage
+function saveGame() {
+    localStorage.setItem('elementalTycoon', JSON.stringify({
+        resources,
+        marketing,
+        automation,
+        eps,
+        money,
+        essence,
+        prestigeMultiplier,
+        upgrades
+    }));
+}
 
-        function resetGame(includeEssence = false) {
-            for (let element in resources) {
-                resources[element] = 0;
-                marketing[element] = 0;
-                automation[element] = false;
-                eps[element] = 0;
-            }
-            money = 0;
-            prestigeMultiplier = 1.00;
-            upgrades = [];
-            if (includeEssence) {
-                essence = 0;
-            }
-        }
+// Function to delete all game progress
+function deleteProgress() {
+    if (confirm("Are you sure you want to delete your progress? This action cannot be undone.")) {
+        localStorage.removeItem('elementalTycoon');
+        resetGame(true);
+        updateDisplay();
+        alert("Progress deleted! The game has been reset.");
+    }
+}
 
-        function updateDisplay() {
-            for (let element in resources) {
-                document.getElementById(element).textContent = formatNumber(resources[element]);
-                document.getElementById(`${element}-eps`).textContent = formatNumber(eps[element] * prestigeMultiplier);
-                updateProgressBar(element);
-            }
-            document.getElementById('money').textContent = formatNumber(money);
-            document.getElementById('essence').textContent = formatNumber(essence);
-            document.getElementById('prestige-multiplier').textContent = prestigeMultiplier.toFixed(2);
-        }
+// Function to reset the game
+function resetGame(includeEssence = false) {
+    for (let element in resources) {
+        resources[element] = 0;
+        marketing[element] = 0;
+        automation[element] = false;
+        eps[element] = 0;
+    }
+    money = 0;
+    prestigeMultiplier = 1.00;
+    upgrades = [];
+    if (includeEssence) {
+        essence = 0;
+    }
+}
 
-        function recalculateEPS(element) {
-            if (automation[element]) {
-                eps[element] = (1 + marketing[element]) * prestigeMultiplier;
-            } else {
-                eps[element] = 0;
-            }
+// Function to update the display with current game data
+function updateDisplay() {
+    for (let element in resources) {
+        document.getElementById(element).textContent = formatNumber(resources[element]);
+        document.getElementById(`${element}-eps`).textContent = formatNumber(eps[element] * prestigeMultiplier);
+        updateProgressBar(element);
+    }
+    document.getElementById('money').textContent = formatNumber(money);
+    document.getElementById('essence').textContent = formatNumber(essence);
+    document.getElementById('prestige-multiplier').textContent = prestigeMultiplier.toFixed(2);
+}
+
+// Function to recalculate EPS (elements per second) for an element
+function recalculateEPS(element) {
+    if (automation[element]) {
+        eps[element] = (1 + marketing[element]) * prestigeMultiplier;
+    } else {
+        eps[element] = 0;
+    }
+    updateDisplay();
+}
+
+// Function to gather resources for an element
+function gather(element) {
+    resources[element]++;
+    money += (1 + marketing[element]) * prestigeMultiplier;
+    updateDisplay();
+}
+
+// Function to update progress bar for an element
+function updateProgressBar(element) {
+    const progressBar = document.querySelector(`#${element}-progress .progress-bar`);
+    const progressText = document.querySelector(`#${element}-progress span`);
+    if (progressBar && progressText) {
+        const progress = (resources[element] % 100);
+        progressBar.style.width = `${progress}%`;
+        progressText.textContent = `${progress}%`;
+    }
+}
+
+// Function to buy marketing for an element
+function buyMarketing(element) {
+    if (money >= 10) {
+        money -= 10;
+        marketing[element]++;
+        recalculateEPS(element);
+        updateDisplay();
+    } else {
+        alert("Not enough money!");
+    }
+}
+
+// Function to buy automation for an element
+function buyAutomation(element) {
+    if (money >= 50 && !automation[element]) {
+        money -= 50;
+        automation[element] = true;
+        recalculateEPS(element);
+        updateDisplay();
+        startAutomationForElement(element);
+    } else if (automation[element]) {
+        alert(`${element.charAt(0).toUpperCase() + element.slice(1)} is already automated!`);
+    } else {
+        alert("Not enough money!");
+    }
+}
+
+// Function to start automation for an element
+function startAutomationForElement(element) {
+    if (automation[element]) {
+        setInterval(() => {
+            resources[element] += eps[element];
+            money += eps[element] * (1 + marketing[element]);
             updateDisplay();
+        }, 1000);
+    }
+}
+
+// Function to start automation for all elements
+function startAutomation() {
+    for (let element in automation) {
+        if (automation[element]) {
+            startAutomationForElement(element);
         }
+    }
+}
 
-        function gather(element) {
-            resources[element]++;
-            money += (1 + marketing[element]) * prestigeMultiplier;
-            updateDisplay();
-        }
+// Function to perform prestige action
+function prestige() {
+    if (money >= 100000) {
+        const earnedEssence = Math.floor(money / 100000);
+        essence += earnedEssence;
+        alert(`Prestiged! You earned ${earnedEssence} Essence.`);
+        resetGame();
+        generateRandomUpgrade();
+        updateDisplay();
+    } else {
+        alert("You need $100,000 to prestige!");
+    }
+}
 
-        function updateProgressBar(element) {
-            const progressBar = document.querySelector(`#${element}-progress .progress-bar`);
-            const progressText = document.querySelector(`#${element}-progress span`);
-            if (progressBar && progressText) {
-                const progress = (resources[element] % 100);
-                progressBar.style.width = `${progress}%`;
-                progressText.textContent = `${progress}%`;
-            }
-        }
+// Function to get a random upgrade name
+function getRandomUpgradeName() {
+    return upgradeNames[Math.floor(Math.random() * upgradeNames.length)];
+}
 
-        function buyMarketing(element) {
-            if (money >= 10) {
-                money -= 10;
-                marketing[element]++;
-                recalculateEPS(element);
-                updateDisplay();
-            } else {
-                alert("Not enough money!");
-            }
-        }
+// Function to generate a random upgrade
+function generateRandomUpgrade() {
+    let upgrade = {
+        name: getRandomUpgradeName(), // Use the random name generator here
+        cost: 10 + upgrades.length * 5,
+        effect: Math.random() * 2,
+        purchased: false
+    };
 
-        function buyAutomation(element) {
-            if (money >= 50 && !automation[element]) {
-                money -= 50;
-                automation[element] = true;
-                recalculateEPS(element);
-                updateDisplay();
-                startAutomationForElement(element);
-            } else if (automation[element]) {
-                alert(`${element.charAt(0).toUpperCase() + element.slice(1)} is already automated!`);
-            } else {
-                alert("Not enough money!");
-            }
-        }
+    upgrades.push(upgrade);
+    displayUpgrades();
+    setTimeout(generateRandomUpgrade, 30 * 60 * 1000); // Generate a new upgrade every 30 minutes
+}
 
-        function startAutomationForElement(element) {
-            if (automation[element]) {
-                setInterval(() => {
-                    resources[element] += eps[element];
-                    money += eps[element] * (1 + marketing[element]);
-                    updateDisplay();
-                }, 1000);
-            }
-        }
+// Function to display all upgrades
+function displayUpgrades() {
+    let upgradeList = document.getElementById('upgrade-list');
+    upgradeList.innerHTML = '';
 
-        function startAutomation() {
-            for (let element in automation) {
-                if (automation[element]) {
-                    startAutomationForElement(element);
-                }
-            }
-        }
+    upgrades.forEach((upgrade, index) => {
+        let upgradeDiv = document.createElement('div');
+        upgradeDiv.innerHTML = `${upgrade.name} - Cost: ${upgrade.cost} Essence - Effect: x${upgrade.effect.toFixed(2)} 
+                                <button onclick="buyUpgrade(${index})">Buy</button>`;
+        upgradeList.appendChild(upgradeDiv);
+    });
+}
 
-        function prestige() {
-            if (money >= 100000) {
-                const earnedEssence = Math.floor(money / 100000);
-                essence += earnedEssence;
-                alert(`Prestiged! You earned ${earnedEssence} Essence.`);
-                resetGame();
-                generateRandomUpgrade();
-                updateDisplay();
-            } else {
-                alert("You need $100,000 to prestige!");
-            }
-        }
+// Function to buy an upgrade
+function buyUpgrade(index) {
+    if (essence >= upgrades[index].cost && !upgrades[index].purchased) {
+        essence -= upgrades[index].cost;
+        upgrades[index].purchased = true;
+        prestigeMultiplier *= upgrades[index].effect;
+        document.getElementById('essence').textContent = formatNumber(essence);
+        document.getElementById('prestige-multiplier').textContent = prestigeMultiplier.toFixed(2);
+        displayUpgrades();
+        alert('Upgrade purchased!');
+    } else {
+        alert('Not enough Essence or already purchased!');
+    }
+}
 
-        function generateRandomUpgrade() {
-            let upgrade = {
-                name: 'Random Upgrade ' + (upgrades.length + 1),
-                cost: 10 + upgrades.length * 5,
-                effect: Math.random() * 2,
-                purchased: false
-            };
+// Function to switch game versions
+function switchVersion(version) {
+    switch (version) {
+        case 'live':
+            window.location.href = 'index_live.html';
+            break;
+        case 'alpha':
+            window.location.href = 'index_alpha.html';
+            break;
+        case 'beta':
+            window.location.href = 'index_beta.html';
+            break;
+        default:
+            alert('Version not recognized.');
+    }
+}
 
-            upgrades.push(upgrade);
-            displayUpgrades();
-            setTimeout(generateRandomUpgrade, 30 * 60 * 1000);
-        }
+// Save game every 10 seconds
+setInterval(saveGame, 10000);
 
-        function displayUpgrades() {
-            let upgradeList = document.getElementById('upgrade-list');
-            upgradeList.innerHTML = '';
-
-            upgrades.forEach((upgrade, index) => {
-                let upgradeDiv = document.createElement('div');
-                upgradeDiv.innerHTML = `${upgrade.name} - Cost: ${upgrade.cost} Essence - Effect: x${upgrade.effect.toFixed(2)} 
-                                        <button onclick="buyUpgrade(${index})">Buy</button>`;
-                upgradeList.appendChild(upgradeDiv);
-            });
-        }
-
-        function buyUpgrade(index) {
-            if (essence >= upgrades[index].cost && !upgrades[index].purchased) {
-                essence -= upgrades[index].cost;
-                upgrades[index].purchased = true;
-                prestigeMultiplier *= upgrades[index].effect;
-                document.getElementById('essence').textContent = formatNumber(essence);
-                document.getElementById('prestige-multiplier').textContent = prestigeMultiplier.toFixed(2);
-                displayUpgrades();
-                alert('Upgrade purchased!');
-            } else {
-                alert('Not enough Essence or already purchased!');
-            }
-        }
-
-        function switchVersion(version) {
-            switch (version) {
-                case 'live':
-                    window.location.href = 'index_live.html';
-                    break;
-                case 'alpha':
-                    window.location.href = 'index_alpha.html';
-                    break;
-                case 'beta':
-                    window.location.href = 'index_beta.html';
-                    break;
-                default:
-                    alert('Version not recognized.');
-            }
-        }
-
-        setInterval(saveGame, 10000);
-
-        window.onload = () => {
-            loadGame();
-            generateRandomUpgrade();
-        };
+// Load game and generate first random upgrade on window load
+window.onload = () => {
+    loadGame();
+    generateRandomUpgrade();
+};
     </script>
     </script>
 </body>
