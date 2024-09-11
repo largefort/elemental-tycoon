@@ -402,7 +402,7 @@ function generateRandomUpgrade() {
     let upgrade = {
         name: getRandomUpgradeName(), // Use the random name generator here
         cost: 10 + upgrades.length * 5,
-        effect: (Math.random() * 2).toFixed(2), // Format Effect
+        effect: parseFloat((Math.random() * 2 + 0.1).toFixed(2)), // Format Effect with a minimum value
         purchased: false
     };
 
@@ -418,8 +418,8 @@ function displayUpgrades() {
 
     upgrades.forEach((upgrade, index) => {
         let upgradeDiv = document.createElement('div');
-        upgradeDiv.innerHTML = `${upgrade.name} - Cost: ${formatNumber(upgrade.cost)} Essence - Effect: x${upgrade.effect} 
-                                <button onclick="buyUpgrade(${index})">Buy</button>`;
+        upgradeDiv.innerHTML = `${upgrade.name} - Cost: ${formatNumber(upgrade.cost)} Essence - Effect: x${upgrade.effect.toFixed(2)} 
+                                <button onclick="buyUpgrade(${index})">Buy</button>`; // Format effect to 2 decimal places
         upgradeList.appendChild(upgradeDiv);
     });
 }
@@ -429,7 +429,8 @@ function buyUpgrade(index) {
     if (essence >= upgrades[index].cost && !upgrades[index].purchased) {
         essence -= upgrades[index].cost;
         upgrades[index].purchased = true;
-        prestigeMultiplier *= parseFloat(upgrades[index].effect); // Corrected to parseFloat for multiplication
+        prestigeMultiplier = (prestigeMultiplier * upgrades[index].effect).toFixed(2); // Corrected to format multiplier
+        prestigeMultiplier = parseFloat(prestigeMultiplier); // Ensure it remains a number after formatting
         document.getElementById('essence').textContent = formatNumber(essence);
         document.getElementById('prestige-multiplier').textContent = prestigeMultiplier.toFixed(2);
         displayUpgrades();
