@@ -212,6 +212,7 @@ const eps = {
 let money = 0;
 let essence = 0; // Prestige currency
 let prestigeMultiplier = 1.00; // Multiplier from prestige upgrades
+let permanentMultiplierBonus = 1.00; // Permanent multiplier bonus gained from each prestige
 let upgrades = []; // List of upgrades
 
 const prefixes = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'Ud', 'Dd', 'Td', 'Qad', 'Qid', 'Sxd', 'Spd', 'Ocd', 'Nod',
@@ -263,6 +264,7 @@ function loadGame() {
         money = savedData.money;
         essence = savedData.essence;
         prestigeMultiplier = savedData.prestigeMultiplier || 1.00;
+        permanentMultiplierBonus = savedData.permanentMultiplierBonus || 1.00;
         upgrades = savedData.upgrades || [];
         updateDisplay();
         displayUpgrades();
@@ -279,6 +281,7 @@ function saveGame() {
         money,
         essence,
         prestigeMultiplier,
+        permanentMultiplierBonus,
         upgrades
     }));
 }
@@ -300,8 +303,8 @@ function resetGame(includeEssence = false) {
         eps[element] = 0;
     }
     money = 0;
-    prestigeMultiplier = 1.00;
-    
+    prestigeMultiplier = permanentMultiplierBonus; // Reset to permanent bonus multiplier
+
     // Clear upgrades array to delete prestige-generated upgrades
     upgrades = [];
 
@@ -418,7 +421,18 @@ function prestige() {
     if (money >= 100000) {
         const earnedEssence = Math.floor(money / 100000);
         essence += earnedEssence;
-        alert(`Prestiged! You earned ${formatNumber(earnedEssence)} Essence.`);
+
+        // Calculate the previous multiplier for comparison
+        const previousMultiplier = permanentMultiplierBonus;
+
+        // Increase the permanent multiplier bonus with each prestige
+        permanentMultiplierBonus *= 1.10; // For example, each prestige increases it by 10%
+
+        // Calculate the increase in multiplier
+        const multiplierIncrease = (permanentMultiplierBonus - previousMultiplier).toFixed(2);
+
+        alert(`Prestiged! You earned ${formatNumber(earnedEssence)} Essence. Your permanent multiplier has increased by x${multiplierIncrease}!`);
+
         resetGame();
         generateRandomUpgrade();
         updateDisplay();
