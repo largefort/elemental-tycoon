@@ -364,3 +364,60 @@ button:active {
 #marketing button:hover {
     transform: scale(1.05); /* Hover scale effect */
 }
+
+/* Elemental Abilities Section */
+#abilities {
+    margin: 2rem 0; /* Space around the abilities section */
+    padding: 1rem;
+    background-color: #373b47; /* Consistent background with other sections */
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px var(--shadow-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    position: relative; /* For layered effects */
+    overflow: hidden; /* Prevent overflow */
+    z-index: 1; /* Positioning for effects */
+}
+
+/* Abilities Buttons */
+#abilities button {
+    padding: 0.6rem 1rem;
+    background: var(--button-bg-gradient);
+    border: none;
+    border-radius: var(--border-radius);
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: var(--box-shadow);
+    transition: background 0.3s, transform 0.2s;
+    z-index: 5; /* Ensure buttons are above animations */
+    outline: none; /* Remove default outline */
+    flex: 1 1 200px; /* Flex behavior for responsiveness */
+    max-width: 250px; /* Max width for buttons */
+    text-align: center; /* Center button text */
+}
+
+#abilities button:hover {
+    background: var(--hover-bg-gradient);
+    transform: translateY(-3px);
+}
+
+#abilities button:focus {
+    outline: 2px solid var(--focus-outline-color);
+}
+
+#abilities button:active {
+    transform: translateY(1px);
+}
+
+/* Ability Buttons Cooldown Style */
+#abilities button:disabled {
+    background: #555; /* Greyed out when on cooldown */
+    color: #999; /* Muted text color */
+    cursor: not-allowed; /* Indicate disabled state */
+    box-shadow: none; /* Remove shadow for disabled buttons */
+}
