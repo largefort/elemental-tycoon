@@ -181,6 +181,7 @@
     </div>
 
     <script>
+// Define constants and state management
 const resources = {
     fire: 0,
     water: 0,
@@ -220,6 +221,18 @@ const eps = {
     dark: 0,
     void: 0
 };
+
+const originalAutomationCosts = {
+    fire: 50,
+    water: 50,
+    earth: 50,
+    air: 50,
+    light: 50,
+    dark: 50,
+    void: 50
+};
+
+let automationCosts = { ...originalAutomationCosts };
 
 const abilityCooldowns = {
     fire: 30,   // seconds
@@ -285,12 +298,12 @@ function applyAbilityEffect(element) {
             }, 15000);
             break;
         case 'earth':
-            reduceAutomationCost(0.5);
-            setTimeout(() => resetAutomationCost(), 60000);
+            reduceAutomationCost(0.5); // Reduce costs by 50%
+            setTimeout(() => resetAutomationCost(), 60000); // Reset after 60 seconds
             break;
         case 'air':
-            speedUpProgressBars(2);
-            setTimeout(() => resetProgressBarSpeed(), 20000);
+            speedUpProgressBars(2); // Speed up progress by 2x
+            setTimeout(() => resetProgressBarSpeed(), 20000); // Reset after 20 seconds
             break;
         case 'light':
             prestigeMultiplier *= 1.5;
@@ -307,19 +320,34 @@ function applyAbilityEffect(element) {
 }
 
 function reduceAutomationCost(factor) {
-    // Implement cost reduction logic here
+    for (let element in automationCosts) {
+        automationCosts[element] *= factor; // Reduce automation costs by the given factor
+    }
+    updateAutomationButtons(); // Update buttons to reflect the new costs
 }
 
 function resetAutomationCost() {
-    // Reset automation cost to original values
+    automationCosts = { ...originalAutomationCosts }; // Reset automation costs to original values
+    updateAutomationButtons(); // Update buttons to reflect the reset costs
+}
+
+function updateAutomationButtons() {
+    for (let element in automationCosts) {
+        const button = document.querySelector(`#${element}-resource button:nth-child(2)`);
+        button.textContent = `Automate ${element.charAt(0).toUpperCase() + element.slice(1)} ($${automationCosts[element]})`;
+    }
 }
 
 function speedUpProgressBars(factor) {
-    // Implement progress bar speed-up logic
+    document.querySelectorAll('.progress-bar').forEach(bar => {
+        bar.style.transition = `width ${0.4 / factor}s ease-in-out`; // Speed up the transition for progress bars
+    });
 }
 
 function resetProgressBarSpeed() {
-    // Reset progress bars to normal speed
+    document.querySelectorAll('.progress-bar').forEach(bar => {
+        bar.style.transition = 'width 0.4s ease-in-out'; // Reset to original speed
+    });
 }
 
 function randomResourceGain(min, max) {
@@ -486,8 +514,8 @@ function buyMarketing(element) {
 }
 
 function buyAutomation(element) {
-    if (money >= 50 && !automation[element]) {
-        money -= 50;
+    if (money >= automationCosts[element] && !automation[element]) {
+        money -= automationCosts[element];
         automation[element] = true;
         recalculateEPS(element);
         updateDisplay();
