@@ -32,6 +32,18 @@
             </div>
         </div>
 
+        <!-- Elemental Abilities Section -->
+        <h2>Elemental Abilities</h2>
+        <div id="abilities">
+            <button onclick="activateAbility('fire')" id="fire-ability">Fire Ability: Blaze Burst (x2 Fire EPS for 30s)</button>
+            <button onclick="activateAbility('water')" id="water-ability">Water Ability: Tsunami (Double all resources for 15s)</button>
+            <button onclick="activateAbility('earth')" id="earth-ability">Earth Ability: Quake Shield (Reduce automation costs by 50% for 60s)</button>
+            <button onclick="activateAbility('air')" id="air-ability">Air Ability: Gale Force (Speed up all progress bars by 2x for 20s)</button>
+            <button onclick="activateAbility('light')" id="light-ability">Light Ability: Solar Blessing (Increase prestige multiplier by 1.5x for 60s)</button>
+            <button onclick="activateAbility('dark')" id="dark-ability">Dark Ability: Shadow Cloak (Gain 100 Dark instantly, cooldown 120s)</button>
+            <button onclick="activateAbility('void')" id="void-ability">Void Ability: Void Rift (Randomly gain 10-100 of all resources, cooldown 180s)</button>
+        </div>
+
         <!-- Element Resource Sections -->
         <div id="resources">
             <!-- Existing Elements -->
@@ -115,7 +127,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Marketing Strategies Section -->
         <h2>Marketing Strategies</h2>
         <div id="marketing">
@@ -209,31 +221,112 @@ const eps = {
     void: 0
 };
 
+const abilityCooldowns = {
+    fire: 30,   // seconds
+    water: 15,
+    earth: 60,
+    air: 20,
+    light: 60,
+    dark: 120,
+    void: 180
+};
+
+const activeAbilities = {
+    fire: false,
+    water: false,
+    earth: false,
+    air: false,
+    light: false,
+    dark: false,
+    void: false
+};
+
 let money = 0;
 let essence = 0; // Prestige currency
 let prestigeMultiplier = 1.00; // Multiplier from prestige upgrades
 let permanentMultiplierBonus = 1.00; // Permanent multiplier bonus gained from each prestige
 let upgrades = []; // List of upgrades
 
-const prefixes = [
-    '', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'Ud', 'Dd', 'Td', 'Qad', 'Qid', 'Sxd', 'Spd', 'Ocd', 'Nod', 
-    'Vg', 'Uvg', 'Dvg', 'Tvg', 'Qavg', 'Qivg', 'Sxvg', 'Spvg', 'Ocvg', 'Novg', 'Tr', 'Utr', 'Dtr', 'Ttr', 'Qatr', 'Qitr', 'Sxtr', 
-    'Sptr', 'Octr', 'Notr', 'Qt', 'Uqt', 'Dqt', 'Tqt', 'Qaqt', 'Qiqt', 'Sxqt', 'Spqt', 'Ocqt', 'Noqt', 'Qn', 'Uqn', 'Dqn', 'Tqn', 
-    'Qaqn', 'Qiqn', 'Sxqn', 'Spqn', 'Ocqn', 'Noqn', 'Se', 'Use', 'Dse', 'Tse', 'Qase', 'Qise', 'Sxse', 'Spse', 'Ocse', 'Nose', 
-    'St', 'Ust', 'Dst', 'Tst', 'Qast', 'Qist', 'Sxst', 'Spst', 'Ocst', 'Nost', 'Og', 'Uog', 'Dog', 'Tog', 'Qaog', 'Qiog', 'Sxog', 
-    'Spog', 'Ocog', 'Noog', 'Ng', 'Ung', 'Dng', 'Tng', 'Qang', 'Qing', 'Sxng', 'Spng', 'Ocng', 'Nonng', 'Ce', 'Uce', 'Dce', 'Tce', 
-    'Qace', 'Qice', 'Sxce', 'Spce', 'Occe', 'Noce', 'Dce', 'Udce', 'Ddce', 'Tdce', 'Qadce', 'Qidce', 'Sxdce', 'Spdce', 'Ocdce', 'Nodce'
-];
-
-const upgradeNames = [
-    'Blazing Fury', 'Ocean’s Whisper', 'Earthen Might', 'Aerial Grace', 'Radiant Surge', 'Shadow Veil', 'Void’s Embrace',
-    'Inferno Blast', 'Tidal Wave', 'Quake Strike', 'Zephyr Speed', 'Solar Flare', 'Dark Pulse', 'Abyssal Echo',
-    'Phoenix Ascend', 'Tempest Roar', 'Stone Guardian', 'Wind Dancer', 'Light Bringer', 'Night Stalker', 'Cosmic Reaver'
-];
-
 let fps = 60; // Default FPS value
 let lastFrameTime = 0;
 let gameLoop; // Variable to hold the game loop interval
+
+function activateAbility(element) {
+    if (!activeAbilities[element]) {
+        activeAbilities[element] = true;
+        let button = document.getElementById(`${element}-ability`);
+        button.disabled = true;
+        applyAbilityEffect(element);
+
+        // Start cooldown
+        setTimeout(() => {
+            activeAbilities[element] = false;
+            button.disabled = false;
+        }, abilityCooldowns[element] * 1000);
+    } else {
+        alert(`${element.charAt(0).toUpperCase() + element.slice(1)} Ability is on cooldown!`);
+    }
+}
+
+function applyAbilityEffect(element) {
+    switch (element) {
+        case 'fire':
+            eps.fire *= 2;
+            setTimeout(() => eps.fire /= 2, 30000);
+            break;
+        case 'water':
+            for (let el in resources) {
+                resources[el] *= 2;
+            }
+            setTimeout(() => {
+                for (let el in resources) {
+                    resources[el] /= 2;
+                }
+            }, 15000);
+            break;
+        case 'earth':
+            reduceAutomationCost(0.5);
+            setTimeout(() => resetAutomationCost(), 60000);
+            break;
+        case 'air':
+            speedUpProgressBars(2);
+            setTimeout(() => resetProgressBarSpeed(), 20000);
+            break;
+        case 'light':
+            prestigeMultiplier *= 1.5;
+            setTimeout(() => prestigeMultiplier /= 1.5, 60000);
+            break;
+        case 'dark':
+            resources.dark += 100;
+            break;
+        case 'void':
+            randomResourceGain(10, 100);
+            break;
+    }
+    updateDisplay();
+}
+
+function reduceAutomationCost(factor) {
+    // Implement cost reduction logic here
+}
+
+function resetAutomationCost() {
+    // Reset automation cost to original values
+}
+
+function speedUpProgressBars(factor) {
+    // Implement progress bar speed-up logic
+}
+
+function resetProgressBarSpeed() {
+    // Reset progress bars to normal speed
+}
+
+function randomResourceGain(min, max) {
+    for (let el in resources) {
+        resources[el] += Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+}
 
 function setFPS(newFPS) {
     fps = newFPS;
