@@ -301,10 +301,16 @@ function resetGame(includeEssence = false) {
     }
     money = 0;
     prestigeMultiplier = 1.00;
+    
+    // Clear upgrades array to delete prestige-generated upgrades
     upgrades = [];
+
     if (includeEssence) {
         essence = 0;
     }
+    
+    updateDisplay();
+    displayUpgrades(); // Make sure to update the display to reflect the cleared upgrades
 }
 
 function updateDisplay() {
