@@ -215,8 +215,15 @@ let prestigeMultiplier = 1.00; // Multiplier from prestige upgrades
 let permanentMultiplierBonus = 1.00; // Permanent multiplier bonus gained from each prestige
 let upgrades = []; // List of upgrades
 
-const prefixes = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'Ud', 'Dd', 'Td', 'Qad', 'Qid', 'Sxd', 'Spd', 'Ocd', 'Nod',
-    'Vg', 'Uvg', 'Dvg', 'Tvg', 'Qavg', 'Qivg', 'Sxvg', 'Spvg', 'Ocvg', 'Novg', 'Tr', 'Utr', 'Dtr', 'Ttr', 'Qatr', 'Qitr', 'Sxtr', 'Sptr', 'Octr', 'Notr'];
+const prefixes = [
+    '', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'Ud', 'Dd', 'Td', 'Qad', 'Qid', 'Sxd', 'Spd', 'Ocd', 'Nod', 
+    'Vg', 'Uvg', 'Dvg', 'Tvg', 'Qavg', 'Qivg', 'Sxvg', 'Spvg', 'Ocvg', 'Novg', 'Tr', 'Utr', 'Dtr', 'Ttr', 'Qatr', 'Qitr', 'Sxtr', 
+    'Sptr', 'Octr', 'Notr', 'Qt', 'Uqt', 'Dqt', 'Tqt', 'Qaqt', 'Qiqt', 'Sxqt', 'Spqt', 'Ocqt', 'Noqt', 'Qn', 'Uqn', 'Dqn', 'Tqn', 
+    'Qaqn', 'Qiqn', 'Sxqn', 'Spqn', 'Ocqn', 'Noqn', 'Se', 'Use', 'Dse', 'Tse', 'Qase', 'Qise', 'Sxse', 'Spse', 'Ocse', 'Nose', 
+    'St', 'Ust', 'Dst', 'Tst', 'Qast', 'Qist', 'Sxst', 'Spst', 'Ocst', 'Nost', 'Og', 'Uog', 'Dog', 'Tog', 'Qaog', 'Qiog', 'Sxog', 
+    'Spog', 'Ocog', 'Noog', 'Ng', 'Ung', 'Dng', 'Tng', 'Qang', 'Qing', 'Sxng', 'Spng', 'Ocng', 'Nonng', 'Ce', 'Uce', 'Dce', 'Tce', 
+    'Qace', 'Qice', 'Sxce', 'Spce', 'Occe', 'Noce', 'Dce', 'Udce', 'Ddce', 'Tdce', 'Qadce', 'Qidce', 'Sxdce', 'Spdce', 'Ocdce', 'Nodce'
+];
 
 const upgradeNames = [
     'Blazing Fury', 'Ocean’s Whisper', 'Earthen Might', 'Aerial Grace', 'Radiant Surge', 'Shadow Veil', 'Void’s Embrace',
