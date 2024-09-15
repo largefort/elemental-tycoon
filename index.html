@@ -181,6 +181,17 @@
     </div>
 
     <script>
+// Define prefixes for formatting large numbers
+const prefixes = [
+    '', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'Ud', 'Dd', 'Td', 'Qad', 'Qid', 'Sxd', 'Spd', 'Ocd', 'Nod', 
+    'Vg', 'Uvg', 'Dvg', 'Tvg', 'Qavg', 'Qivg', 'Sxvg', 'Spvg', 'Ocvg', 'Novg', 'Tr', 'Utr', 'Dtr', 'Ttr', 'Qatr', 'Qitr', 'Sxtr', 
+    'Sptr', 'Octr', 'Notr', 'Qt', 'Uqt', 'Dqt', 'Tqt', 'Qaqt', 'Qiqt', 'Sxqt', 'Spqt', 'Ocqt', 'Noqt', 'Qn', 'Uqn', 'Dqn', 'Tqn', 
+    'Qaqn', 'Qiqn', 'Sxqn', 'Spqn', 'Ocqn', 'Noqn', 'Se', 'Use', 'Dse', 'Tse', 'Qase', 'Qise', 'Sxse', 'Spse', 'Ocse', 'Nose', 
+    'St', 'Ust', 'Dst', 'Tst', 'Qast', 'Qist', 'Sxst', 'Spst', 'Ocst', 'Nost', 'Og', 'Uog', 'Dog', 'Tog', 'Qaog', 'Qiog', 'Sxog', 
+    'Spog', 'Ocog', 'Noog', 'Ng', 'Ung', 'Dng', 'Tng', 'Qang', 'Qing', 'Sxng', 'Spng', 'Ocng', 'Nonng', 'Ce', 'Uce', 'Dce', 'Tce', 
+    'Qace', 'Qice', 'Sxce', 'Spce', 'Occe', 'Noce', 'Dce', 'Udce', 'Ddce', 'Tdce', 'Qadce', 'Qidce', 'Sxdce', 'Spdce', 'Ocdce', 'Nodce'
+];
+
 // Define constants and state management
 const resources = {
     fire: 0,
@@ -264,6 +275,7 @@ let fps = 60; // Default FPS value
 let lastFrameTime = 0;
 let gameLoop; // Variable to hold the game loop interval
 
+// Elemental Abilities
 function activateAbility(element) {
     if (!activeAbilities[element]) {
         activeAbilities[element] = true;
@@ -284,41 +296,94 @@ function activateAbility(element) {
 function applyAbilityEffect(element) {
     switch (element) {
         case 'fire':
-            eps.fire *= 2;
-            setTimeout(() => eps.fire /= 2, 30000);
+            fireAbilityEffect();
             break;
         case 'water':
-            for (let el in resources) {
-                resources[el] *= 2;
-            }
-            setTimeout(() => {
-                for (let el in resources) {
-                    resources[el] /= 2;
-                }
-            }, 15000);
+            waterAbilityEffect();
             break;
         case 'earth':
-            reduceAutomationCost(0.5); // Reduce costs by 50%
-            setTimeout(() => resetAutomationCost(), 60000); // Reset after 60 seconds
+            earthAbilityEffect();
             break;
         case 'air':
-            speedUpProgressBars(2); // Speed up progress by 2x
-            setTimeout(() => resetProgressBarSpeed(), 20000); // Reset after 20 seconds
+            airAbilityEffect();
             break;
         case 'light':
-            prestigeMultiplier *= 1.5;
-            setTimeout(() => prestigeMultiplier /= 1.5, 60000);
+            lightAbilityEffect();
             break;
         case 'dark':
-            resources.dark += 100;
+            darkAbilityEffect();
             break;
         case 'void':
-            randomResourceGain(10, 100);
+            voidAbilityEffect();
             break;
     }
     updateDisplay();
 }
 
+// Fire Ability: Doubles Fire EPS for 30 seconds
+function fireAbilityEffect() {
+    eps.fire *= 2;
+    setTimeout(() => {
+        eps.fire /= 2;
+        updateDisplay();
+    }, 30000);
+}
+
+// Water Ability: Doubles all resources for 15 seconds
+function waterAbilityEffect() {
+    for (let el in resources) {
+        resources[el] *= 2;
+    }
+    updateDisplay();
+    setTimeout(() => {
+        for (let el in resources) {
+            resources[el] /= 2;
+        }
+        updateDisplay();
+    }, 15000);
+}
+
+// Earth Ability: Reduces automation costs by 50% for 60 seconds
+function earthAbilityEffect() {
+    reduceAutomationCost(0.5); // Reduce costs by 50%
+    setTimeout(() => {
+        resetAutomationCost(); // Reset after 60 seconds
+        updateDisplay();
+    }, 60000);
+}
+
+// Air Ability: Speeds up all progress bars by 2x for 20 seconds
+function airAbilityEffect() {
+    speedUpProgressBars(2); // Speed up progress by 2x
+    setTimeout(() => {
+        resetProgressBarSpeed(); // Reset after 20 seconds
+        updateDisplay();
+    }, 20000);
+}
+
+// Light Ability: Increases prestige multiplier by 1.5x for 60 seconds
+function lightAbilityEffect() {
+    prestigeMultiplier *= 1.5;
+    updateDisplay();
+    setTimeout(() => {
+        prestigeMultiplier /= 1.5;
+        updateDisplay();
+    }, 60000);
+}
+
+// Dark Ability: Instantly gains 100 Dark, with a cooldown of 120 seconds
+function darkAbilityEffect() {
+    resources.dark += 100;
+    updateDisplay();
+}
+
+// Void Ability: Randomly gain 10-100 of all resources, cooldown 180 seconds
+function voidAbilityEffect() {
+    randomResourceGain(10, 100);
+    updateDisplay();
+}
+
+// Utility Functions for Abilities
 function reduceAutomationCost(factor) {
     for (let element in automationCosts) {
         automationCosts[element] *= factor; // Reduce automation costs by the given factor
@@ -354,8 +419,10 @@ function randomResourceGain(min, max) {
     for (let el in resources) {
         resources[el] += Math.floor(Math.random() * (max - min + 1)) + min;
     }
+    updateDisplay();
 }
 
+// Game Loop Functions
 function setFPS(newFPS) {
     fps = newFPS;
     clearInterval(gameLoop); // Clear the existing loop
@@ -373,6 +440,7 @@ function startGameLoop() {
     }, 1000 / fps);
 }
 
+// Number Formatting Function
 function formatNumber(number) {
     if (number < 1000) return number.toFixed(2).replace(/\.00$/, '');
     let tier = Math.floor(Math.log10(number) / 3);
@@ -382,6 +450,7 @@ function formatNumber(number) {
     return scaled.toFixed(2) + suffix;
 }
 
+// Load and Save Functions
 function loadGame() {
     const savedData = JSON.parse(localStorage.getItem('elementalTycoon'));
     if (savedData) {
@@ -414,6 +483,7 @@ function saveGame() {
     }));
 }
 
+// Reset Game Functions
 function deleteProgress() {
     if (confirm("Are you sure you want to delete your progress? This action cannot be undone.")) {
         localStorage.removeItem('elementalTycoon');
@@ -444,6 +514,7 @@ function resetGame(includeEssence = false) {
     displayUpgrades(); // Make sure to update the display to reflect the cleared upgrades
 }
 
+// Update Display Functions
 function updateDisplay() {
     for (let element in resources) {
         const currentResourceText = document.getElementById(element).textContent;
@@ -502,6 +573,7 @@ function updateProgressBar(element) {
     }
 }
 
+// Marketing and Automation Functions
 function buyMarketing(element) {
     if (money >= 10) {
         money -= 10;
@@ -545,6 +617,7 @@ function startAutomation() {
     }
 }
 
+// Prestige System Functions
 function prestige() {
     if (money >= 100000) {
         const earnedEssence = Math.floor(money / 100000);
@@ -569,6 +642,7 @@ function prestige() {
     }
 }
 
+// Upgrades and Random Upgrade Generator
 function getRandomUpgradeName() {
     return upgradeNames[Math.floor(Math.random() * upgradeNames.length)];
 }
@@ -613,6 +687,7 @@ function buyUpgrade(index) {
     }
 }
 
+// Version Switching Function
 function switchVersion(version) {
     switch (version) {
         case 'live':
@@ -629,8 +704,10 @@ function switchVersion(version) {
     }
 }
 
-setInterval(saveGame, 10000); // Save game every 10 seconds
+// Save the game every 10 seconds
+setInterval(saveGame, 10000);
 
+// Initialize the game
 window.onload = () => {
     loadGame();
     generateRandomUpgrade();
