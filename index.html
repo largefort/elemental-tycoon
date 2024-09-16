@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="disable.css">
 </head>
-</script>
-</head>
 <body>
     <div id="game">
         <h1>Elemental Tycoon</h1>
@@ -36,80 +34,90 @@
 
         <!-- Element Resource Sections -->
         <div id="resources">
-            <!-- Existing Elements -->
+            <!-- Fire Resource -->
             <div class="resource" id="fire-resource">
                 <h2>Fire: <span id="fire">0</span></h2>
                 <div class="resource-buttons">
-                    <button onclick="gather('fire')">Gather Fire</button>
-                    <button onclick="buyAutomation('fire')">Automate Fire ($50)</button>
+                    <button onclick="gather('fire')" aria-label="Gather Fire">Gather Fire</button>
+                    <button onclick="buyAutomation('fire')" aria-label="Automate Fire ($50)">Automate Fire ($50)</button>
                 </div>
                 <div class="progress" id="fire-progress">
                     <div class="progress-bar"></div>
                     <span>0%</span>
                 </div>
             </div>
+
+            <!-- Water Resource -->
             <div class="resource" id="water-resource">
                 <h2>Water: <span id="water">0</span></h2>
                 <div class="resource-buttons">
-                    <button onclick="gather('water')">Gather Water</button>
-                    <button onclick="buyAutomation('water')">Automate Water ($50)</button>
+                    <button onclick="gather('water')" aria-label="Gather Water">Gather Water</button>
+                    <button onclick="buyAutomation('water')" aria-label="Automate Water ($50)">Automate Water ($50)</button>
                 </div>
                 <div class="progress" id="water-progress">
                     <div class="progress-bar"></div>
                     <span>0%</span>
                 </div>
             </div>
+
+            <!-- Earth Resource -->
             <div class="resource" id="earth-resource">
                 <h2>Earth: <span id="earth">0</span></h2>
                 <div class="resource-buttons">
-                    <button onclick="gather('earth')">Gather Earth</button>
-                    <button onclick="buyAutomation('earth')">Automate Earth ($50)</button>
+                    <button onclick="gather('earth')" aria-label="Gather Earth">Gather Earth</button>
+                    <button onclick="buyAutomation('earth')" aria-label="Automate Earth ($50)">Automate Earth ($50)</button>
                 </div>
                 <div class="progress" id="earth-progress">
                     <div class="progress-bar"></div>
                     <span>0%</span>
                 </div>
             </div>
+
+            <!-- Air Resource -->
             <div class="resource" id="air-resource">
                 <h2>Air: <span id="air">0</span></h2>
                 <div class="resource-buttons">
-                    <button onclick="gather('air')">Gather Air</button>
-                    <button onclick="buyAutomation('air')">Automate Air ($50)</button>
+                    <button onclick="gather('air')" aria-label="Gather Air">Gather Air</button>
+                    <button onclick="buyAutomation('air')" aria-label="Automate Air ($50)">Automate Air ($50)</button>
                 </div>
                 <div class="progress" id="air-progress">
                     <div class="progress-bar"></div>
                     <span>0%</span>
                 </div>
             </div>
-            
-            <!-- New Elements -->
+
+            <!-- Light Resource -->
             <div class="resource" id="light-resource">
                 <h2>Light: <span id="light">0</span></h2>
                 <div class="resource-buttons">
-                    <button onclick="gather('light')">Gather Light</button>
-                    <button onclick="buyAutomation('light')">Automate Light ($50)</button>
+                    <button onclick="gather('light')" aria-label="Gather Light">Gather Light</button>
+                    <button onclick="buyAutomation('light')" aria-label="Automate Light ($50)">Automate Light ($50)</button>
                 </div>
                 <div class="progress" id="light-progress">
                     <div class="progress-bar"></div>
                     <span>0%</span>
                 </div>
             </div>
+
+            <!-- Dark Resource -->
             <div class="resource" id="dark-resource">
                 <h2>Dark: <span id="dark">0</span></h2>
                 <div class="resource-buttons">
-                    <button onclick="gather('dark')">Gather Dark</button>
-                    <button onclick="buyAutomation('dark')">Automate Dark ($50)</button>
+                    <button onclick="gather('dark')" aria-label="Gather Dark">Gather Dark</button>
+                    <button onclick="buyAutomation('dark')" aria-label="Automate Dark ($50)">Automate Dark ($50)</button>
                 </div>
                 <div class="progress" id="dark-progress">
                     <div class="progress-bar"></div>
                     <span>0%</span>
                 </div>
             </div>
+
+            <!-- Void Resource -->
             <div class="resource" id="void-resource">
                 <h2>Void: <span id="void">0</span></h2>
                 <div class="resource-buttons">
-                    <button onclick="gather('void')">Gather Void</button>
-                    <button onclick="buyAutomation('void')">Automate Void ($50)</button>
+                    <button onclick="gather('void')" aria-label="Gather Void">Gather Void</button>
+                    <button onclick="buyAutomation('void')" aria-label="Automate Void ($50)">Automate Void ($50)</button>
                 </div>
                 <div class="progress" id="void-progress">
                     <div class="progress-bar"></div>
@@ -121,20 +129,19 @@
         <!-- Marketing Strategies Section -->
         <h2>Marketing Strategies</h2>
         <div id="marketing">
-            <button onclick="buyMarketing('fire')">Promote Fire ($10)</button>
-            <button onclick="buyMarketing('water')">Promote Water ($10)</button>
-            <button onclick="buyMarketing('earth')">Promote Earth ($10)</button>
-            <button onclick="buyMarketing('air')">Promote Air ($10)</button>
-            <!-- Marketing for New Elements -->
-            <button onclick="buyMarketing('light')">Promote Light ($10)</button>
-            <button onclick="buyMarketing('dark')">Promote Dark ($10)</button>
-            <button onclick="buyMarketing('void')">Promote Void ($10)</button>
+            <button onclick="buyMarketing('fire')" aria-label="Promote Fire ($10)">Promote Fire ($10)</button>
+            <button onclick="buyMarketing('water')" aria-label="Promote Water ($10)">Promote Water ($10)</button>
+            <button onclick="buyMarketing('earth')" aria-label="Promote Earth ($10)">Promote Earth ($10)</button>
+            <button onclick="buyMarketing('air')" aria-label="Promote Air ($10)">Promote Air ($10)</button>
+            <button onclick="buyMarketing('light')" aria-label="Promote Light ($10)">Promote Light ($10)</button>
+            <button onclick="buyMarketing('dark')" aria-label="Promote Dark ($10)">Promote Dark ($10)</button>
+            <button onclick="buyMarketing('void')" aria-label="Promote Void ($10)">Promote Void ($10)</button>
         </div>
 
         <!-- Prestige System Section -->
         <h2>Prestige System</h2>
         <div id="prestige">
-            <button onclick="prestige()">Prestige (Requires $100,000)</button>
+            <button onclick="prestige()" aria-label="Prestige (Requires $100,000)">Prestige (Requires $100,000)</button>
             <p>Prestige Multiplier: x<span id="prestige-multiplier">1</span></p>
         </div>
 
@@ -159,14 +166,14 @@
         <!-- Version Switching Section -->
         <h2>Version Switching</h2>
         <div id="version-switching">
-            <button onclick="switchVersion('live')">Switch to Live Version</button>
-            <button onclick="switchVersion('alpha')">Switch to Alpha Version</button>
-            <button onclick="switchVersion('beta')">Switch to Beta Version</button>
+            <button onclick="switchVersion('live')" aria-label="Switch to Live Version">Switch to Live Version</button>
+            <button onclick="switchVersion('alpha')" aria-label="Switch to Alpha Version">Switch to Alpha Version</button>
+            <button onclick="switchVersion('beta')" aria-label="Switch to Beta Version">Switch to Beta Version</button>
         </div>
 
         <!-- Delete Progress Button -->
         <div id="reset">
-            <button onclick="deleteProgress()">Delete Progress</button>
+            <button onclick="deleteProgress()" aria-label="Delete Progress">Delete Progress</button>
         </div>
     </div>
     <script src="script.js"></script>
