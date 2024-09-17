@@ -18,7 +18,7 @@
 body {
     font-family: 'Roboto', sans-serif;
     background-color: var(--background-color);
-    color: var(--text-color);
+    color: rgba(224, 224, 224, 0.9);
     margin: 0;
     padding: 0;
     display: flex;
@@ -52,7 +52,7 @@ body {
     transition: all 0.3s;
     animation: fadeIn 1s ease-in-out; /* Fade-in effect on load */
     position: relative; /* For glossy effect */
-    overflow: hidden; /* Prevent overflow */
+    overflow: auto; /* Ensure content stays within boundaries */
 }
 
 #game::before {
@@ -79,7 +79,7 @@ h1, h2, h3, h4 {
     margin: 15px 0;
     font-weight: 300;
     color: var(--heading-color); /* Brighter color for better contrast */
-    text-shadow: 2px 2px 5px var(--shadow-color); /* Text shadow for depth */
+    text-shadow: 2px 2px 6px var(--shadow-color); /* Softer text shadow for depth */
     position: relative; /* For z-index adjustments */
     z-index: 2; /* Above gloss effect */
 }
@@ -97,6 +97,7 @@ h1, h2, h3, h4 {
     box-shadow: 0 5px 15px var(--shadow-color);
     transition: transform 0.3s; /* Smooth transition */
     position: relative; /* For glossy effect */
+    overflow: hidden; /* Prevent overflow */
 }
 
 #money-container, #eps-container {
@@ -178,6 +179,7 @@ h1, h2, h3, h4 {
     background-position: center;
     animation: flicker 3s infinite; /* Fire flicker animation */
 }
+
 #water-resource {
     background-color: #64b5f6;
     background-image: url('water.gif'); /* Replace 'water.gif' with the path to your water GIF */
@@ -185,6 +187,7 @@ h1, h2, h3, h4 {
     background-position: center;
     animation: wave 5s infinite; /* Water wave animation */
 }
+
 #earth-resource {
     background-color: #a1887f;
     background-image: url('earth.gif'); /* Replace 'earth.gif' with the path to your earth GIF */
@@ -192,6 +195,7 @@ h1, h2, h3, h4 {
     background-position: center;
     animation: shake 4s infinite; /* Earth shake animation */
 }
+
 #air-resource {
     background-color: #cfd8dc;
     background-image: url('air.gif'); /* Replace 'air.gif' with the path to your air GIF */
@@ -200,6 +204,7 @@ h1, h2, h3, h4 {
     filter: brightness(0.85); /* Adjusted brightness for better visibility */
     animation: breeze 6s infinite; /* Air breeze animation */
 }
+
 #light-resource {
     background-color: #fff176;
     background-image: url('light.gif'); /* Replace 'light.gif' with the path to your light GIF */
@@ -207,6 +212,7 @@ h1, h2, h3, h4 {
     background-position: center;
     animation: glow 3s infinite; /* Light glow animation */
 }
+
 #dark-resource {
     background-color: #8d6e63;
     background-image: url('dark.gif'); /* Replace 'dark.gif' with the path to your dark GIF */
@@ -214,6 +220,7 @@ h1, h2, h3, h4 {
     background-position: center;
     animation: shadowPulse 5s infinite; /* Dark shadow pulse animation */
 }
+
 #void-resource {
     background-color: #7986cb;
     background-image: url('void.gif'); /* Replace 'void.gif' with the path to your void GIF */
