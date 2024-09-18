@@ -6,12 +6,12 @@
     --text-color: #e0e0e0;
     --heading-color: #ffffff;
     --card-bg-color: #2c2f38;
-    --shadow-color: rgba(0, 0, 0, 0.5);
+    --shadow-color: rgba(0, 0, 0, 0.3);
     --button-bg-gradient: linear-gradient(145deg, var(--primary-color), var(--secondary-color));
     --hover-bg-gradient: linear-gradient(145deg, var(--secondary-color), var(--primary-color));
     --focus-outline-color: rgba(255, 255, 255, 0.8);
-    --border-radius: 10px;
-    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    --border-radius: 12px;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Global Styles */
@@ -26,8 +26,8 @@ body {
     align-items: center;
     min-height: 100vh;
     box-sizing: border-box;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-    transition: background-color 0.5s; /* Smooth background transition */
+    overflow-x: hidden;
+    transition: background-color 0.5s ease;
 }
 
 /* Utility Classes */
@@ -45,14 +45,14 @@ body {
     padding: 2rem;
     border-radius: var(--border-radius);
     width: 90%;
-    max-width: 1200px; /* Constrain max width for large screens */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    max-width: 1200px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
     text-align: center;
-    margin: 20px auto; /* Centered and responsive */
+    margin: 20px auto;
     transition: all 0.3s;
-    animation: fadeIn 1s ease-in-out; /* Fade-in effect on load */
-    position: relative; /* For glossy effect */
-    overflow: auto; /* Ensure content stays within boundaries */
+    animation: fadeIn 1s ease-in-out;
+    position: relative;
+    overflow: hidden;
 }
 
 #game::before {
@@ -63,9 +63,9 @@ body {
     right: 0;
     bottom: 0;
     background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
-    pointer-events: none; /* Ensure it doesn't block interactions */
-    z-index: 1; /* Layer above the content for gloss */
-    mix-blend-mode: overlay; /* Glossy effect */
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: overlay;
 }
 
 /* Fade-in Animation */
@@ -78,10 +78,10 @@ body {
 h1, h2, h3, h4 {
     margin: 15px 0;
     font-weight: 300;
-    color: var(--heading-color); /* Brighter color for better contrast */
-    text-shadow: 2px 2px 6px var(--shadow-color); /* Softer text shadow for depth */
-    position: relative; /* For z-index adjustments */
-    z-index: 2; /* Above gloss effect */
+    color: var(--heading-color);
+    text-shadow: 2px 2px 6px var(--shadow-color);
+    position: relative;
+    z-index: 2;
 }
 
 /* Stats and EPS Section */
@@ -91,13 +91,13 @@ h1, h2, h3, h4 {
     background-color: #373b47;
     border-radius: var(--border-radius);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
     align-items: center;
     box-shadow: 0 5px 15px var(--shadow-color);
-    transition: transform 0.3s; /* Smooth transition */
-    position: relative; /* For glossy effect */
-    overflow: hidden; /* Prevent overflow */
+    transition: transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 #money-container, #eps-container {
@@ -110,36 +110,35 @@ h1, h2, h3, h4 {
     background-color: #4a4f5e;
     border-radius: var(--border-radius);
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-    position: relative; /* For gloss */
-    overflow: hidden; /* Hide gloss overflow */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 #eps:hover {
-    transform: scale(1.05); /* Subtle zoom effect */
-    background-color: #5b6172; /* Slight color change */
+    transform: scale(1.05);
+    background-color: #5b6172;
 }
 
-/* Element Section Styles */
+/* Resource Elements */
 .resource {
-    margin-bottom: 2rem;
     padding: 1.5rem;
     border-radius: var(--border-radius);
     box-sizing: border-box;
     text-align: center;
     box-shadow: 0 5px 15px var(--shadow-color);
-    transition: transform 0.2s, background-color 0.3s;
-    width: 100%; /* Take full width in a flex container */
-    max-width: 300px; /* Constrain width for better balance */
-    margin: 0 auto; /* Center the element */
-    position: relative; /* For positioning animated effects */
-    overflow: hidden; /* Hide overflow for visual effects */
-    z-index: 1; /* Ensure layering */
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
 }
 
 .resource:hover {
-    transform: translateY(-5px) scale(1.02); /* Enhanced hover effect */
-    background-color: rgba(255, 255, 255, 0.1); /* Lighten background on hover */
+    transform: translateY(-3px) scale(1.02);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .resource::before {
@@ -150,8 +149,8 @@ h1, h2, h3, h4 {
     right: 0;
     bottom: 0;
     background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
-    z-index: 2; /* Gloss effect */
-    pointer-events: none; /* Ensure it doesn't block interactions */
+    z-index: 2;
+    pointer-events: none;
 }
 
 .resource-buttons {
@@ -159,7 +158,7 @@ h1, h2, h3, h4 {
     display: flex;
     justify-content: center;
     gap: 10px;
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    flex-wrap: wrap;
 }
 
 /* Elements Container to Align Elements in Rows */
@@ -174,59 +173,59 @@ h1, h2, h3, h4 {
 /* Element Colors and Animated Backgrounds */
 #fire-resource {
     background-color: #e57373;
-    background-image: url('fire.gif'); /* Replace 'fire.gif' with the path to your fire GIF */
+    background-image: url('fire.gif');
     background-size: cover;
     background-position: center;
-    animation: flicker 3s infinite; /* Fire flicker animation */
+    animation: flicker 3s infinite;
 }
 
 #water-resource {
     background-color: #64b5f6;
-    background-image: url('water.gif'); /* Replace 'water.gif' with the path to your water GIF */
+    background-image: url('water.gif');
     background-size: cover;
     background-position: center;
-    animation: wave 5s infinite; /* Water wave animation */
+    animation: wave 5s infinite;
 }
 
 #earth-resource {
     background-color: #a1887f;
-    background-image: url('earth.gif'); /* Replace 'earth.gif' with the path to your earth GIF */
+    background-image: url('earth.gif');
     background-size: cover;
     background-position: center;
-    animation: shake 4s infinite; /* Earth shake animation */
+    animation: shake 4s infinite;
 }
 
 #air-resource {
     background-color: #cfd8dc;
-    background-image: url('air.gif'); /* Replace 'air.gif' with the path to your air GIF */
+    background-image: url('air.gif');
     background-size: cover;
     background-position: center;
-    filter: brightness(0.85); /* Adjusted brightness for better visibility */
-    animation: breeze 6s infinite; /* Air breeze animation */
+    filter: brightness(0.85);
+    animation: breeze 6s infinite;
 }
 
 #light-resource {
     background-color: #fff176;
-    background-image: url('light.gif'); /* Replace 'light.gif' with the path to your light GIF */
+    background-image: url('light.gif');
     background-size: cover;
     background-position: center;
-    animation: glow 3s infinite; /* Light glow animation */
+    animation: glow 3s infinite;
 }
 
 #dark-resource {
     background-color: #8d6e63;
-    background-image: url('dark.gif'); /* Replace 'dark.gif' with the path to your dark GIF */
+    background-image: url('dark.gif');
     background-size: cover;
     background-position: center;
-    animation: shadowPulse 5s infinite; /* Dark shadow pulse animation */
+    animation: shadowPulse 5s infinite;
 }
 
 #void-resource {
     background-color: #7986cb;
-    background-image: url('void.gif'); /* Replace 'void.gif' with the path to your void GIF */
+    background-image: url('void.gif');
     background-size: cover;
     background-position: center;
-    animation: voidSwirl 7s infinite; /* Void swirl animation */
+    animation: voidSwirl 7s infinite;
 }
 
 /* Animated Effects */
@@ -268,26 +267,22 @@ h1, h2, h3, h4 {
 /* Progress Bar Styles */
 .progress {
     width: 100%;
-    height: 1.25rem; /* Reduced height for sleeker design */
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)); /* Glossy background */
-    margin-top: 1rem;
+    height: 1.25rem;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
     border-radius: var(--border-radius);
-    overflow: hidden;
+    margin-top: 1rem;
     position: relative;
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 1rem;
-    box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.15); /* Outer shadow for depth */
-    z-index: 2; /* Ensure it is above the animated backgrounds */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Light border for definition */
-    backdrop-filter: blur(5px); /* Gloss effect */
-    transition: background 0.5s, box-shadow 0.5s; /* Smooth transition */
+    box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: background 0.5s ease;
 }
 
 .progress:hover {
-    box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.2); /* Enhanced hover shadow */
+    box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .progress .progress-bar {
@@ -297,29 +292,20 @@ h1, h2, h3, h4 {
     left: 0;
     top: 0;
     transition: width 0.4s ease-in-out;
-    z-index: 3; /* Ensure it is above the animated backgrounds */
+    z-index: 3;
     border-radius: var(--border-radius);
-    background: linear-gradient(90deg, #ff8a65, #ff7043); /* Gradient effect for modern look */
+    background: linear-gradient(90deg, #ff8a65, #ff7043);
 }
-
-/* Progress Bar Colors */
-#fire-resource .progress .progress-bar { background: linear-gradient(90deg, #ff8a65, #ef5350); }
-#water-resource .progress .progress-bar { background: linear-gradient(90deg, #90caf9, #42a5f5); }
-#earth-resource .progress .progress-bar { background: linear-gradient(90deg, #bcaaa4, #8d6e63); }
-#air-resource .progress .progress-bar { background: linear-gradient(90deg, #e1f5fe, #b3e5fc); }
-#light-resource .progress .progress-bar { background: linear-gradient(90deg, #fff59d, #ffeb3b); }
-#dark-resource .progress .progress-bar { background: linear-gradient(90deg, #a1887f, #5d4037); }
-#void-resource .progress .progress-bar { background: linear-gradient(90deg, #9fa8da, #7986cb); }
 
 .progress span {
     z-index: 4;
     font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow for visibility */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* Redesigned Button Styles */
+/* Button Styles */
 button {
-    padding: 0.6rem 1rem; /* Reduced padding for more compact buttons */
+    padding: 0.6rem 1rem;
     background: var(--button-bg-gradient);
     border: none;
     border-radius: var(--border-radius);
@@ -328,9 +314,9 @@ button {
     font-size: 14px;
     font-weight: 500;
     box-shadow: var(--box-shadow);
-    transition: background 0.3s, transform 0.2s;
-    z-index: 5; /* Ensure buttons are above animations */
-    outline: none; /* Remove default outline */
+    transition: background 0.3s ease, transform 0.2s ease;
+    z-index: 5;
+    outline: none;
 }
 
 button:hover {
