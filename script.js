@@ -47,7 +47,8 @@ const prefixes = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'D
     'Vg', 'Uvg', 'Dvg', 'Tvg', 'Qavg', 'Qivg', 'Sxvg', 'Spvg', 'Ocvg', 'Novg', 'Tr', 'Utr', 'Dtr', 'Ttr', 'Qatr', 'Qitr', 'Sxtr', 'Sptr', 'Octr', 'Notr',
     'Qdr', 'Qidr', 'Sxdr', 'Spdr', 'Ocdr', 'Nodr', 'Ctr', 'Uctr', 'Dctr', 'Tctr', 'Qactr', 'Jafet',
     'Ujaf', 'Djaf', 'Tjaf', 'Qajaf', 'Qijaf', 'Sxjaf', 'Spjaf', 'Ocjaf', 'Nojaf', 'Tjaftr', 
-    'Ujaftr', 'Djaftr', 'Qajaftr', 'Qijaftr', 'Sxjaftr', 'Spjaftr', 'Ocjaftr', 'Nojaftr', 'Cent', 'Ucent', 'Dcent', 'Tcent', 'Qacent'];
+    'Ujaftr', 'Djaftr', 'Qajaftr', 'Qijaftr', 'Sxjaftr', 'Spjaftr', 'Ocjaftr', 'Nojaftr', 'Cent', 'Ucent', 'Dcent', 'Tcent', 'Qacent',
+    'Jafet+', 'JafetX', 'MegaJafet', 'UltraJafet', 'GigaJafet', 'TerraJafet', 'Jafillion', 'Jaftrillion', 'Jafillion+', 'HyperJafet'];
 
 const upgradeNames = [
     'Blazing Fury', 'Ocean’s Whisper', 'Earthen Might', 'Aerial Grace', 'Radiant Surge', 'Shadow Veil', 'Void’s Embrace',
