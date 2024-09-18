@@ -308,8 +308,8 @@ function switchVersion(version) {
         case 'alpha':
             window.location.href = 'index_alpha.html';
             break;
-        case 'beta':
-            window.location.href = 'index_beta.html';
+        case 'mobile':
+            window.location.href = 'index_mobile.html';
             break;
         default:
             alert('Version not recognized.');
