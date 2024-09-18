@@ -1,0 +1,462 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #1f1f2e;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align content to the top */
+    min-height: 100vh;
+    box-sizing: border-box;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    -webkit-touch-callout: none; /* Prevent text selection on touch */
+    -webkit-user-select: none; /* Prevent text selection on touch */
+    user-select: none; /* Cross-browser support */
+    padding: 0 0 60px; /* Padding at the bottom for nav bar */
+}
+
+/* Main Game Container */
+#game {
+    width: 100%;
+    max-width: 500px; /* Constrain width for readability */
+    text-align: center;
+    margin: 20px auto; /* Center and add vertical spacing */
+    padding-bottom: 60px; /* Space for bottom nav */
+    box-sizing: border-box;
+}
+
+/* Game Title */
+header {
+    margin: 20px 0;
+    color: #e0e0e0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Home Stats Position */
+#home-stats {
+    text-align: center;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #373b47;
+    border-radius: 12px;
+    width: 90%; /* Constrain width for better focus */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Space between counters */
+}
+
+/* Element Resource Section */
+.resource {
+    margin: 15px auto; /* Add spacing between elements */
+    padding: 18px; /* Generous padding for content */
+    border-radius: 12px; /* Consistent rounding */
+    box-sizing: border-box;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* Stronger shadow for depth */
+    transition: transform 0.2s, background-color 0.3s;
+    width: 90%; /* Full width for responsiveness */
+    max-width: 300px; /* Constrained width for better layout */
+    overflow: hidden;
+    touch-action: manipulation;
+}
+
+.resource:hover {
+    transform: translateY(-3px); /* Enhanced hover effect */
+    background-color: #444957; /* Subtle color change */
+}
+
+/* Element Colors and Animated Backgrounds */
+#fire-resource {
+    background-color: #e57373;
+    background-image: url('fire.gif'); /* Replace 'fire.gif' with the path to your fire GIF */
+    background-size: cover;
+    background-position: center;
+    animation: flicker 3s infinite; /* Fire flicker animation */
+}
+#water-resource {
+    background-color: #64b5f6;
+    background-image: url('water.gif'); /* Replace 'water.gif' with the path to your water GIF */
+    background-size: cover;
+    background-position: center;
+    animation: wave 5s infinite; /* Water wave animation */
+}
+#earth-resource {
+    background-color: #a1887f;
+    background-image: url('earth.gif'); /* Replace 'earth.gif' with the path to your earth GIF */
+    background-size: cover;
+    background-position: center;
+    animation: shake 4s infinite; /* Earth shake animation */
+}
+#air-resource {
+    background-color: #cfd8dc;
+    background-image: url('air.gif'); /* Replace 'air.gif' with the path to your air GIF */
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.85); /* Adjusted brightness for better visibility */
+    animation: breeze 6s infinite; /* Air breeze animation */
+}
+#light-resource {
+    background-color: #fff176;
+    background-image: url('light.gif'); /* Replace 'light.gif' with the path to your light GIF */
+    background-size: cover;
+    background-position: center;
+    animation: glow 3s infinite; /* Light glow animation */
+}
+#dark-resource {
+    background-color: #8d6e63;
+    background-image: url('dark.gif'); /* Replace 'dark.gif' with the path to your dark GIF */
+    background-size: cover;
+    background-position: center;
+    animation: shadowPulse 5s infinite; /* Dark shadow pulse animation */
+}
+#void-resource {
+    background-color: #7986cb;
+    background-image: url('void.gif'); /* Replace 'void.gif' with the path to your void GIF */
+    background-size: cover;
+    background-position: center;
+    animation: voidSwirl 7s infinite; /* Void swirl animation */
+}
+
+/* Animated Effects */
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes wave {
+    0% { background-position: left; }
+    100% { background-position: right; }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-2px); }
+}
+
+@keyframes breeze {
+    0% { background-position: top; }
+    100% { background-position: bottom; }
+}
+
+@keyframes glow {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+@keyframes shadowPulse {
+    0%, 100% { box-shadow: inset 0 0 10px #000000; }
+    50% { box-shadow: inset 0 0 20px #000000; }
+}
+
+@keyframes voidSwirl {
+    0% { background-position: 0 0; }
+    100% { background-position: 100% 100%; }
+}
+
+/* Resource Button Styles */
+.resource-buttons {
+    margin-top: 12px; /* Added margin for spacing */
+    display: flex;
+    justify-content: center;
+    gap: 12px; /* Increased gap for better spacing */
+    flex-wrap: wrap;
+    width: 100%; /* Ensure full width for consistency */
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+/* Progress Bar Styles with Element Colors */
+#fire-resource .progress .progress-bar {
+    background-color: #f44336; /* Fire red */
+}
+
+#water-resource .progress .progress-bar {
+    background-color: #2196f3; /* Water blue */
+}
+
+#earth-resource .progress .progress-bar {
+    background-color: #8d6e63; /* Earth brown */
+}
+
+#air-resource .progress .progress-bar {
+    background-color: #cfd8dc; /* Air light gray */
+}
+
+#light-resource .progress .progress-bar {
+    background-color: #ffeb3b; /* Light yellow */
+}
+
+#dark-resource .progress .progress-bar {
+    background-color: #5d4037; /* Dark brown */
+}
+
+#void-resource .progress .progress-bar {
+    background-color: #3f51b5; /* Void purple */
+}
+
+.progress {
+    width: 100%;
+    height: 16px; /* Slightly taller for better visibility */
+    background-color: rgba(0, 0, 0, 0.3);
+    margin-top: 10px; /* Added margin for spacing */
+    border-radius: 10px; /* Consistent rounding */
+    overflow: hidden;
+    position: relative; /* Changed to relative to position child elements */
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px; /* Added margin for spacing */
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3); /* Stronger inset shadow */
+    z-index: 2;
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.progress .progress-bar {
+    width: 0;
+    height: 100%;
+    position: absolute; /* Absolute positioning to stay within parent */
+    left: 0;
+    top: 0;
+    transition: width 0.3s ease-in-out;
+    z-index: 1; /* Ensure the progress bar is below the percentage text */
+    border-radius: 10px; /* Consistent rounding */
+}
+
+/* Percentage Text within Progress Bar */
+.progress span {
+    z-index: 2; /* Ensure percentage is above the progress bar */
+    font-weight: bold;
+    position: relative; /* Position relative to stay within the progress container */
+}
+
+/* Redesigned Button Styles */
+button {
+    padding: 12px 20px; /* Increased padding for better tap targets */
+    background: linear-gradient(145deg, #42a5f5, #1e88e5);
+    border: none;
+    border-radius: 8px; /* Increased radius for better touch feel */
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 16px; /* Slightly larger font size */
+    font-weight: 600; /* Bolder text */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+    transition: background 0.3s, transform 0.2s;
+    z-index: 5;
+    margin-bottom: 12px; /* Added margin for spacing */
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+button:hover {
+    background: linear-gradient(145deg, #1e88e5, #42a5f5);
+    transform: translateY(-3px); /* More pronounced hover effect */
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+/* Marketing, Prestige, and Version Switching Section Styles */
+#marketing, #prestige, #version-switching {
+    margin-top: 20px; /* Increased margin */
+    padding: 18px; /* Increased padding */
+    background-color: #373b47;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Increased gap for better spacing */
+    flex-wrap: wrap;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* Stronger shadow */
+    width: 90%; /* Full width */
+    margin: 0 auto; /* Center the content */
+    box-sizing: border-box; /* Box-sizing for padding and margin adjustments */
+}
+
+/* Specific Button Styles for Marketing */
+#marketing button {
+    margin: 8px 4px; /* Compact margin */
+    background: linear-gradient(145deg, #ff8a65, #ff7043);
+    padding: 10px 16px; /* Adjusted padding for mobile */
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+/* Bottom Navigation Bar */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #2c2f38;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    color: #e0e0e0;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 10px 15px;
+    transition: color 0.3s;
+}
+
+.nav-button.active {
+    color: #42a5f5;
+    font-weight: bold;
+}
+
+.nav-button:hover {
+    color: #42a5f5;
+}
+
+/* Tab Content */
+.tab-container {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 60px); /* Full height minus bottom nav */
+    overflow: hidden; /* Prevent content overflow */
+}
+
+.tab-content {
+    display: none; /* Hide all tabs by default */
+    padding-bottom: 60px; /* Space for bottom nav */
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Show the active tab */
+.tab-content.active {
+    display: block;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Slide in from the right */
+.tab-content.slide-in-right {
+    transform: translateX(100%);
+}
+
+/* Slide in from the left */
+.tab-content.slide-in-left {
+    transform: translateX(-100%);
+}
+
+/* Slide out to the right */
+.tab-content.slide-out-right {
+    transform: translateX(100%);
+}
+
+/* Slide out to the left */
+.tab-content.slide-out-left {
+    transform: translateX(-100%);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 480px) {
+    #game {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+        margin: 15px 0;
+    }
+
+    button {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+
+    #home-stats, .resource {
+        padding: 10px;
+        border-radius: 10px;
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 480px) {
+    /* Further adjustments for smaller screens */
+    #game {
+        padding: 10px; /* Reduced padding for small screens */
+    }
+
+    h1 {
+        font-size: 1.5em; /* Adjusted for small screens */
+        margin: 15px 0; /* Adjusted margin */
+    }
+
+    button {
+        padding: 10px 14px; /* Reduced padding for better fit */
+        font-size: 14px; /* Adjusted font size */
+    }
+
+    #home-stats, .resource {
+        padding: 10px; /* Reduced padding for smaller screens */
+        border-radius: 10px; /* Consistent with reduced overall radius */
+    }
+}
+
+/* Offline Progress Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
+    z-index: 20; /* Sit on top */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.modal-content {
+    background-color: #2c2f38;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    color: #e0e0e0;
+}
+
+.modal-content p {
+    color: #ffffff;
+    margin: 15px 0;
+}
+
+.modal-content button {
+    padding: 10px 20px;
+    background: linear-gradient(145deg, #42a5f5, #1e88e5);
+    border: none;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content button:hover {
+    background: linear-gradient(145deg, #1e88e5, #42a5f5);
+    transform: translateY(-3px);
+}
