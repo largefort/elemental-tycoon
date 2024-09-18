@@ -44,7 +44,10 @@ let prestigeMultiplier = 1.00; // Multiplier from prestige upgrades
 let upgrades = []; // List of upgrades
 
 const prefixes = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'Ud', 'Dd', 'Td', 'Qad', 'Qid', 'Sxd', 'Spd', 'Ocd', 'Nod',
-    'Vg', 'Uvg', 'Dvg', 'Tvg', 'Qavg', 'Qivg', 'Sxvg', 'Spvg', 'Ocvg', 'Novg', 'Tr', 'Utr', 'Dtr', 'Ttr', 'Qatr', 'Qitr', 'Sxtr', 'Sptr', 'Octr', 'Notr'];
+    'Vg', 'Uvg', 'Dvg', 'Tvg', 'Qavg', 'Qivg', 'Sxvg', 'Spvg', 'Ocvg', 'Novg', 'Tr', 'Utr', 'Dtr', 'Ttr', 'Qatr', 'Qitr', 'Sxtr', 'Sptr', 'Octr', 'Notr',
+    'Qdr', 'Qidr', 'Sxdr', 'Spdr', 'Ocdr', 'Nodr', 'Ctr', 'Uctr', 'Dctr', 'Tctr', 'Qactr', 'Jafet',
+    'Ujaf', 'Djaf', 'Tjaf', 'Qajaf', 'Qijaf', 'Sxjaf', 'Spjaf', 'Ocjaf', 'Nojaf', 'Tjaftr', 
+    'Ujaftr', 'Djaftr', 'Qajaftr', 'Qijaftr', 'Sxjaftr', 'Spjaftr', 'Ocjaftr', 'Nojaftr', 'Cent', 'Ucent', 'Dcent', 'Tcent', 'Qacent'];
 
 const upgradeNames = [
     'Blazing Fury', 'Ocean’s Whisper', 'Earthen Might', 'Aerial Grace', 'Radiant Surge', 'Shadow Veil', 'Void’s Embrace',
@@ -74,12 +77,22 @@ function startGameLoop() {
 }
 
 function formatNumber(number) {
-    if (number < 1000) return number.toFixed(2).replace(/\.00$/, '');
+    if (number < 1000) {
+        // No decimals for small numbers
+        return Math.floor(number);
+    }
+
     let tier = Math.floor(Math.log10(number) / 3);
     let suffix = prefixes[tier] || `e${tier * 3}`;
     let scale = Math.pow(10, tier * 3);
     let scaled = number / scale;
-    return scaled.toFixed(2) + suffix;
+
+    // If scaled number is an integer, don't show decimals
+    if (scaled % 1 === 0) {
+        return Math.floor(scaled) + suffix;
+    } else {
+        return scaled.toFixed(2) + suffix; // Two decimal places for larger numbers
+    }
 }
 
 function loadGame() {
@@ -194,9 +207,9 @@ function updateProgressBar(element) {
     const progressBar = document.querySelector(`#${element}-progress .progress-bar`);
     const progressText = document.querySelector(`#${element}-progress span`);
     if (progressBar && progressText) {
-        const progress = ((resources[element] % 100)).toFixed(2);
+        const progress = (resources[element] % 100);
         progressBar.style.width = `${progress}%`;
-        progressText.textContent = `${progress}%`;
+        progressText.textContent = `${Math.floor(progress)}%`; // Removed decimals for percentage
     }
 }
 
@@ -247,9 +260,14 @@ function prestige() {
     if (money >= 100000) {
         const earnedEssence = Math.floor(money / 100000);
         essence += earnedEssence;
-        alert(`Prestiged! You earned ${formatNumber(earnedEssence)} Essence.`);
-        resetGame();
-        generateRandomUpgrade();
+
+        // Increase the base prestige multiplier based on the earned essence
+        basePrestigeMultiplier += earnedEssence * 0.05; // Adjust the factor (0.05) to control the rate of multiplier growth
+
+        alert(`Prestiged! You earned ${earnedEssence} Essence. Your new prestige multiplier is ${basePrestigeMultiplier.toFixed(2)}x.`);
+
+        resetGame(); // Reset the game but keep the essence and updated prestige multiplier
+        generateRandomUpgrade(); // Generate a new upgrade after each prestige
         updateDisplay();
     } else {
         alert("You need $100,000 to prestige!");
