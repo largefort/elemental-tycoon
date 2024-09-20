@@ -1,0 +1,8 @@
+  top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 60px); /* Full height minus nav */
+    opacity: 0;
+    transform: translateX(100%); /* Start off-screen */
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}

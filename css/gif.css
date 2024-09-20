@@ -1,0 +1,87 @@
+/* Element Colors and Animated Backgrounds */
+#fire-resource {
+    background-color: #e57373;
+    background-image: url('fire.gif'); /* Replace 'fire.gif' with the path to your fire GIF */
+    background-size: cover;
+    background-position: center;
+    animation: flicker 3s infinite; /* Fire flicker animation */
+}
+#water-resource {
+    background-color: #64b5f6;
+    background-image: url('water.gif'); /* Replace 'water.gif' with the path to your water GIF */
+    background-size: cover;
+    background-position: center;
+    animation: wave 5s infinite; /* Water wave animation */
+}
+#earth-resource {
+    background-color: #a1887f;
+    background-image: url('earth.gif'); /* Replace 'earth.gif' with the path to your earth GIF */
+    background-size: cover;
+    background-position: center;
+    animation: shake 4s infinite; /* Earth shake animation */
+}
+#air-resource {
+    background-color: #cfd8dc;
+    background-image: url('air.gif'); /* Replace 'air.gif' with the path to your air GIF */
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.85); /* Adjusted brightness for better visibility */
+    animation: breeze 6s infinite; /* Air breeze animation */
+}
+#light-resource {
+    background-color: #fff176;
+    background-image: url('light.gif'); /* Replace 'light.gif' with the path to your light GIF */
+    background-size: cover;
+    background-position: center;
+    animation: glow 3s infinite; /* Light glow animation */
+}
+#dark-resource {
+    background-color: #8d6e63;
+    background-image: url('dark.gif'); /* Replace 'dark.gif' with the path to your dark GIF */
+    background-size: cover;
+    background-position: center;
+    animation: shadowPulse 5s infinite; /* Dark shadow pulse animation */
+}
+#void-resource {
+    background-color: #7986cb;
+    background-image: url('void.gif'); /* Replace 'void.gif' with the path to your void GIF */
+    background-size: cover;
+    background-position: center;
+    animation: voidSwirl 7s infinite; /* Void swirl animation */
+}
+
+/* Animated Effects */
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes wave {
+    0% { background-position: left; }
+    100% { background-position: right; }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-2px); }
+}
+
+@keyframes breeze {
+    0% { background-position: top; }
+    100% { background-position: bottom; }
+}
+
+@keyframes glow {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+@keyframes shadowPulse {
+    0%, 100% { box-shadow: inset 0 0 10px #000000; }
+    50% { box-shadow: inset 0 0 20px #000000; }
+}
+
+@keyframes voidSwirl {
+    0% { background-position: 0 0; }
+    100% { background-position: 100% 100%; }
+}

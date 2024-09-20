@@ -1,0 +1,64 @@
+/* Progress Bar Styles with Element Colors */
+#fire-resource .progress .progress-bar {
+    background-color: #f44336; /* Fire red */
+}
+
+#water-resource .progress .progress-bar {
+    background-color: #2196f3; /* Water blue */
+}
+
+#earth-resource .progress .progress-bar {
+    background-color: #8d6e63; /* Earth brown */
+}
+
+#air-resource .progress .progress-bar {
+    background-color: #cfd8dc; /* Air light gray */
+}
+
+#light-resource .progress .progress-bar {
+    background-color: #ffeb3b; /* Light yellow */
+}
+
+#dark-resource .progress .progress-bar {
+    background-color: #5d4037; /* Dark brown */
+}
+
+#void-resource .progress .progress-bar {
+    background-color: #3f51b5; /* Void purple */
+}
+
+.progress {
+    width: 100%;
+    height: 16px; /* Slightly taller for better visibility */
+    background-color: rgba(0, 0, 0, 0.3);
+    margin-top: 10px; /* Added margin for spacing */
+    border-radius: 10px; /* Consistent rounding */
+    overflow: hidden;
+    position: relative; /* Changed to relative to position child elements */
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px; /* Added margin for spacing */
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3); /* Stronger inset shadow */
+    z-index: 2;
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.progress .progress-bar {
+    width: 0;
+    height: 100%;
+    position: absolute; /* Absolute positioning to stay within parent */
+    left: 0;
+    top: 0;
+    transition: width 0.3s ease-in-out;
+    z-index: 1; /* Ensure the progress bar is below the percentage text */
+    border-radius: 10px; /* Consistent rounding */
+}
+
+/* Percentage Text within Progress Bar */
+.progress span {
+    z-index: 2; /* Ensure percentage is above the progress bar */
+    font-weight: bold;
+    position: relative; /* Position relative to stay within the progress container */
+}
