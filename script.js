@@ -261,14 +261,9 @@ function prestige() {
     if (money >= 100000) {
         const earnedEssence = Math.floor(money / 100000);
         essence += earnedEssence;
-
-        // Increase the base prestige multiplier based on the earned essence
-        basePrestigeMultiplier += earnedEssence * 0.05; // Adjust the factor (0.05) to control the rate of multiplier growth
-
-        alert(`Prestiged! You earned ${earnedEssence} Essence. Your new prestige multiplier is ${basePrestigeMultiplier.toFixed(2)}x.`);
-
-        resetGame(); // Reset the game but keep the essence and updated prestige multiplier
-        generateRandomUpgrade(); // Generate a new upgrade after each prestige
+        alert(`Prestiged! You earned ${formatNumber(earnedEssence)} Essence.`);
+        resetGame();
+        generateRandomUpgrade();
         updateDisplay();
     } else {
         alert("You need $100,000 to prestige!");
