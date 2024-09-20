@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Elemental Tycoon</title>
     <link rel="stylesheet" href="mobile.css">
+    <link rel="stylesheet" href="css/offlinemodal.css">
+    <link rel="stylesheet" href="css/progressstyles.css">
 </head>
 <body>
 <div id="game">
@@ -86,13 +88,20 @@
     <section id="marketing-tab" class="tab-content">
         <h2>Marketing Strategies</h2>
         <div id="marketing">
-            <button onclick="buyMarketing('fire')">Promote Fire ($10)</button> <button onclick="buyMarketing('water')">Promote Water ($10)</button> <button onclick="buyMarketing('earth')">Promote Earth ($10)</button> <button onclick="buyMarketing('air')">Promote Air ($10)</button> <button onclick="buyMarketing('light')">Promote Light ($10)</button> <button onclick="buyMarketing('dark')">Promote Dark ($10)</button> <button onclick="buyMarketing('void')">Promote Void ($10)</button>
+            <button onclick="buyMarketing('fire')" aria-label="Promote Fire ($10)">Promote Fire ($10)</button>
+            <button onclick="buyMarketing('water')" aria-label="Promote Water ($10)">Promote Water ($10)</button>
+            <button onclick="buyMarketing('earth')" aria-label="Promote Earth ($10)">Promote Earth ($10)</button>
+            <button onclick="buyMarketing('air')" aria-label="Promote Air ($10)">Promote Air ($10)</button>
+            <button onclick="buyMarketing('light')" aria-label="Promote Light ($10)">Promote Light ($10)</button>
+            <button onclick="buyMarketing('dark')" aria-label="Promote Dark ($10)">Promote Dark ($10)</button>
+            <button onclick="buyMarketing('void')" aria-label="Promote Void ($10)">Promote Void ($10)</button>
         </div>
     </section>
     <section id="upgrades-tab" class="tab-content">
         <h2>Prestige System</h2>
         <div id="prestige">
             <button onclick="prestige()">Prestige (Requires $100,000)</button>
+            <button onclick="deleteProgress()" aria-label="Delete Progress">Delete Progress</button>
             <p>Prestige Multiplier: x<span id="prestige-multiplier">1</span></p>
         </div>
         <h2>Prestige Upgrades</h2>
@@ -105,6 +114,7 @@
     <nav class="bottom-nav">
         <button class="nav-button active" onclick="switchTab('home')">Home</button> <button class="nav-button" onclick="switchTab('marketing-tab')">Marketing</button> <button class="nav-button" onclick="switchTab('upgrades-tab')">Upgrades</button>
     </nav>
+
     <div id="offline-modal" class="modal">
         <div class="modal-content">
             <h2>Welcome Back!</h2>
@@ -113,10 +123,12 @@
         </div>
     </div>
 </div>
-<script src="game.js"></script>
+<script src="js/script.js"></script>
+<script src="js/tapsound.js"></script>
+<script src="js/upgrades.js"></script>
+<script src="js/splashscreen.js"></script>
+<script src="js/index.js"></script>
 <script>
-
-
     let currentTabIndex = 0; // Track the current tab index
 
 function switchTab(tabId) {

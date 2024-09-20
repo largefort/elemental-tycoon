@@ -205,7 +205,7 @@ header {
     margin-top: 10px; /* Added margin for spacing */
     border-radius: 10px; /* Consistent rounding */
     overflow: hidden;
-    position: relative; /* Changed to relative to position child elements */
+    position: relative;
     color: #ffffff;
     display: flex;
     align-items: center;
@@ -219,19 +219,12 @@ header {
 .progress .progress-bar {
     width: 0;
     height: 100%;
-    position: absolute; /* Absolute positioning to stay within parent */
+    position: absolute;
     left: 0;
     top: 0;
     transition: width 0.3s ease-in-out;
-    z-index: 1; /* Ensure the progress bar is below the percentage text */
+    z-index: 3;
     border-radius: 10px; /* Consistent rounding */
-}
-
-/* Percentage Text within Progress Bar */
-.progress span {
-    z-index: 2; /* Ensure percentage is above the progress bar */
-    font-weight: bold;
-    position: relative; /* Position relative to stay within the progress container */
 }
 
 /* Redesigned Button Styles */
@@ -367,28 +360,6 @@ button:active {
 
 /* Responsive Adjustments */
 @media (max-width: 480px) {
-    #game {
-        padding: 10px;
-    }
-
-    h1 {
-        font-size: 1.5em;
-        margin: 15px 0;
-    }
-
-    button {
-        padding: 10px 14px;
-        font-size: 14px;
-    }
-
-    #home-stats, .resource {
-        padding: 10px;
-        border-radius: 10px;
-    }
-}
-
-/* Responsive Adjustments */
-@media (max-width: 480px) {
     /* Further adjustments for smaller screens */
     #game {
         padding: 10px; /* Reduced padding for small screens */
@@ -408,55 +379,4 @@ button:active {
         padding: 10px; /* Reduced padding for smaller screens */
         border-radius: 10px; /* Consistent with reduced overall radius */
     }
-}
-
-/* Offline Progress Modal Styles */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
-    z-index: 20; /* Sit on top */
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.modal-content {
-    background-color: #2c2f38;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    max-width: 90%;
-    margin: 0 auto;
-}
-
-.modal-content h2 {
-    margin-top: 0;
-    color: #e0e0e0;
-}
-
-.modal-content p {
-    color: #ffffff;
-    margin: 15px 0;
-}
-
-.modal-content button {
-    padding: 10px 20px;
-    background: linear-gradient(145deg, #42a5f5, #1e88e5);
-    border: none;
-    border-radius: 8px;
-    color: #ffffff;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 20px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-}
-
-.modal-content button:hover {
-    background: linear-gradient(145deg, #1e88e5, #42a5f5);
-    transform: translateY(-3px);
 }

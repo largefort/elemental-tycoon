@@ -47,7 +47,16 @@ let upgrades = []; // List of upgrades
 let automationIntervals = {}; // Track intervals for automation to clear them on reset
 
 const prefixes = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'Ud', 'Dd', 'Td', 'Qad', 'Qid', 'Sxd', 'Spd', 'Ocd', 'Nod',
-    'Vg', 'Uvg', 'Dvg', 'Tvg', 'Qavg', 'Qivg', 'Sxvg', 'Spvg', 'Ocvg', 'Novg', 'Tr', 'Utr', 'Dtr', 'Ttr', 'Qatr', 'Qitr', 'Sxtr', 'Sptr', 'Octr', 'Notr'
+    'Vg', 'Uvg', 'Dvg', 'Tvg', 'Qavg', 'Qivg', 'Sxvg', 'Spvg', 'Ocvg', 'Novg', 'Tr', 'Utr', 'Dtr', 'Ttr', 'Qatr', 'Qitr', 'Sxtr', 'Sptr', 'Octr', 'Notr',
+    'Qdr', 'Qidr', 'Sxdr', 'Spdr', 'Ocdr', 'Nodr', 'Ctr', 'Uctr', 'Dctr', 'Tctr', 'Qactr', 'Jafet',
+    'Ujaf', 'Djaf', 'Tjaf', 'Qajaf', 'Qijaf', 'Sxjaf', 'Spjaf', 'Ocjaf', 'Nojaf', 'Tjaftr',
+    'Ujaftr', 'Djaftr', 'Qajaftr', 'Qijaftr', 'Sxjaftr', 'Spjaftr', 'Ocjaftr', 'Nojaftr', 'Cent', 'Ucent', 'Dcent', 'Tcent', 'Qacent',
+    'Jafet+', 'JafetX', 'MegaJafet', 'UltraJafet', 'GigaJafet', 'TerraJafet', 'Jafillion', 'Jaftrillion', 'Jafillion+', 'HyperJafet'];
+
+const upgradeNames = [
+    'Blazing Fury', 'Ocean’s Whisper', 'Earthen Might', 'Aerial Grace', 'Radiant Surge', 'Shadow Veil', 'Void’s Embrace',
+    'Inferno Blast', 'Tidal Wave', 'Quake Strike', 'Zephyr Speed', 'Solar Flare', 'Dark Pulse', 'Abyssal Echo',
+    'Phoenix Ascend', 'Tempest Roar', 'Stone Guardian', 'Wind Dancer', 'Light Bringer', 'Night Stalker', 'Cosmic Reaver'
 ];
 
 function formatNumber(number) {
@@ -106,19 +115,13 @@ function saveGame() {
 function deleteProgress() {
     if (confirm("Are you sure you want to delete your progress? This action cannot be undone.")) {
         localStorage.removeItem('elementalTycoon');
-        resetGame(true); // Reset game completely including essence
+        resetGame(true);
         updateDisplay();
         alert("Progress deleted! The game has been reset.");
     }
 }
 
 function resetGame(includeEssence = false) {
-    // Clear all intervals related to automation
-    for (let element in automationIntervals) {
-        clearInterval(automationIntervals[element]);
-    }
-    automationIntervals = {}; // Reset interval storage
-
     // Reset all game data
     for (let element in resources) {
         resources[element] = 0;
@@ -130,13 +133,19 @@ function resetGame(includeEssence = false) {
     upgradeMultiplier = 1.00; // Reset upgrade multiplier
     upgrades = [];
     totalEPS = 0; // Reset total EPS
+
+    // Handle essence and base prestige multiplier if completely reset
     if (includeEssence) {
         essence = 0;
-        basePrestigeMultiplier = 1.00; // Reset the base multiplier if completely reset
+        basePrestigeMultiplier = 1.00; // Reset the base multiplier
     }
 
-    calculateTotalEPS(); // Recalculate total EPS after reset
+    // Recalculate total EPS after reset
+    calculateTotalEPS();
+
+    // Update display and clear any prestige-generated upgrades
     updateDisplay();
+    displayUpgrades(); // Ensure the display reflects the cleared upgrades
 }
 
 function updateDisplay() {
@@ -249,63 +258,6 @@ function startAutomation() {
         if (automation[element]) {
             startAutomationForElement(element);
         }
-    }
-}
-
-function prestige() {
-    if (money >= 100000) {
-        const earnedEssence = Math.floor(money / 100000);
-        essence += earnedEssence;
-
-        // Increase the base prestige multiplier based on the earned essence
-        basePrestigeMultiplier += earnedEssence * 0.05; // Adjust the factor (0.05) to control the rate of multiplier growth
-
-        alert(`Prestiged! You earned ${earnedEssence} Essence. Your new prestige multiplier is ${basePrestigeMultiplier.toFixed(2)}x.`);
-
-        resetGame(); // Reset the game but keep the essence and updated prestige multiplier
-        generateRandomUpgrade(); // Generate a new upgrade after each prestige
-        updateDisplay();
-    } else {
-        alert("You need $100,000 to prestige!");
-    }
-}
-
-function generateRandomUpgrade() {
-    let upgrade = {
-        name: 'Random Upgrade ' + (upgrades.length + 1),
-        cost: 10 + upgrades.length * 5,
-        effect: Math.random() * 2,
-        purchased: false
-    };
-
-    upgrades.push(upgrade);
-    displayUpgrades();
-    setTimeout(generateRandomUpgrade, 30 * 60 * 1000); // Generate a new upgrade every 30 minutes
-}
-
-function displayUpgrades() {
-    let upgradeList = document.getElementById('upgrade-list');
-    upgradeList.innerHTML = '';
-
-    upgrades.forEach((upgrade, index) => {
-        let upgradeDiv = document.createElement('div');
-        upgradeDiv.innerHTML = `${upgrade.name} - Cost: ${upgrade.cost} Essence - Effect: x${upgrade.effect.toFixed(2)}
-                                <button onclick="buyUpgrade(${index})">Buy</button>`;
-        upgradeList.appendChild(upgradeDiv);
-    });
-}
-
-function buyUpgrade(index) {
-    if (essence >= upgrades[index].cost && !upgrades[index].purchased) {
-        essence -= upgrades[index].cost;
-        upgrades[index].purchased = true;
-        calculateUpgradeMultiplier(); // Recalculate the multiplier after purchasing an upgrade
-        document.getElementById('essence').textContent = formatNumber(essence);
-        document.getElementById('prestige-multiplier').textContent = (basePrestigeMultiplier * upgradeMultiplier).toFixed(2);
-        displayUpgrades();
-        alert('Upgrade purchased!');
-    } else {
-        alert('Not enough Essence or already purchased!');
     }
 }
 
