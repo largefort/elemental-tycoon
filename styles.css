@@ -307,34 +307,3 @@ button:active {
     background-position: center;
     animation: swirl 7s infinite;
 }
-
-/* Keyframes for GIF Animations */
-@keyframes flicker {
-    0%, 100% { opacity: 0.8; }
-    50% { opacity: 1; }
-}
-
-@keyframes wave {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-}
-
-@keyframes quake {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(5px); }
-}
-
-@keyframes breeze {
-    0%, 100% { background-position: 0 0; }
-    50% { background-position: 100% 100%; }
-}
-
-@keyframes glow {
-    0%, 100% { opacity: 0.8; }
-    50% { opacity: 1; }
-}
-
-@keyframes swirl {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(360deg); }
-}
