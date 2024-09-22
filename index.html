@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,18 +8,21 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="disable.css">
 </head>
-<body>
-    <div id="game">
-        <h1>Elemental Tycoon</h1>
 
-        <!-- Total Money and EPS Section -->
-        <div id="stats">
-            <div id="money-container">
+<body>
+    <div id="app-container">
+        <header id="header">
+            <h1>Elemental Tycoon</h1>
+        </header>
+
+        <!-- Stats Section -->
+        <section id="stats" class="relative-position">
+            <div id="money-container" class="stat-box">
                 <h3>Total Money: $<span id="money">0</span></h3>
                 <h3>Prestige Currency: <span id="essence">0</span> Essence</h3>
                 <h3>Prestige Multiplier: x<span id="prestige-multiplier">1</span></h3>
             </div>
-            <div id="eps-container">
+            <div id="eps-container" class="stat-box">
                 <h4>Elements per Second (EPS)</h4>
                 <div id="eps">
                     <p>Fire: <span id="fire-eps">0</span> EPS</p>
@@ -30,10 +34,10 @@
                     <p>Void: <span id="void-eps">0</span> EPS</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Element Resource Sections -->
-        <div id="resources">
+        <!-- Resources Section -->
+        <section id="resources" class="elements-container">
             <!-- Fire Resource -->
             <div class="resource" id="fire-resource">
                 <h2>Fire: <span id="fire">0</span></h2>
@@ -124,59 +128,64 @@
                     <span>0%</span>
                 </div>
             </div>
-        </div>
-        
+        </section>
+
         <!-- Marketing Strategies Section -->
-        <h2>Marketing Strategies</h2>
-        <div id="marketing">
-            <button onclick="buyMarketing('fire')" aria-label="Promote Fire ($10)">Promote Fire ($10)</button>
-            <button onclick="buyMarketing('water')" aria-label="Promote Water ($10)">Promote Water ($10)</button>
-            <button onclick="buyMarketing('earth')" aria-label="Promote Earth ($10)">Promote Earth ($10)</button>
-            <button onclick="buyMarketing('air')" aria-label="Promote Air ($10)">Promote Air ($10)</button>
-            <button onclick="buyMarketing('light')" aria-label="Promote Light ($10)">Promote Light ($10)</button>
-            <button onclick="buyMarketing('dark')" aria-label="Promote Dark ($10)">Promote Dark ($10)</button>
-            <button onclick="buyMarketing('void')" aria-label="Promote Void ($10)">Promote Void ($10)</button>
-        </div>
+        <section id="marketing" class="center-text">
+            <h2>Marketing Strategies</h2>
+            <div class="resource-buttons">
+                <button onclick="buyMarketing('fire')" aria-label="Promote Fire ($10)">Promote Fire ($10)</button>
+                <button onclick="buyMarketing('water')" aria-label="Promote Water ($10)">Promote Water ($10)</button>
+                <button onclick="buyMarketing('earth')" aria-label="Promote Earth ($10)">Promote Earth ($10)</button>
+                <button onclick="buyMarketing('air')" aria-label="Promote Air ($10)">Promote Air ($10)</button>
+                <button onclick="buyMarketing('light')" aria-label="Promote Light ($10)">Promote Light ($10)</button>
+                <button onclick="buyMarketing('dark')" aria-label="Promote Dark ($10)">Promote Dark ($10)</button>
+                <button onclick="buyMarketing('void')" aria-label="Promote Void ($10)">Promote Void ($10)</button>
+            </div>
+        </section>
 
         <!-- Prestige System Section -->
-        <h2>Prestige System</h2>
-        <div id="prestige">
+        <section id="prestige" class="center-text">
+            <h2>Prestige System</h2>
             <button onclick="prestige()" aria-label="Prestige (Requires $100,000)">Prestige (Requires $100,000)</button>
             <p>Prestige Multiplier: x<span id="prestige-multiplier">1</span></p>
-        </div>
+        </section>
 
         <!-- Prestige Upgrades Section -->
-        <h2>Prestige Upgrades</h2>
-        <div id="prestige-upgrades">
+        <section id="prestige-upgrades" class="center-text">
+            <h2>Prestige Upgrades</h2>
             <p>Use Essence to buy upgrades that enhance your gameplay:</p>
             <div id="upgrade-list">
                 <!-- Dynamically generated upgrades will appear here -->
             </div>
-        </div>
+        </section>
 
-        <!-- Random Upgrade Generator -->
-        <h2>Random Upgrade Generator</h2>
-        <div id="random-upgrade">
+        <!-- Random Upgrade Generator Section -->
+        <section id="random-upgrade" class="center-text">
+            <h2>Random Upgrade Generator</h2>
             <p>Every 30 minutes, a new upgrade will be available:</p>
             <div id="random-upgrade-display">
                 <!-- Random upgrade will appear here -->
             </div>
-        </div>
+        </section>
 
         <!-- Version Switching Section -->
-        <h2>Version Switching</h2>
-        <div id="version-switching">
+        <section id="version-switching" class="center-text">
+            <h2>Version Switching</h2>
             <button onclick="switchVersion('live')" aria-label="Switch to Live Version">Switch to Live Version</button>
             <button onclick="switchVersion('alpha')" aria-label="Switch to Alpha Version">Switch to Alpha Version</button>
-            <button onclick="switchVersion('mobile')" aria-label="Switch to Beta Version">Switch to Mobile Version</button>
-        </div>
+            <button onclick="switchVersion('mobile')" aria-label="Switch to Mobile Version">Switch to Mobile Version</button>
+        </section>
 
         <!-- Delete Progress Button -->
-        <div id="reset">
+        <section id="reset" class="center-text">
             <button onclick="deleteProgress()" aria-label="Delete Progress">Delete Progress</button>
-        </div>
+        </section>
     </div>
+
+    <!-- JS Scripts -->
     <script src="script.js"></script>
     <script src="service-worker.js"></script>
 </body>
+
 </html>
