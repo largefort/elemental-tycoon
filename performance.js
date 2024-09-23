@@ -1,3 +1,6 @@
+let performanceModeEnabled = false; // Declare the variable to track performance mode
+const defaultFPS = 60; // Set the default FPS
+
 function togglePerformanceMode() {
     const performanceBtn = document.getElementById('performance-btn');
     
@@ -13,7 +16,7 @@ function togglePerformanceMode() {
         enableLowPerformance(); // Adjust visuals for performance
     }
     
-    performanceModeEnabled = !performanceModeEnabled;
+    performanceModeEnabled = !performanceModeEnabled; // Toggle the mode
 }
 
 function enableLowPerformance() {
@@ -27,7 +30,6 @@ function enableHighPerformance() {
         bar.style.transitionDuration = "0.5s"; // Restore normal progress bar animation speed
     });
 }
-
 // Initialize game
 document.addEventListener('DOMContentLoaded', () => {
     loadGame();
