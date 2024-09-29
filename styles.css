@@ -1,24 +1,8 @@
-/* Root Variables for Consistency */
-:root {
-    --primary-color: #1e88e5;
-    --secondary-color: #42a5f5;
-    --background-color: #1f1f2e;
-    --text-color: #e0e0e0;
-    --heading-color: #ffffff;
-    --card-bg-color: #2c2f38;
-    --shadow-color: rgba(0, 0, 0, 0.3);
-    --button-bg-gradient: linear-gradient(145deg, var(--primary-color), var(--secondary-color));
-    --hover-bg-gradient: linear-gradient(145deg, var(--secondary-color), var(--primary-color));
-    --focus-outline-color: rgba(255, 255, 255, 0.8);
-    --border-radius: 12px;
-    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
 /* Global Styles */
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: var(--background-color);
-    color: rgba(224, 224, 224, 0.9);
+    background-color: #1f1f2e;
+    color: #e0e0e0;
     margin: 0;
     padding: 0;
     display: flex;
@@ -26,78 +10,40 @@ body {
     align-items: center;
     min-height: 100vh;
     box-sizing: border-box;
-    overflow-x: hidden;
-    transition: background-color 0.5s ease;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
-/* Utility Classes */
-.relative-position {
-    position: relative;
-}
-
-.center-text {
-    text-align: center;
-}
-
-/* Game Container */
 #game {
-    background-color: var(--card-bg-color);
-    padding: 2rem;
-    border-radius: var(--border-radius);
+    background-color: #2c2f38;
+    padding: 30px;
+    border-radius: 15px;
     width: 90%;
-    max-width: 1200px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    max-width: 1200px; /* Constrain max width for large screens */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
     text-align: center;
-    margin: 20px auto;
+    margin: 20px auto; /* Centered and responsive */
     transition: all 0.3s;
-    animation: fadeIn 1s ease-in-out;
-    position: relative;
-    overflow: hidden;
-}
-
-#game::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
-    pointer-events: none;
-    z-index: 1;
-    mix-blend-mode: overlay;
-}
-
-/* Fade-in Animation */
-@keyframes fadeIn {
-    0% { opacity: 0; transform: scale(0.9); }
-    100% { opacity: 1; transform: scale(1); }
+    box-sizing: border-box;
 }
 
 /* Titles and Headings */
 h1, h2, h3, h4 {
     margin: 15px 0;
     font-weight: 300;
-    color: var(--heading-color);
-    text-shadow: 2px 2px 6px var(--shadow-color);
-    position: relative;
-    z-index: 2;
+    color: #e0e0e0;
 }
 
 /* Stats and EPS Section */
 #stats {
-    margin-bottom: 2rem;
-    padding: 1.5rem;
+    margin-bottom: 30px;
+    padding: 20px;
     background-color: #373b47;
-    border-radius: var(--border-radius);
+    border-radius: 10px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 20px;
     align-items: center;
-    box-shadow: 0 5px 15px var(--shadow-color);
-    transition: transform 0.3s ease;
-    position: relative;
-    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 #money-container, #eps-container {
@@ -105,52 +51,31 @@ h1, h2, h3, h4 {
 }
 
 #eps {
-    margin-top: 1rem;
-    padding: 1rem;
+    margin-top: 10px;
+    padding: 15px;
     background-color: #4a4f5e;
-    border-radius: var(--border-radius);
+    border-radius: 10px;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    position: relative;
-    overflow: hidden;
 }
 
-#eps:hover {
-    transform: scale(1.05);
-    background-color: #5b6172;
-}
-
-/* Resource Elements */
+/* Element Section Styles */
 .resource {
-    padding: 1.5rem;
-    border-radius: var(--border-radius);
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 12px;
     box-sizing: border-box;
     text-align: center;
-    box-shadow: 0 5px 15px var(--shadow-color);
-    transition: transform 0.2s ease, background-color 0.3s ease;
-    width: 100%;
-    max-width: 300px;
-    margin: 0 auto;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s, background-color 0.3s;
+    width: 100%; /* Take full width in a flex container */
+    max-width: 300px; /* Constrain width for better balance */
+    margin: 0 auto; /* Center the element */
+    position: relative; /* For positioning animated effects */
+    overflow: hidden; /* Hide overflow for visual effects */
 }
 
 .resource:hover {
-    transform: translateY(-3px) scale(1.02);
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.resource::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
-    z-index: 2;
-    pointer-events: none;
+    transform: translateY(-5px);
 }
 
 .resource-buttons {
@@ -158,7 +83,7 @@ h1, h2, h3, h4 {
     display: flex;
     justify-content: center;
     gap: 10px;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
 }
 
 /* Elements Container to Align Elements in Rows */
@@ -166,66 +91,60 @@ h1, h2, h3, h4 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    gap: 20px;
+    margin-bottom: 30px;
 }
 
 /* Element Colors and Animated Backgrounds */
 #fire-resource {
     background-color: #e57373;
-    background-image: url('fire.gif');
+    background-image: url('fire.gif'); /* Replace 'fire.gif' with the path to your fire GIF */
     background-size: cover;
     background-position: center;
-    animation: flicker 3s infinite;
+    animation: flicker 3s infinite; /* Fire flicker animation */
 }
-
 #water-resource {
     background-color: #64b5f6;
-    background-image: url('water.gif');
+    background-image: url('water.gif'); /* Replace 'water.gif' with the path to your water GIF */
     background-size: cover;
     background-position: center;
-    animation: wave 5s infinite;
+    animation: wave 5s infinite; /* Water wave animation */
 }
-
 #earth-resource {
     background-color: #a1887f;
-    background-image: url('earth.gif');
+    background-image: url('earth.gif'); /* Replace 'earth.gif' with the path to your earth GIF */
     background-size: cover;
     background-position: center;
-    animation: shake 4s infinite;
+    animation: shake 4s infinite; /* Earth shake animation */
 }
-
 #air-resource {
     background-color: #cfd8dc;
-    background-image: url('air.gif');
+    background-image: url('air.gif'); /* Replace 'air.gif' with the path to your air GIF */
     background-size: cover;
     background-position: center;
-    filter: brightness(0.85);
-    animation: breeze 6s infinite;
+    filter: brightness(0.85); /* Adjusted brightness for better visibility */
+    animation: breeze 6s infinite; /* Air breeze animation */
 }
-
 #light-resource {
     background-color: #fff176;
-    background-image: url('light.gif');
+    background-image: url('light.gif'); /* Replace 'light.gif' with the path to your light GIF */
     background-size: cover;
     background-position: center;
-    animation: glow 3s infinite;
+    animation: glow 3s infinite; /* Light glow animation */
 }
-
 #dark-resource {
     background-color: #8d6e63;
-    background-image: url('dark.gif');
+    background-image: url('dark.gif'); /* Replace 'dark.gif' with the path to your dark GIF */
     background-size: cover;
     background-position: center;
-    animation: shadowPulse 5s infinite;
+    animation: shadowPulse 5s infinite; /* Dark shadow pulse animation */
 }
-
 #void-resource {
     background-color: #7986cb;
-    background-image: url('void.gif');
+    background-image: url('void.gif'); /* Replace 'void.gif' with the path to your void GIF */
     background-size: cover;
     background-position: center;
-    animation: voidSwirl 7s infinite;
+    animation: voidSwirl 7s infinite; /* Void swirl animation */
 }
 
 /* Animated Effects */
@@ -267,22 +186,19 @@ h1, h2, h3, h4 {
 /* Progress Bar Styles */
 .progress {
     width: 100%;
-    height: 1.25rem;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-    border-radius: var(--border-radius);
-    margin-top: 1rem;
+    height: 20px; /* Reduced height for sleeker design */
+    background-color: rgba(0, 0, 0, 0.3); /* Transparent background for visual effect */
+    margin-top: 10px;
+    border-radius: 8px;
+    overflow: hidden;
     position: relative;
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1rem;
-    box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: background 0.5s ease;
-}
-
-.progress:hover {
-    box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.3);
+    margin-bottom: 15px;
+    box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.2);
+    z-index: 2; /* Ensure it is above the animated backgrounds */
 }
 
 .progress .progress-bar {
@@ -292,40 +208,42 @@ h1, h2, h3, h4 {
     left: 0;
     top: 0;
     transition: width 0.4s ease-in-out;
-    z-index: 3;
-    border-radius: var(--border-radius);
-    background: linear-gradient(90deg, #ff8a65, #ff7043);
+    z-index: 3; /* Ensure it is above the animated backgrounds */
+    border-radius: 8px;
 }
+
+/* Progress Bar Colors */
+#fire-resource .progress .progress-bar { background-color: #ef9a9a; }
+#water-resource .progress .progress-bar { background-color: #90caf9; }
+#earth-resource .progress .progress-bar { background-color: #bcaaa4; }
+#air-resource .progress .progress-bar { background-color: #e1f5fe; }
+#light-resource .progress .progress-bar { background-color: #fff59d; }
+#dark-resource .progress .progress-bar { background-color: #a1887f; }
+#void-resource .progress .progress-bar { background-color: #9fa8da; }
 
 .progress span {
     z-index: 4;
     font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* Button Styles */
+/* Redesigned Button Styles */
 button {
-    padding: 0.6rem 1rem;
-    background: var(--button-bg-gradient);
+    padding: 10px 18px; /* Reduced padding for more compact buttons */
+    background: linear-gradient(145deg, #42a5f5, #1e88e5);
     border: none;
-    border-radius: var(--border-radius);
+    border-radius: 8px;
     color: #ffffff;
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
-    box-shadow: var(--box-shadow);
-    transition: background 0.3s ease, transform 0.2s ease;
-    z-index: 5;
-    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: background 0.3s, transform 0.2s;
+    z-index: 5; /* Ensure buttons are above animations */
 }
 
 button:hover {
-    background: var(--hover-bg-gradient);
+    background: linear-gradient(145deg, #1e88e5, #42a5f5);
     transform: translateY(-3px);
-}
-
-button:focus {
-    outline: 2px solid var(--focus-outline-color);
 }
 
 button:active {
@@ -334,26 +252,20 @@ button:active {
 
 /* Marketing, Prestige, and Version Switching Section Styles */
 #marketing, #prestige, #version-switching {
-    margin-top: 1.5rem;
-    padding: 1rem;
+    margin-top: 20px;
+    padding: 15px;
     background-color: #373b47;
-    border-radius: var(--border-radius);
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 15px;
     flex-wrap: wrap; /* Allows wrapping on smaller screens */
-    box-shadow: 0 5px 15px var(--shadow-color);
-    position: relative; /* For gloss */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 #marketing button {
     margin: 8px 4px;
     background: linear-gradient(145deg, #ff8a65, #ff7043);
-    padding: 0.5rem 1rem; /* Adjusted padding */
-    transition: transform 0.2s;
+    padding: 8px 16px; /* Adjusted padding */
 }
-
-#marketing button:hover {
-    transform: scale(1.05); /* Hover scale effect */
-
