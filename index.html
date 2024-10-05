@@ -6,17 +6,6 @@
     <title>Elemental Tycoon</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-    <div class="adplugg-tag"></div>
-    <script>
-    (function(ac) {
-      var d = document, s = 'script', id = 'adplugg-adjs';
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id; js.async = 1;
-      js.src = '//www.adplugg.com/serve/' + ac + '/js/1.1/ad.js';
-      fjs.parentNode.insertBefore(js, fjs);
-    }('A48225808'));
-</script>
 </head>
 <body>
     <main id="game">
@@ -161,12 +150,25 @@
             <button onclick="deleteProgress()">Delete Progress</button>
         </section>
 
-        <!-- Jokes Section -->
-        <section id="jokes">
-            <h2>Jokes of The Days</h2>
-            <p id="joke-display">Click the button for a joke!</p>
-            <button onclick="getRandomJoke()">Get a Joke!</button>
-        </section>
+<!-- AdPlugg Advertisement -->
+<div class="adplugg-tag"></div>
+<script>
+  (function(ac) {
+    var d = document, s = 'script', id = 'adplugg-adjs';
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id; js.async = 1;
+    js.src = '//www.adplugg.com/serve/' + ac + '/js/1.1/ad.js';
+    fjs.parentNode.insertBefore(js, fjs);
+  }('A48225808'));
+</script>
+
+<!-- Jokes Section -->
+<section id="jokes">
+    <h2>Jokes of The Days</h2>
+    <p id="joke-display">Click the button for a joke!</p>
+    <button onclick="getRandomJoke()">Get a Joke!</button>
+</section>
     </main>
     <script src="script.js"></script>
     <script>
