@@ -215,7 +215,7 @@ function switchVersion(version) {
         case 'alpha':
             window.location.href = 'index_alpha.html';
             break;
-        case 'beta':
+        case 'mobile':
             window.location.href = 'index_mobile.html';
             break;
         default:
