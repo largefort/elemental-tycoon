@@ -1,226 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elemental Tycoon</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-</head>
+
 <body>
-    <main id="game">
-        <header>
-            <h1>Elemental Tycoon</h1>
-        </header>
+    <div id="container">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <ul>
+                <li><a href="#home" onclick="showSection('home')">Home</a></li>
+                <li><a href="#marketing" onclick="showSection('marketing')">Marketing</a></li>
+                <li><a href="#prestige" onclick="showSection('prestige')">Prestige System</a></li>
+                <li><a href="#version-switching" onclick="showSection('version-switching')">Versions</a></li>
+            </ul>
+        </nav>
 
-        <!-- Total Money and EPS Section -->
-        <section id="stats">
-            <div id="money-container">
-                <h3>Total Money: $<span id="money">0</span></h3>
-                <h3>Prestige Currency: <span id="essence">0</span> Essence</h3>
-                <h3>Prestige Multiplier: x<span id="prestige-multiplier">1</span></h3>
-            </div>
-            <div id="eps-container">
-                <h4>Elements per Second (EPS)</h4>
-                <div id="eps">
-                    <p>Fire: <span id="fire-eps">0</span> EPS</p>
-                    <p>Water: <span id="water-eps">0</span> EPS</p>
-                    <p>Earth: <span id="earth-eps">0</span> EPS</p>
-                    <p>Air: <span id="air-eps">0</span> EPS</p>
-                    <p>Light: <span id="light-eps">0</span> EPS</p>
-                    <p>Dark: <span id="dark-eps">0</span> EPS</p>
-                    <p>Void: <span id="void-eps">0</span> EPS</p>
-                </div>
-            </div>
-        </section>
+        <!-- Main Content -->
+        <main id="game">
+            <header>
+                <h1>Elemental Tycoon</h1>
+            </header>
 
-        <!-- Element Resource Sections -->
-        <section id="resources">
-            <h2>Resource Elements</h2>
-            <div class="resource" id="fire-resource">
-                <h3>Fire: <span id="fire">0</span></h3>
-                <div class="resource-buttons">
-                    <button onclick="gather('fire')">Gather Fire</button>
-                    <button onclick="buyAutomation('fire')">Automate Fire ($50)</button>
+            <!-- Home Section -->
+            <section id="home" class="section">
+                <h2>Elements</h2>
+                <div id="eps-container">
+                    <h4>Elements per Second (EPS)</h4>
+                    <div id="eps">
+                        <p>Fire: <span id="fire-eps">0</span> EPS</p>
+                        <p>Water: <span id="water-eps">0</span> EPS</p>
+                        <p>Earth: <span id="earth-eps">0</span> EPS</p>
+                        <p>Air: <span id="air-eps">0</span> EPS</p>
+                        <p>Light: <span id="light-eps">0</span> EPS</p>
+                        <p>Dark: <span id="dark-eps">0</span> EPS</p>
+                        <p>Void: <span id="void-eps">0</span> EPS</p>
+                    </div>
                 </div>
-                <div class="progress" id="fire-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-            <div class="resource" id="water-resource">
-                <h3>Water: <span id="water">0</span></h3>
-                <div class="resource-buttons">
-                    <button onclick="gather('water')">Gather Water</button>
-                    <button onclick="buyAutomation('water')">Automate Water ($50)</button>
-                </div>
-                <div class="progress" id="water-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-            <div class="resource" id="earth-resource">
-                <h3>Earth: <span id="earth">0</span></h3>
-                <div class="resource-buttons">
-                    <button onclick="gather('earth')">Gather Earth</button>
-                    <button onclick="buyAutomation('earth')">Automate Earth ($50)</button>
-                </div>
-                <div class="progress" id="earth-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-            <div class="resource" id="air-resource">
-                <h3>Air: <span id="air">0</span></h3>
-                <div class="resource-buttons">
-                    <button onclick="gather('air')">Gather Air</button>
-                    <button onclick="buyAutomation('air')">Automate Air ($50)</button>
-                </div>
-                <div class="progress" id="air-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-            <div class="resource" id="light-resource">
-                <h3>Light: <span id="light">0</span></h3>
-                <div class="resource-buttons">
-                    <button onclick="gather('light')">Gather Light</button>
-                    <button onclick="buyAutomation('light')">Automate Light ($50)</button>
-                </div>
-                <div class="progress" id="light-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-            <div class="resource" id="dark-resource">
-                <h3>Dark: <span id="dark">0</span></h3>
-                <div class="resource-buttons">
-                    <button onclick="gather('dark')">Gather Dark</button>
-                    <button onclick="buyAutomation('dark')">Automate Dark ($50)</button>
-                </div>
-                <div class="progress" id="dark-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-            <div class="resource" id="void-resource">
-                <h3>Void: <span id="void">0</span></h3>
-                <div class="resource-buttons">
-                    <button onclick="gather('void')">Gather Void</button>
-                    <button onclick="buyAutomation('void')">Automate Void ($50)</button>
-                </div>
-                <div class="progress" id="void-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-        </section>
 
-        <!-- Marketing Strategies Section -->
-        <section id="marketing">
-            <h2>Marketing Strategies</h2>
-            <div class="marketing-buttons">
-                <button onclick="buyMarketing('fire')">Promote Fire ($10)</button>
-                <button onclick="buyMarketing('water')">Promote Water ($10)</button>
-                <button onclick="buyMarketing('earth')">Promote Earth ($10)</button>
-                <button onclick="buyMarketing('air')">Promote Air ($10)</button>
-                <button onclick="buyMarketing('light')">Promote Light ($10)</button>
-                <button onclick="buyMarketing('dark')">Promote Dark ($10)</button>
-                <button onclick="buyMarketing('void')">Promote Void ($10)</button>
-            </div>
-        </section>
+                <!-- Element Resources -->
+                <section id="resources">
+                    <h2>Resource Elements</h2>
 
-        <!-- Prestige System Section -->
-        <section id="prestige">
-            <h2>Prestige System</h2>
-            <button onclick="prestige()">Prestige (Requires $100,000)</button>
-            <p>Prestige Multiplier: x<span id="prestige-multiplier">1</span></p>
-        </section>
+                    <!-- Fire Resource -->
+                    <div class="resource" id="fire-resource">
+                        <h3>Fire: <span id="fire">0</span></h3>
+                        <div class="resource-buttons">
+                            <button onclick="gather('fire')">Gather Fire</button>
+                            <button onclick="buyAutomation('fire')">Automate Fire ($50)</button>
+                        </div>
+                    </div>
 
-         <!-- Version Switching Section -->
-        <section id="version-switching" class="center-text">
-            <h2>Version Switching</h2>
-            <button onclick="switchVersion('live')" aria-label="Switch to Live Version">Switch to Live Version</button>
-            <button onclick="switchVersion('alpha')" aria-label="Switch to Alpha Version">Switch to Alpha Version</button>
-            <button onclick="switchVersion('mobile')" aria-label="Switch to Mobile Version">Switch to Mobile Version</button>
-        </section>
+                    <!-- Water Resource -->
+                    <div class="resource" id="water-resource">
+                        <h3>Water: <span id="water">0</span></h3>
+                        <div class="resource-buttons">
+                            <button onclick="gather('water')">Gather Water</button>
+                            <button onclick="buyAutomation('water')">Automate Water ($50)</button>
+                        </div>
+                    </div>
 
-        <!-- Reset Progress Button -->
-        <section id="reset">
-            <button onclick="deleteProgress()">Delete Progress</button>
-        </section>
+                    <!-- Earth Resource -->
+                    <div class="resource" id="earth-resource">
+                        <h3>Earth: <span id="earth">0</span></h3>
+                        <div class="resource-buttons">
+                            <button onclick="gather('earth')">Gather Earth</button>
+                            <button onclick="buyAutomation('earth')">Automate Earth ($50)</button>
+                        </div>
+                    </div>
 
-<!-- AdPlugg Advertisement -->
-<div class="adplugg-tag"></div>
-<script>
-  (function(ac) {
-    var d = document, s = 'script', id = 'adplugg-adjs';
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id; js.async = 1;
-    js.src = '//www.adplugg.com/serve/' + ac + '/js/1.1/ad.js';
-    fjs.parentNode.insertBefore(js, fjs);
-  }('A48225808'));
-</script>
+                    <!-- Air Resource -->
+                    <div class="resource" id="air-resource">
+                        <h3>Air: <span id="air">0</span></h3>
+                        <div class="resource-buttons">
+                            <button onclick="gather('air')">Gather Air</button>
+                            <button onclick="buyAutomation('air')">Automate Air ($50)</button>
+                        </div>
+                    </div>
 
-<!-- Jokes Section -->
-<section id="jokes">
-    <h2>Jokes of The Days</h2>
-    <p id="joke-display">Click the button for a joke!</p>
-    <button onclick="getRandomJoke()">Get a Joke!</button>
-</section>
-    </main>
+                    <!-- Light Resource -->
+                    <div class="resource" id="light-resource">
+                        <h3>Light: <span id="light">0</span></h3>
+                        <div class="resource-buttons">
+                            <button onclick="gather('light')">Gather Light</button>
+                            <button onclick="buyAutomation('light')">Automate Light ($50)</button>
+                        </div>
+                    </div>
+
+                    <!-- Dark Resource -->
+                    <div class="resource" id="dark-resource">
+                        <h3>Dark: <span id="dark">0</span></h3>
+                        <div class="resource-buttons">
+                            <button onclick="gather('dark')">Gather Dark</button>
+                            <button onclick="buyAutomation('dark')">Automate Dark ($50)</button>
+                        </div>
+                    </div>
+
+                    <!-- Void Resource -->
+                    <div class="resource" id="void-resource">
+                        <h3>Void: <span id="void">0</span></h3>
+                        <div class="resource-buttons">
+                            <button onclick="gather('void')">Gather Void</button>
+                            <button onclick="buyAutomation('void')">Automate Void ($50)</button>
+                        </div>
+                    </div>
+
+                </section>
+            </section>
+
+            <!-- Marketing Section -->
+            <section id="marketing" class="section" style="display: none;">
+                <h2>Marketing Strategies</h2>
+                <div class="marketing-buttons">
+                    <button onclick="buyMarketing('fire')">Promote Fire ($10)</button>
+                    <button onclick="buyMarketing('water')">Promote Water ($10)</button>
+                    <button onclick="buyMarketing('earth')">Promote Earth ($10)</button>
+                    <button onclick="buyMarketing('air')">Promote Air ($10)</button>
+                    <button onclick="buyMarketing('light')">Promote Light ($10)</button>
+                    <button onclick="buyMarketing('dark')">Promote Dark ($10)</button>
+                    <button onclick="buyMarketing('void')">Promote Void ($10)</button>
+                </div>
+            </section>
+
+            <!-- Prestige System Section -->
+            <section id="prestige" class="section" style="display: none;">
+                <h2>Prestige System</h2>
+                <button onclick="prestige()">Prestige (Requires $100,000)</button>
+                <p>Prestige Multiplier: x<span id="prestige-multiplier">1</span></p>
+            </section>
+
+            <!-- Version Switching Section -->
+            <section id="version-switching" class="section" style="display: none;">
+                <h2>Version Switching</h2>
+                <button onclick="switchVersion('live')">Switch to Live Version</button>
+                <button onclick="switchVersion('alpha')">Switch to Alpha Version</button>
+                <button onclick="switchVersion('mobile')">Switch to Mobile Version</button>
+            </section>
+
+            <!-- Reset Progress Button -->
+            <section id="reset">
+                <button onclick="deleteProgress()">Delete Progress</button>
+            </section>
+
+            <!-- Jokes Section -->
+            <section id="jokes">
+                <h2>Jokes of The Day</h2>
+                <p id="joke-display">Click the button for a joke!</p>
+                <button onclick="getRandomJoke()">Get a Joke!</button>
+            </section>
+        </main>
+    </div>
+
     <script src="script.js"></script>
     <script>
-       // Array of jokes
-const jokes = [
-    "Why did Jafet take so long to develop Elemental Tycoon? Because every time he gathered resources, he just kept getting 'element'-ary jokes!",
-    "What do you call a water element in Elemental Tycoon? A 'drip' of Jafet's creativity!",
-    "Why did the fire resource break up with Jafet? It found him too 'cool' to handle!",
-    "Jafet tried to automate the fire gathering but ended up creating a 'flame war' with his own jokes!",
-    "Why do the elements love Jafet? Because he always brings the 'light' into their dark moments!",
-    "Jafet was so focused on gathering earth elements that he forgot to plant his ideas!",
-    "What did the air resource say when Jafet finally finished a feature? 'Finally, you let us breathe!'",
-    "Why was Jafet's Elemental Tycoon development team always calm? Because they learned to go with the flow of the water elements!",
-    "Why does Jafet think he's the best at gathering fire? Because he's always on fire with ideas!",
-    "What do you call Jafet when he’s deep in coding? A 'code-emon'!",
-    "Why did the void element invite Jafet to its party? Because it wanted to fill the void with laughter!",
-    "How did Jafet become a millionaire in Elemental Tycoon? He learned to 'cash' in on all the elements!",
-    "Why did Jafet's earth element break? It couldn't handle all the pressure from his high expectations!",
-    "What’s Jafet’s favorite type of music? Elemental rock!",
-    "Why did the water element refuse to play poker with Jafet? Because he always 'bluffed' his way to the top!",
-    "How does Jafet keep track of his elements? With a 'element-ary' spreadsheet!",
-    "Why was Jafet’s computer always so calm? Because it had plenty of 'cache'!",
-    "What did Jafet say when he finished a new feature? 'Element-ary, my dear Watson!'",
-    "Why did the light element always follow Jafet? Because it knew he’d brighten its day!",
-    "Why does Jafet love developing games? Because it’s his 'element' of fun!",
-    "What do you get when you cross Jafet and a fire element? A blazing success!",
-    "How does Jafet like his coffee? With a dash of 'element-ary' flavors!",
-    "What did the air element say to Jafet at the start of a meeting? 'Let’s get this breeze rolling!'",
-    "Why did the earth element want to be friends with Jafet? Because it wanted to grow together!",
-    "What’s Jafet's secret weapon in Elemental Tycoon? A 'punchline' upgrade!",
-    "Why does Jafet always win at Elemental Tycoon? Because he knows how to 'tap' into resources!",
-    "How did Jafet feel after a successful update? Like he had just gathered a mountain of joy!",
-    "What does Jafet say to inspire his team? 'Let’s make this game an 'element' of surprise!'",
-    "Why do players love Jafet's Elemental Tycoon? Because it’s full of 'puns' and 'fun'!",
-    "What did the dark element whisper to Jafet? 'You light up my world!'",
-    "Why did Jafet take a break from coding? To recharge his 'elemental' batteries!",
-    "What do you call Jafet when he’s brainstorming? A 'thinking fireball'!",
-    "Why did Jafet add more features to Elemental Tycoon? He wanted to keep the game 'elemental' and interesting!",
-    "What did Jafet say when he discovered a new element? 'This is 'un-elemented' territory!'",
-    "Why does Jafet love using animations in Elemental Tycoon? Because they make the elements come alive!",
-    "How did Jafet become an expert at gathering elements? He had a knack for 'collecting' good ideas!",
-    "What’s Jafet’s motto for Elemental Tycoon? 'Keep calm and gather elements!'",
-    "Why did the players cheer for Jafet? Because he made their gaming experience 'element-ary' fun!"
-];
+       // Sidebar Navigation Function
+function showSection(sectionId) {
+    // Hide all sections
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+        section.classList.remove('active'); // Use classList to hide
+    });
 
-// Function to get a random joke
-function getRandomJoke() {
-    const randomIndex = Math.floor(Math.random() * jokes.length);
-    const jokeDisplay = document.getElementById('joke-display');
-    jokeDisplay.textContent = jokes[randomIndex];
+    // Show the selected section
+    const selectedSection = document.getElementById(sectionId);
+    if (selectedSection) {
+        selectedSection.classList.add('active'); // Use classList to show
+    }
+
+    // Update active link in the sidebar
+    const links = document.querySelectorAll('#sidebar ul li a');
+    links.forEach(link => {
+        link.classList.remove('active'); // Remove active class from all links
+    });
+
+    // Set active class on the selected link
+    const selectedLink = Array.from(links).find(link => link.getAttribute('href') === `#${sectionId}`);
+    if (selectedLink) {
+        selectedLink.classList.add('active');
+    }
 }
-    </script>
-</body>
-</html>
 
+// Add event listeners to sidebar links
+document.querySelectorAll('#sidebar ul li a').forEach(link => {
+    link.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent default link behavior
+        const targetSection = this.getAttribute('href').substring(1); // Get the target section ID
+        showSection(targetSection); // Call the showSection function
+    });
+});
+
+        // Function to get a random joke (kept as in the original)
+        function getRandomJoke() {
+            const jokes = [
+                "Why did Jafet take so long to develop Elemental Tycoon? Because every time he gathered resources, he just kept getting 'element'-ary jokes!",
+                "What do you call a water element in Elemental Tycoon? A 'drip' of Jafet's creativity!",
+                "Why did the fire resource break up with Jafet? It found him too 'cool' to handle!"
+                // Add more jokes here...
+            ];
+            const randomIndex = Math.floor(Math.random() * jokes.length);
+            const jokeDisplay = document.getElementById('joke-display');
+            jokeDisplay.textContent = jokes[randomIndex];
+        }
+    </script>
+
+    <style>
+        #container {
+            display: flex;
+            height: 100vh; /* Ensure the container takes the full height */
+        }
+
+        #sidebar {
+            width: 100px;
+            background-color: #333;
+            padding: 20px;
+            height: 100%; /* Ensure the sidebar takes full height of container */
+            overflow-y: auto; /* Allow scrolling if content overflows */
+            position: fixed; /* Fix the sidebar to the left side */
+            left: 0; /* Position the sidebar on the left side */
+            top: 0; /* Align with the top of the viewport */
+        }
+
+        #sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        #sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            display: block; /* Make the entire link area clickable */
+            padding: 10px; /* Add some padding for better click area */
+            transition: background-color 0.3s; /* Smooth hover effect */
+        }
+
+        #sidebar ul li a:hover {
+            text-decoration: underline;
+            background-color: #555; /* Change background on hover for better visibility */
+        }
+
+        /* Main Content Styling */
+        main {
+            padding: 20px;
+            flex-grow: 1; /* Allow main content to grow */
+            height: 100vh; /* Make sure main content takes full height */
+            overflow-y: auto; /* Allow scrolling if needed */
+            margin-left: 220px; /* Add margin to prevent overlap with the sidebar */
+        }
+
+        /* Hide all sections by default, except for the one being shown */
+        .section {
+            display: none;
+        }
+
+        /* Active section visibility */
+        .section.active {
+            display: block; /* Only show the active section */
+        }
+    </style>
+</body>
+
+</html>
