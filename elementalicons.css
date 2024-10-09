@@ -1,0 +1,7 @@
+/* Icon Styling */
+.element-icon {
+    width: 20px; /* Adjust this size as needed */
+    height: 20px;
+    vertical-align: middle; /* Align icon vertically with the text */
+    margin-right: 4px; /* Reduced space between icon and text */
+}
