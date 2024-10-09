@@ -1,8 +1,9 @@
 /* Global Styles */
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #1f1f2e;
-    color: #e0e0e0;
+    font-family: 'Roboto', sans-serif; /* You may keep or change this */
+    font-size: 1.5em; /* Make text larger for TV display */
+    background-color: grey;
+    color: white;
     margin: 0;
     padding: 0;
     display: flex;
@@ -15,7 +16,7 @@ body {
     -webkit-touch-callout: none; /* Prevent text selection on touch */
     -webkit-user-select: none; /* Prevent text selection on touch */
     user-select: none; /* Cross-browser support */
-    padding: 0 0 70px; /* Increased padding at the bottom for nav bar */
+    padding: 0 0 60px; /* Padding at the bottom for nav bar */
 }
 
 /* Main Game Container */
@@ -24,14 +25,14 @@ body {
     max-width: 500px; /* Constrain width for readability */
     text-align: center;
     margin: 20px auto; /* Center and add vertical spacing */
-    padding-bottom: 70px; /* Increased space for bottom nav */
+    padding-bottom: 60px; /* Space for bottom nav */
     box-sizing: border-box;
 }
 
 /* Game Title */
 header {
     margin: 20px 0;
-    color: #e0e0e0;
+    color: #000;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -65,61 +66,56 @@ header {
     touch-action: manipulation;
 }
 
-.resource:hover {
-    transform: translateY(-3px); /* Enhanced hover effect */
-    background-color: #444957; /* Subtle color change */
-}
-
 /* Element Colors and Animated Backgrounds */
 #fire-resource {
     background-color: #e57373;
-    background-image: url('fire.gif'); /* Replace 'fire.gif' with the path to your fire GIF */
+    background-image: url('fire.gif');
     background-size: cover;
     background-position: center;
-    animation: flicker 3s infinite; /* Fire flicker animation */
+    animation: flicker 3s infinite;
 }
 #water-resource {
     background-color: #64b5f6;
-    background-image: url('water.gif'); /* Replace 'water.gif' with the path to your water GIF */
+    background-image: url('water.gif');
     background-size: cover;
     background-position: center;
-    animation: wave 5s infinite; /* Water wave animation */
+    animation: wave 5s infinite;
 }
 #earth-resource {
     background-color: #a1887f;
-    background-image: url('earth.gif'); /* Replace 'earth.gif' with the path to your earth GIF */
+    background-image: url('earth.gif');
     background-size: cover;
     background-position: center;
-    animation: shake 4s infinite; /* Earth shake animation */
+    animation: shake 4s infinite;
 }
 #air-resource {
     background-color: #cfd8dc;
-    background-image: url('air.gif'); /* Replace 'air.gif' with the path to your air GIF */
+    background-image: url('air.gif');
     background-size: cover;
     background-position: center;
-    filter: brightness(0.85); /* Adjusted brightness for better visibility */
-    animation: breeze 6s infinite; /* Air breeze animation */
+    filter: brightness(0.85);
+    animation: breeze 6s infinite;
 }
 #light-resource {
     background-color: #fff176;
-    background-image: url('light.gif'); /* Replace 'light.gif' with the path to your light GIF */
+    background-image: url('light.gif');
     background-size: cover;
     background-position: center;
-    animation: glow 3s infinite; /* Light glow animation */
+    animation: glow 3s infinite;
 }
 #dark-resource {
     background-color: #8d6e63;
-    background-image: url('dark.gif'); /* Replace 'dark.gif' with the path to your dark GIF */
+    background-image: url('dark.gif');
     background-size: cover;
     background-position: center;
-    animation: shadowPulse 5s infinite; /* Dark shadow pulse animation */
+    animation: shadowPulse 5s infinite;
 }
 #void-resource {
     background-color: #7986cb;
-    background-image: url('void.gif'); /* Replace 'void.gif' with the path to your void GIF */
+    background-image: url('void.gif');
     background-size: cover;
     background-position: center;
-    animation: voidSwirl 7s infinite; /* Void swirl animation */
+    animation: voidSwirl 7s infinite;
 }
 
 /* Animated Effects */
@@ -160,13 +156,13 @@ header {
 
 /* Resource Button Styles */
 .resource-buttons {
-    margin-top: 12px; /* Added margin for spacing */
+    margin-top: 12px;
     display: flex;
     justify-content: center;
-    gap: 12px; /* Increased gap for better spacing */
+    gap: 12px;
     flex-wrap: wrap;
-    width: 100%; /* Ensure full width for consistency */
-    box-sizing: border-box; /* Ensure padding is included in width */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Progress Bar Styles with Element Colors */
@@ -202,18 +198,18 @@ header {
     width: 100%;
     height: 16px; /* Slightly taller for better visibility */
     background-color: rgba(0, 0, 0, 0.3);
-    margin-top: 10px; /* Added margin for spacing */
-    border-radius: 10px; /* Consistent rounding */
+    margin-top: 10px;
+    border-radius: 10px;
     overflow: hidden;
     position: relative;
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 12px; /* Added margin for spacing */
-    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3); /* Stronger inset shadow */
+    margin-bottom: 12px;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
     z-index: 2;
-    box-sizing: border-box; /* Ensure padding is included in width */
+    box-sizing: border-box;
 }
 
 .progress .progress-bar {
@@ -224,75 +220,83 @@ header {
     top: 0;
     transition: width 0.3s ease-in-out;
     z-index: 3;
-    border-radius: 10px; /* Consistent rounding */
+    border-radius: 10px;
 }
 
 /* Redesigned Button Styles */
 button {
-    padding: 12px 20px; /* Increased padding for better tap targets */
-    background: linear-gradient(145deg, #42a5f5, #1e88e5);
+    width: 90%; /* Make buttons larger and easier to select */
+    padding: 20px;
+    font-size: 1.5em;
+    margin: 10px auto;
     border: none;
-    border-radius: 8px; /* Increased radius for better touch feel */
+    border-radius: 10px;
+    background-color: #6200ea; /* Primary button color */
     color: #ffffff;
     cursor: pointer;
-    font-size: 16px; /* Slightly larger font size */
-    font-weight: 600; /* Bolder text */
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
-    transition: background 0.3s, transform 0.2s; /* Smooth transitions */
-    width: 45%; /* Ensure buttons are consistent */
-    max-width: 180px; /* Constrain max width */
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 button:hover {
-    transform: translateY(-2px); /* Slight lift effect on hover */
+    background-color: #3700b3; /* Darker shade for hover */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
 }
 
-button:active {
-    transform: translateY(0); /* Reset lift effect on click */
-}
-
-/* Bottom Navigation Styles */
-.bottom-nav {
-    position: fixed; /* Fix the nav bar to the bottom */
+/* Navigation Bar Styles */
+.nav-bar {
+    position: fixed;
+    bottom: 0;
     left: 0;
     right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
-    padding: 12px; /* Padding for comfort */
-    border-top-left-radius: 12px; /* Rounded corners */
-    border-top-right-radius: 12px; /* Rounded corners */
+    height: 60px; /* Increased height for better touch accessibility */
+    background-color: #373b47;
     display: flex;
-    justify-content: space-around; /* Space out the buttons */
+    justify-content: space-around;
     align-items: center;
-    z-index: 999; /* Ensure it stays on top */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+    z-index: 10; /* Ensure nav bar is above other elements */
 }
 
-/* Tab Button Styles */
-.tab-button {
-    background: transparent; /* Transparent to show the background */
-    color: #e0e0e0;
+.nav-bar button {
+    flex: 1; /* Equal spacing for nav buttons */
+    margin: 0;
     border: none;
-    cursor: pointer;
-    font-size: 16px; /* Uniform font size */
-    font-weight: 600; /* Bolder text */
-    transition: color 0.3s; /* Smooth color transition */
+    background: none;
+    color: #ffffff;
+    font-size: 1.2em; /* Adjusted for better visibility */
+    padding: 10px; /* Padding for better touch area */
+    transition: background-color 0.3s;
 }
 
-.tab-button:hover {
-    color: #fff; /* Lighten color on hover */
+.nav-bar button:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Slight highlight on hover */
 }
 
-/* Jokes Tab Adjustment */
-.jokes-tab {
-    flex: 1; /* Allow this tab to take available space */
-    text-align: center; /* Center the text */
-    padding: 8px; /* Some padding for aesthetics */
-}
-
-/* Add additional media queries as needed for responsiveness */
-@media (max-width: 600px) {
-    /* Adjust styles for smaller screens */
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
     body {
-        font-size: 14px; /* Adjust font size for readability */
+        font-size: 1.2em; /* Adjust font size for smaller screens */
     }
+
+    button {
+        font-size: 1em; /* Smaller button text */
+    }
+
+    /* Adjust bottom nav bar height */
+    .nav-bar {
+        height: 50px;
+    }
+
+    /* Adjust font size for nav buttons */
+    .nav-bar button {
+        font-size: 1em; /* Smaller nav button text */
+    }
+}
+
+.nav-button:focus, .nav-button.focused {
+    outline: none; /* Remove default outline */
+    background-color: #f0f0f0; /* Light background on focus */
+    border: 2px solid #007BFF; /* Blue border on focus */
+    transition: background-color 0.3s, border 0.3s; /* Smooth transition */
 }

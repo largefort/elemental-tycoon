@@ -1,11 +1,19 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
   module.exports = [
     {
-      "id": "cordova-plugin-admobpro.AdMob",
-      "file": "plugins/cordova-plugin-admobpro/www/AdMob.js",
-      "pluginId": "cordova-plugin-admobpro",
+      "id": "com.telerik.plugins.nativepagetransitions.NativePageTransitions",
+      "file": "plugins/com.telerik.plugins.nativepagetransitions/www/NativePageTransitions.js",
+      "pluginId": "com.telerik.plugins.nativepagetransitions",
       "clobbers": [
-        "window.AdMob"
+        "window.plugins.nativepagetransitions"
+      ]
+    },
+    {
+      "id": "cordova-plugin-ionic-webview.IonicWebView",
+      "file": "plugins/cordova-plugin-ionic-webview/src/www/util.js",
+      "pluginId": "cordova-plugin-ionic-webview",
+      "clobbers": [
+        "Ionic.WebView"
       ]
     },
     {
@@ -25,75 +33,22 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       ]
     },
     {
-      "id": "com.telerik.plugins.nativepagetransitions.NativePageTransitions",
-      "file": "plugins/com.telerik.plugins.nativepagetransitions/www/NativePageTransitions.js",
-      "pluginId": "com.telerik.plugins.nativepagetransitions",
+      "id": "com.jafetegill.gameperformance.GamePerformance",
+      "file": "plugins/com.jafetegill.gameperformance/www/GamePerformance.js",
+      "pluginId": "com.jafetegill.gameperformance",
       "clobbers": [
-        "window.plugins.nativepagetransitions"
-      ]
-    },
-    {
-      "id": "cordova-plugin-device.device",
-      "file": "plugins/cordova-plugin-device/www/device.js",
-      "pluginId": "cordova-plugin-device",
-      "clobbers": [
-        "device"
-      ]
-    },
-    {
-      "id": "cordova-plugin-badge.Badge",
-      "file": "plugins/cordova-plugin-badge/www/badge.js",
-      "pluginId": "cordova-plugin-badge",
-      "clobbers": [
-        "cordova.plugins.notification.badge"
-      ]
-    },
-    {
-      "id": "@parrino/cordova-plugin-local-notifications.LocalNotification",
-      "file": "plugins/@parrino/cordova-plugin-local-notifications/www/local-notification.js",
-      "pluginId": "@parrino/cordova-plugin-local-notifications",
-      "clobbers": [
-        "cordova.plugins.notification.local"
-      ]
-    },
-    {
-      "id": "@parrino/cordova-plugin-local-notifications.LocalNotification.Core",
-      "file": "plugins/@parrino/cordova-plugin-local-notifications/www/local-notification-core.js",
-      "pluginId": "@parrino/cordova-plugin-local-notifications",
-      "clobbers": [
-        "cordova.plugins.notification.local.core",
-        "plugin.notification.local.core"
-      ]
-    },
-    {
-      "id": "@parrino/cordova-plugin-local-notifications.LocalNotification.Util",
-      "file": "plugins/@parrino/cordova-plugin-local-notifications/www/local-notification-util.js",
-      "pluginId": "@parrino/cordova-plugin-local-notifications",
-      "merges": [
-        "cordova.plugins.notification.local.core",
-        "plugin.notification.local.core"
-      ]
-    },
-    {
-      "id": "cordova-plugin-ionic-webview.IonicWebView",
-      "file": "plugins/cordova-plugin-ionic-webview/src/www/util.js",
-      "pluginId": "cordova-plugin-ionic-webview",
-      "clobbers": [
-        "Ionic.WebView"
+        "cordova.plugins.GamePerformance"
       ]
     }
   ];
   module.exports.metadata = {
-    "cordova-plugin-extension": "1.6.0",
-    "cordova-plugin-admobpro": "8.13.1",
+    "com.telerik.plugins.nativepagetransitions": "0.7.0",
     "cordova-plugin-android-fullscreen": "1.0.0",
+    "cordova-plugin-fastclick": "1.0.0",
+    "cordova-plugin-ionic-webview": "5.0.0",
+    "cordova-plugin-proguard": "2.2.0",
     "cordova-plugin-splashscreen": "6.0.1",
     "cordova-plugin-ui-sounds": "1.2.2",
-    "com.telerik.plugins.nativepagetransitions": "0.7.0",
-    "cordova-plugin-device": "3.0.0",
-    "cordova-plugin-badge": "0.8.9",
-    "@parrino/cordova-plugin-local-notifications": "1.0.5",
-    "cordova-plugin-ionic-webview": "5.0.0",
-    "cordova-plugin-fastclick": "1.0.0"
+    "com.jafetegill.gameperformance": "0.1.1"
   };
 });

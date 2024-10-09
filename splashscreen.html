@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-5816082932921993">
+    <title>Medieval Civilizations</title>
+    <style>
+        /* Add your custom splash screen styles here */
+        body {
+            background-color: #000000; /* Set background color */
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Hide scrollbars */
+        }
+        .splash-image {
+            width: 100vw; /* Set width to cover entire viewport width */
+            height: 100vh; /* Set height to cover entire viewport height */
+            object-fit: cover; /* Maintain aspect ratio and cover the container */
+        }
+        .loading-text {
+            position: fixed; /* Position loading text fixed to the screen */
+            top: 40%; /* Position above the progress bar */
+            left: 50%; /* Center loading text horizontally */
+            transform: translate(-50%, -50%); /* Center loading text */
+            font-size: 24px; /* Set font size for loading text */
+            color: #FFFFFF; /* Set text color to white */
+            font-family: 'MedievalSharp', serif; /* Use medieval-themed font */
+            text-align: center; /* Center align text */
+        }
+        .loading-tip {
+            position: fixed; /* Position loading tips fixed to the screen */
+            bottom: 20px; /* Add margin to separate from bottom */
+            left: 50%; /* Center loading tips horizontally */
+            transform: translateX(-50%); /* Center loading tips */
+            font-size: 18px; /* Set font size for loading tips */
+            color: #FFFFFF; /* Set text color to white */
+            font-family: 'MedievalSharp', serif; /* Use medieval-themed font */
+            text-align: center; /* Center align text */
+        }
+        .progress-bar {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 30px;
+            background-color: #555;
+            border: 2px solid #000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 10px #333;
+        }
+        .progress-bar-inner {
+            height: 100%;
+            width: 0;
+            background-color: #FFD700;
+            transition: width 0.5s;
+        }
+        .progress-bar-text {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-family: 'MedievalSharp', serif;
+            font-size: 16px;
+        }
+    </style>
+    <!-- Include MedievalFont -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap">
+</head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7136613030546059"
+        crossorigin="anonymous"></script> </head>
+<body>
+<!-- Add your splash screen content here -->
+<!-- Splash screen image -->
+<img class="splash-image" src="splashscreen.webp" alt="Splash Image">
+<div class="loading-text">Loading Elemental Tycoon...</div>
+<div class="progress-bar">
+    <div class="progress-bar-inner">
+        <div class="progress-bar-text">Pre-loading assets...</div>
+    </div>
+</div>
+<div class="loading-tip">Tip: Stay connected for the best experience!</div>
+
+<script>
+    const progressBarInner = document.querySelector('.progress-bar-inner');
+    const progressBarText = document.querySelector('.progress-bar-text');
+
+    const basePath = "https://raw.githubusercontent.com/largefort/medievalcivilizations/main";
+    const assets = [
+        { name: "pre-loading assets", url: `${basePath}/Users/krigsgaldr/MedievalCivilizations/platforms/android/app/src/main/assets/www/images` },
+        { name: "preloading-audio-files", url: `${basePath}https://github.com/largefort/medievalcivilizations/raw/main/audio` },
+        { name: "preloading user interface textures", url: `${basePath}/Users/krigsgaldr/MedievalCivilizations/platforms/android/app/src/main/assets/www/images/` },
+        { name: "loading script.js file", url: `${basePath}https://raw.githubusercontent.com/largefort/medievalcivilizations/main/script.js` },
+        { name: "loading game_darklord.html", url: `${basePath}https://raw.githubusercontent.com/largefort/medievalcivilizations/main/game_darklord.html` },
+        { name: "loading game_knight.html", url: `${basePath}https://raw.githubusercontent.com/largefort/medievalcivilizations/main/game_knight.html` },
+        { name: "loading game_lord.html", url: `${basePath}https://raw.githubusercontent.com/largefort/medievalcivilizations/main/game_lord.html` },
+        { name: "loading game_paladin.html", url: `${basePath}https://raw.githubusercontent.com/largefort/medievalcivilizations/main/game_paladin.html` },
+        { name: "loading game_wizard.html", url: `${basePath}https://raw.githubusercontent.com/largefort/medievalcivilizations/main/game_wizard.html` }
+    ];
+
+    let totalSize = 0;
+    let loadedSize = 0;
+    const minimumLoadTime = 1000; // 50 seconds
+
+    async function getFileSize(url) {
+        const response = await fetch(url, { method: 'HEAD' });
+        const contentLength = response.headers.get('Content-Length');
+        return contentLength ? parseInt(contentLength, 10) : 0;
+    }
+
+    async function preloadAsset(asset) {
+        const size = await getFileSize(asset.url);
+        totalSize += size;
+
+        return fetch(asset.url)
+            .then(response => response.blob())
+            .then(blob => {
+                loadedSize += size;
+                progressBarText.textContent = asset.name;
+                updateProgressBar();
+            })
+            .catch(error => {
+                console.error(`Failed to load ${asset.name}:`, error);
+            });
+    }
+
+    async function preloadAssets() {
+        for (const asset of assets) {
+            await new Promise(resolve => setTimeout(resolve, minimumLoadTime / assets.length)); // Ensures minimum load time
+            await preloadAsset(asset);
+        }
+        setTimeout(function() {
+            window.location.href = "index.html"; // Redirect to the main game HTML file
+        }, 500);
+    }
+
+    function updateProgressBar() {
+        const progressPercentage = (loadedSize / totalSize) * 100;
+        progressBarInner.style.width = progressPercentage + '%';
+        progressBarText.textContent = `Loading: ${Math.round(progressPercentage)}%`;
+    }
+
+    preloadAssets();
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5816082932921993"
+        crossorigin="anonymous"></script>
+</body>
+</html>
