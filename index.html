@@ -7,30 +7,30 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="elementalicons.css">
 </head>
-</head>
 <body>
     <main id="game">
+        <!-- Header -->
         <header>
             <h1>Elemental Tycoon</h1>
         </header>
 
-        <!-- Total Money and EPS Section -->
-        <section id="stats">
-            <div id="money-container">
+        <!-- Stats and EPS Section -->
+        <section id="stats-eps">
+            <div id="stats">
                 <h3>Total Money: $<span id="money">0</span></h3>
                 <h3>Prestige Currency: <span id="essence">0</span> Essence</h3>
                 <h3>Prestige Multiplier: x<span id="prestige-multiplier">1</span></h3>
             </div>
-            <div id="eps-container">
+            <div id="eps">
                 <h4>Elements per Second (EPS)</h4>
-                <div id="eps">
-                    <p>Fire: <span id="fire-eps">0</span> EPS</p>
-                    <p>Water: <span id="water-eps">0</span> EPS</p>
-                    <p>Earth: <span id="earth-eps">0</span> EPS</p>
-                    <p>Air: <span id="air-eps">0</span> EPS</p>
-                    <p>Light: <span id="light-eps">0</span> EPS</p>
-                    <p>Dark: <span id="dark-eps">0</span> EPS</p>
-                    <p>Void: <span id="void-eps">0</span> EPS</p>
+                <div class="eps-values">
+                    <p>Fire: <span id="fire-eps">0</span></p>
+                    <p>Water: <span id="water-eps">0</span></p>
+                    <p>Earth: <span id="earth-eps">0</span></p>
+                    <p>Air: <span id="air-eps">0</span></p>
+                    <p>Light: <span id="light-eps">0</span></p>
+                    <p>Dark: <span id="dark-eps">0</span></p>
+                    <p>Void: <span id="void-eps">0</span></p>
                 </div>
             </div>
         </section>
@@ -143,84 +143,31 @@
                 <button onclick="buyMarketing('void')">Promote Void ($10)</button>
             </div>
         </section>
-
-        <!-- Prestige System Section -->
-        <section id="prestige">
-            <h2>Prestige System</h2>
-            <button onclick="prestige()">Prestige (Requires $100,000)</button>
-            <p>Prestige Multiplier: x<span id="prestige-multiplier">1</span></p>
+            <div id="prestige">
+                <h2>Prestige System</h2>
+                <button onclick="prestige()">Prestige (Requires $100,000)</button>
+                <p>Prestige Multiplier: x<span id="prestige-multiplier">1</span></p>
+            </div>
         </section>
 
-         <!-- Version Switching Section -->
-        <section id="version-switching" class="center-text">
-            <h2>Version Switching</h2>
-            <button onclick="switchVersion('live')" aria-label="Switch to Live Version">Switch to Live Version</button>
-            <button onclick="switchVersion('alpha')" aria-label="Switch to Alpha Version">Switch to Alpha Version</button>
-            <button onclick="switchVersion('mobile')" aria-label="Switch to Mobile Version">Switch to Mobile Version</button>
+        <!-- Bottom Sections -->
+        <section id="bottom-sections">
+            <div id="version-switching">
+                <h2>Version Switching</h2>
+                <button onclick="switchVersion('live')">Switch to Live Version</button>
+                <button onclick="switchVersion('alpha')">Switch to Alpha Version</button>
+                <button onclick="switchVersion('mobile')">Switch to Mobile Version</button>
+            </div>
+            <div id="reset">
+                <button onclick="deleteProgress()">Delete Progress</button>
+            </div>
+            <div id="jokes">
+                <h2>Jokes of The Day-disabled-for-good</h2>
+                <p id="joke-display">Click the button for a joke!</p>
+                <button onclick="getRandomJoke()">Get a Joke!</button>
+            </div>
         </section>
-
-        <!-- Reset Progress Button -->
-        <section id="reset">
-            <button onclick="deleteProgress()">Delete Progress</button>
-        </section>
-
-<!-- Jokes Section -->
-<section id="jokes">
-    <h2>Jokes of The Days</h2>
-    <p id="joke-display">Click the button for a joke!</p>
-    <button onclick="getRandomJoke()">Get a Joke!</button>
-</section>
     </main>
     <script src="script.js"></script>
-    <script>
-       // Array of jokes
-const jokes = [
-    "Why did Jafet take so long to develop Elemental Tycoon? Because every time he gathered resources, he just kept getting 'element'-ary jokes!",
-    "What do you call a water element in Elemental Tycoon? A 'drip' of Jafet's creativity!",
-    "Why did the fire resource break up with Jafet? It found him too 'cool' to handle!",
-    "Jafet tried to automate the fire gathering but ended up creating a 'flame war' with his own jokes!",
-    "Why do the elements love Jafet? Because he always brings the 'light' into their dark moments!",
-    "Jafet was so focused on gathering earth elements that he forgot to plant his ideas!",
-    "What did the air resource say when Jafet finally finished a feature? 'Finally, you let us breathe!'",
-    "Why was Jafet's Elemental Tycoon development team always calm? Because they learned to go with the flow of the water elements!",
-    "Why does Jafet think he's the best at gathering fire? Because he's always on fire with ideas!",
-    "What do you call Jafet when he’s deep in coding? A 'code-emon'!",
-    "Why did the void element invite Jafet to its party? Because it wanted to fill the void with laughter!",
-    "How did Jafet become a millionaire in Elemental Tycoon? He learned to 'cash' in on all the elements!",
-    "Why did Jafet's earth element break? It couldn't handle all the pressure from his high expectations!",
-    "What’s Jafet’s favorite type of music? Elemental rock!",
-    "Why did the water element refuse to play poker with Jafet? Because he always 'bluffed' his way to the top!",
-    "How does Jafet keep track of his elements? With a 'element-ary' spreadsheet!",
-    "Why was Jafet’s computer always so calm? Because it had plenty of 'cache'!",
-    "What did Jafet say when he finished a new feature? 'Element-ary, my dear Watson!'",
-    "Why did the light element always follow Jafet? Because it knew he’d brighten its day!",
-    "Why does Jafet love developing games? Because it’s his 'element' of fun!",
-    "What do you get when you cross Jafet and a fire element? A blazing success!",
-    "How does Jafet like his coffee? With a dash of 'element-ary' flavors!",
-    "What did the air element say to Jafet at the start of a meeting? 'Let’s get this breeze rolling!'",
-    "Why did the earth element want to be friends with Jafet? Because it wanted to grow together!",
-    "What’s Jafet's secret weapon in Elemental Tycoon? A 'punchline' upgrade!",
-    "Why does Jafet always win at Elemental Tycoon? Because he knows how to 'tap' into resources!",
-    "How did Jafet feel after a successful update? Like he had just gathered a mountain of joy!",
-    "What does Jafet say to inspire his team? 'Let’s make this game an 'element' of surprise!'",
-    "Why do players love Jafet's Elemental Tycoon? Because it’s full of 'puns' and 'fun'!",
-    "What did the dark element whisper to Jafet? 'You light up my world!'",
-    "Why did Jafet take a break from coding? To recharge his 'elemental' batteries!",
-    "What do you call Jafet when he’s brainstorming? A 'thinking fireball'!",
-    "Why did Jafet add more features to Elemental Tycoon? He wanted to keep the game 'elemental' and interesting!",
-    "What did Jafet say when he discovered a new element? 'This is 'un-elemented' territory!'",
-    "Why does Jafet love using animations in Elemental Tycoon? Because they make the elements come alive!",
-    "How did Jafet become an expert at gathering elements? He had a knack for 'collecting' good ideas!",
-    "What’s Jafet’s motto for Elemental Tycoon? 'Keep calm and gather elements!'",
-    "Why did the players cheer for Jafet? Because he made their gaming experience 'element-ary' fun!"
-];
-
-// Function to get a random joke
-function getRandomJoke() {
-    const randomIndex = Math.floor(Math.random() * jokes.length);
-    const jokeDisplay = document.getElementById('joke-display');
-    jokeDisplay.textContent = jokes[randomIndex];
-}
-    </script>
 </body>
 </html>
