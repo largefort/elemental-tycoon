@@ -1,7 +1,7 @@
 /* Global Styles */
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #1f1f2e;
+    background: linear-gradient(to bottom, #121212, #1f1f2e);
     color: #e0e0e0;
     margin: 0;
     padding: 0;
@@ -14,12 +14,12 @@ body {
 }
 
 #game {
-    background-color: #2c2f38;
+    background: linear-gradient(to bottom, #2c2f38, #232429);
     padding: 30px;
     border-radius: 15px;
     width: 90%;
     max-width: 1200px; /* Constrain max width for large screens */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
     text-align: center;
     margin: 20px auto; /* Centered and responsive */
     transition: all 0.3s;
@@ -65,17 +65,20 @@ h1, h2, h3, h4 {
     border-radius: 12px;
     box-sizing: border-box;
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
     transition: transform 0.2s, background-color 0.3s;
     width: 100%; /* Take full width in a flex container */
     max-width: 300px; /* Constrain width for better balance */
     margin: 0 auto; /* Center the element */
     position: relative; /* For positioning animated effects */
     overflow: hidden; /* Hide overflow for visual effects */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(145deg, #3c3f48, #2c2f38);
 }
 
 .resource:hover {
-    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    transform: translateY(-10px);
 }
 
 .resource-buttons {
@@ -96,89 +99,43 @@ h1, h2, h3, h4 {
 }
 
 /* Element Colors and Animated Backgrounds */
-#fire-resource {
-    background-color: #e57373;
-    background-image: url('fire.gif'); 
-    background-size: cover;
-    background-position: center;
-    animation: flicker 3s infinite; 
-}
-#water-resource {
-    background-color: #64b5f6;
-    background-image: url('water.gif'); 
-    background-size: cover;
-    background-position: center;
-    animation: wave 5s infinite; 
-}
-#earth-resource {
-    background-color: #a1887f;
-    background-image: url('earth.gif'); 
-    background-size: cover;
-    background-position: center;
-    animation: shake 4s infinite; 
-}
-#air-resource {
-    background-color: #cfd8dc;
-    background-image: url('air.gif'); 
+#fire-resource, #water-resource, #earth-resource, #air-resource, #light-resource, #dark-resource, #void-resource {
     background-size: cover;
     background-position: center;
     filter: brightness(0.85);
-    animation: breeze 6s infinite; 
+    animation: elementAnimation 7s infinite;
 }
+
+#fire-resource {
+    background-image: url('fire.gif');
+}
+
+#water-resource {
+    background-image: url('water.gif');
+}
+
+#earth-resource {
+    background-image: url('earth.gif');
+}
+
+#air-resource {
+    background-image: url('air.gif');
+}
+
 #light-resource {
-    background-color: #fff176;
-    background-image: url('light.gif'); 
-    background-size: cover;
-    background-position: center;
-    animation: glow 3s infinite; 
+    background-image: url('light.gif');
 }
+
 #dark-resource {
-    background-color: #8d6e63;
-    background-image: url('dark.gif'); 
-    background-size: cover;
-    background-position: center;
-    animation: shadowPulse 5s infinite; 
+    background-image: url('dark.gif');
 }
+
 #void-resource {
-    background-color: #7986cb;
-    background-image: url('void.gif'); 
-    background-size: cover;
-    background-position: center;
-    animation: voidSwirl 7s infinite; 
+    background-image: url('void.gif');
 }
 
 /* Animated Effects */
-@keyframes flicker {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
-}
-
-@keyframes wave {
-    0% { background-position: left; }
-    100% { background-position: right; }
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(-2px); }
-}
-
-@keyframes breeze {
-    0% { background-position: top; }
-    100% { background-position: bottom; }
-}
-
-@keyframes glow {
-    0%, 100% { opacity: 0.8; }
-    50% { opacity: 1; }
-}
-
-@keyframes shadowPulse {
-    0%, 100% { box-shadow: inset 0 0 10px #000000; }
-    50% { box-shadow: inset 0 0 20px #000000; }
-}
-
-@keyframes voidSwirl {
+@keyframes elementAnimation {
     0% { background-position: 0 0; }
     100% { background-position: 100% 100%; }
 }
@@ -186,12 +143,12 @@ h1, h2, h3, h4 {
 /* Progress Bar Styles */
 .progress {
     width: 100%;
-    height: 20px; 
-    background-color: rgba(0, 0, 0, 0.3); 
+    height: 20px;
+    background-color: rgba(0, 0, 0, 0.3);
     margin-top: 10px;
     border-radius: 8px;
     overflow: hidden;
-    position: relative;
+    position:relative;
     color: #ffffff;
     display: flex;
     align-items: center;
@@ -208,22 +165,9 @@ h1, h2, h3, h4 {
     left: 0;
     top: 0;
     transition: width 0.4s ease-in-out;
-    z-index: 3; 
+    z-index: 3;
     border-radius: 8px;
-}
-
-/* Progress Bar Colors */
-#fire-resource .progress .progress-bar { background-color: #ef9a9a; }
-#water-resource .progress .progress-bar { background-color: #90caf9; }
-#earth-resource .progress .progress-bar { background-color: #bcaaa4; }
-#air-resource .progress .progress-bar { background-color: #e1f5fe; }
-#light-resource .progress .progress-bar { background-color: #fff59d; }
-#dark-resource .progress .progress-bar { background-color: #a1887f; }
-#void-resource .progress .progress-bar { background-color: #9fa8da; }
-
-.progress span {
-    z-index: 4;
-    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 /* Redesigned Button Styles */
@@ -238,7 +182,7 @@ button {
     font-weight: 500;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     transition: background 0.3s, transform 0.2s;
-    z-index: 5; 
+    z-index: 5;
 }
 
 button:hover {
@@ -261,19 +205,18 @@ button:active {
     align-items: center;
     gap: 15px;
     flex-wrap: wrap; /* Allows wrapping on smaller screens */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 #marketing button {
     margin: 8px 4px;
     background: linear-gradient(145deg, #ff8a65, #ff7043);
-    padding: 8px 16px; 
+    padding: 8px 16px;
 }
 
 #prestige button {
     margin: 8px 4px;
     background: linear-gradient(145deg, #81c784, #66bb6a);
-    padding: 8px 16px; 
+    padding: 8px 16px;
 }
 
 /* Responsive Styles */
