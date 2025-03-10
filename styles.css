@@ -148,7 +148,7 @@ h1, h2, h3, h4 {
     margin-top: 10px;
     border-radius: 8px;
     overflow: hidden;
-    position:relative;
+    position: relative;
     color: #ffffff;
     display: flex;
     align-items: center;
@@ -232,4 +232,27 @@ button:active {
     .resource {
         max-width: 90%; /* Increase width on small screens */
     }
+}
+
+/* --- Linux Firefox Specific Tweaks --- */
+.linux-firefox body {
+    font-size: 16px; /* Increase base font size for improved readability */
+}
+
+.linux-firefox h1,
+.linux-firefox h2,
+.linux-firefox h3,
+.linux-firefox h4 {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    font-weight: 400;
+}
+
+.linux-firefox button {
+    font-size: 16px;
+    padding: 12px 20px;
+}
+
+/* Optional: Adjust animation speed if needed for better clarity */
+.linux-firefox .resource {
+    animation: elementAnimation 10s infinite;
 }
