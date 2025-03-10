@@ -6,6 +6,12 @@
     <title>Elemental Tycoon</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="elementalicons.css">
+    <script>
+      if (navigator.userAgent.toLowerCase().includes('linux') &&
+          navigator.userAgent.toLowerCase().includes('firefox')) {
+        document.documentElement.classList.add('linux-firefox');
+      }
+    </script>
 </head>
 <body>
     <main id="game">
@@ -35,7 +41,7 @@
             </div>
         </section>
 
-          <!-- Element Resource Sections -->
+        <!-- Element Resource Sections -->
         <div id="resources">
             <!-- Fire Resource -->
             <div class="resource" id="fire-resource">
@@ -128,7 +134,6 @@
                 </div>
             </div>
         </div>
-    </section>
 
         <!-- Marketing Strategies Section -->
         <section id="marketing">
@@ -143,12 +148,11 @@
                 <button onclick="buyMarketing('void')">Promote Void ($10)</button>
             </div>
         </section>
-            <div id="prestige">
-                <h2>Prestige System</h2>
-                <button onclick="prestige()">Prestige (Requires $100,000)</button>
-                <p>Prestige Multiplier: x<span id="prestige-multiplier">1</span></p>
-            </div>
-        </section>
+        <div id="prestige">
+            <h2>Prestige System</h2>
+            <button onclick="prestige()">Prestige (Requires $100,000)</button>
+            <p>Prestige Multiplier: x<span id="prestige-multiplier">1</span></p>
+        </div>
 
         <!-- Bottom Sections -->
         <section id="bottom-sections">
@@ -170,23 +174,23 @@
     </main>
     <script src="script.js"></script>
     <script>
-  (function (w, d, s, o, f, js, fjs) {
-    w["botsonic_widget"] = o;
-    w[o] =
-      w[o] ||
-      function () {
-        (w[o].q = w[o].q || []).push(arguments);
-      };
-    (js = d.createElement(s)), (fjs = d.getElementsByTagName(s)[0]);
-    js.id = o;
-    js.src = f;
-    js.async = 1;
-    fjs.parentNode.insertBefore(js, fjs);
-  })(window, document, "script", "Botsonic", "https://widget.botsonic.com/CDN/botsonic.min.js");
-  Botsonic("init", {
-    serviceBaseUrl: "https://api-azure.botsonic.ai",
-    token: "0588aeb7-5da3-4187-8dc9-8a492b0a74e8",
-  });
-</script>
+      (function (w, d, s, o, f, js, fjs) {
+        w["botsonic_widget"] = o;
+        w[o] =
+          w[o] ||
+          function () {
+            (w[o].q = w[o].q || []).push(arguments);
+          };
+        (js = d.createElement(s)), (fjs = d.getElementsByTagName(s)[0]);
+        js.id = o;
+        js.src = f;
+        js.async = 1;
+        fjs.parentNode.insertBefore(js, fjs);
+      })(window, document, "script", "Botsonic", "https://widget.botsonic.com/CDN/botsonic.min.js");
+      Botsonic("init", {
+        serviceBaseUrl: "https://api-azure.botsonic.ai",
+        token: "0588aeb7-5da3-4187-8dc9-8a492b0a74e8",
+      });
+    </script>
 </body>
 </html>
