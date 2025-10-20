@@ -1,177 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elemental Tycoon</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="elementalicons.css">
-    <script>
-      if (navigator.userAgent.toLowerCase().includes('linux') &&
-          navigator.userAgent.toLowerCase().includes('firefox')) {
-        document.documentElement.classList.add('linux-firefox');
-      }
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elemental Tycoon — New UI</title>
+  <!-- System/UA tweak preserved -->
+  <script>
+    if (navigator.userAgent.toLowerCase().includes('linux') &&
+        navigator.userAgent.toLowerCase().includes('firefox')) {
+      document.documentElement.classList.add('linux-firefox');
+    }
+  </script>
+
+  <!-- Design tokens + reset -->
+  <style>
+    :root{
+      --bg: #0a0b0f;
+      --panel: #11131a;
+      --panel-2:#0d0f15;
+      --card: #141824;
+      --text: #e6eefc;
+      --muted: #9fb0cc;
+      --brand:#6bdcff;        /* Aurora cyan */
+      --brand-2:#a78bfa;      /* soft purple */
+      --accent:#00ffa3;       /* mint */
+      --danger:#ff6b6b;
+      --good:#64d69a;
+      --warning:#ffcf56;
+      --ring: 0 0 0 2px rgba(107,220,255,.24),0 8px 30px rgba(0,0,0,.45);
+      --radius: 16px;
+      --gap: 16px;
+      --shadow: 0 6px 28px rgba(0,0,0,.35);
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:radial-gradient(1200px 800px at 10% -10%, rgba(107,220,255,.08), transparent 60%),
+                        radial-gradient(1200px 800px at 110% 20%, rgba(167,139,250,.08), transparent 60%),
+                        var(--bg);color:var(--text);font:500 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";}
+    img{display:block;max-width:100%}
+    h1,h2,h3,h4{margin:0 0 6px}
+    button{font:600 14px/1 system-ui;cursor:pointer;border:0;border-radius:12px;padding:.75rem 1rem;background:#1a2130;color:var(--text);box-shadow:var(--shadow);transition:.2s transform,.2s opacity,.2s filter}
+    button:hover{transform:translateY(-1px)}
+    button:active{transform:translateY(0)}
+    .btn-primary{background:linear-gradient(140deg,var(--brand),var(--brand-2));color:#071018}
+    .btn-ghost{background:#0f131e}
+    .btn-danger{background:linear-gradient(140deg,#ff4d4d,#e43f5a)}
+    .btn-warning{background:linear-gradient(140deg,#ffcf56,#ff9a3d);color:#1a0f00}
+    .badge{display:inline-flex;align-items:center;gap:.35rem;padding:.35rem .6rem;border-radius:999px;background:#0e1421;color:var(--muted);font-size:.8rem}
+
+    /* Layout */
+    #game{display:grid;grid-template-columns:280px 1fr 340px;grid-template-rows:auto 1fr auto;gap:var(--gap);min-height:100svh;padding:var(--gap)}
+    header{grid-column:1 / -1;background:linear-gradient(180deg,rgba(107,220,255,.15),rgba(167,139,250,.08) 50%, transparent 100%), var(--panel);border-radius:var(--radius);padding:18px 18px 14px;box-shadow:var(--shadow);position:sticky;top:0;z-index:10}
+
+    /* Header content */
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand .mark{width:36px;height:36px;border-radius:10px;background:conic-gradient(from 210deg, var(--brand), var(--brand-2), var(--accent));filter:drop-shadow(0 8px 16px rgba(107,220,255,.25))}
+    .brand h1{font-size:1.25rem;letter-spacing:.4px}
+    .stats-quick{display:flex;flex-wrap:wrap;gap:10px}
+    .stats-quick .pill{background:var(--card);border:1px solid rgba(255,255,255,.06);padding:.55rem .8rem;border-radius:999px;display:flex;align-items:center;gap:.5rem}
+    .stats-quick strong{font-weight:700}
+
+    /* Side: Elements nav */
+    .sidebar{background:var(--panel-2);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px}
+    .sidebar h2{font-size:.95rem;color:var(--muted);letter-spacing:.2px;margin-bottom:6px}
+    .element-list{display:grid;grid-template-columns:1fr;gap:8px}
+    .element-chip{display:flex;align-items:center;gap:10px;padding:.6rem .7rem;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.06)}
+    .element-chip .ico{width:22px;height:22px;border-radius:8px;flex:0 0 22px;background:#0d111a}
+    .element-chip .name{font-weight:600}
+    .element-chip .val{margin-left:auto;color:var(--muted)}
+
+    /* Main: Resource grid */
+    .content{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap)}
+    .card{background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.06)}
+    .resources{grid-column:1/ -1;display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap)}
+    .resource{grid-column: span 6}
+    @media (min-width:1100px){.resource{grid-column: span 4}}
+    @media (min-width:1500px){.resource{grid-column: span 3}}
+
+    .resource h3{display:flex;align-items:center;gap:10px;font-size:1rem}
+    .resource .element-icon{width:22px;height:22px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(107,220,255,.25))}
+
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 12px}
+    .progress{position:relative;height:10px;background:#0d121e;border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+    .bar{position:absolute;inset:0;transform-origin:left;background:linear-gradient(90deg,var(--brand) 0%, var(--brand-2) 100%);width:0}
+    .progress .pct{position:absolute;inset-block:-26px auto;inset-inline:auto 0;font-size:.8rem;color:var(--muted)}
+
+    /* Right: EPS + Actions */
+    .rightbar{display:flex;flex-direction:column;gap:var(--gap)}
+    .eps{display:grid;gap:8px}
+    .eps h3{font-size:1rem;margin-bottom:4px}
+    .eps-row{display:flex;align-items:center;gap:8px;justify-content:space-between;padding:.45rem .6rem;border-radius:12px;background:#0e1421;border:1px solid rgba(255,255,255,.06)}
+    .eps-label{display:flex;align-items:center;gap:8px}
+    .eps-val{font-feature-settings:"tnum" on, "lnum" on}
+
+    .marketing .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+
+    /* Footer tools */
+    footer{grid-column:1 / -1;display:grid;grid-template-columns:1fr auto auto;gap:var(--gap);align-items:start}
+    .foot-group{background:var(--panel);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.06)}
+    .foot-group h4{font-size:.95rem;color:var(--muted);margin-bottom:8px}
+    .versions button{min-width:160px}
+    details summary{cursor:pointer;list-style:none}
+    details summary::-webkit-details-marker{display:none}
+
+    /* Utility */
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
 </head>
 <body>
-    <main id="game">
-        <!-- Header -->
-        <header>
-            <h1>Elemental Tycoon</h1>
-        </header>
-
-        <!-- Stats and EPS Section -->
-        <section id="stats-eps">
-            <div id="stats">
-                <h3>Total Money: $<span id="money">0</span></h3>
-                <h3>Prestige Currency: <span id="essence">0</span> Essence</h3>
-                <h3>Prestige Multiplier: x<span id="prestige-multiplier">1</span></h3>
-            </div>
-            <div id="eps">
-                <h4>Elements per Second (EPS)</h4>
-                <div class="eps-values">
-                    <p>Fire: <span id="fire-eps">0</span></p>
-                    <p>Water: <span id="water-eps">0</span></p>
-                    <p>Earth: <span id="earth-eps">0</span></p>
-                    <p>Air: <span id="air-eps">0</span></p>
-                    <p>Light: <span id="light-eps">0</span></p>
-                    <p>Dark: <span id="dark-eps">0</span></p>
-                    <p>Void: <span id="void-eps">0</span></p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Element Resource Sections -->
-        <div id="resources">
-            <!-- Fire Resource -->
-            <div class="resource" id="fire-resource">
-                <h2><img src="fire-icon.png" class="element-icon" alt="Fire Icon"> Fire: <span id="fire">0</span></h2>
-                <div class="resource-buttons">
-                    <button onclick="gather('fire')">Gather Fire</button>
-                    <button onclick="buyAutomation('fire')">Automate Fire ($50)</button>
-                </div>
-                <div class="progress" id="fire-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-
-            <!-- Water Resource -->
-            <div class="resource" id="water-resource">
-                <h2><img src="water-icon.png" class="element-icon" alt="Water Icon"> Water: <span id="water">0</span></h2>
-                <div class="resource-buttons">
-                    <button onclick="gather('water')">Gather Water</button>
-                    <button onclick="buyAutomation('water')">Automate Water ($50)</button>
-                </div>
-                <div class="progress" id="water-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-
-            <!-- Earth Resource -->
-            <div class="resource" id="earth-resource">
-                <h2><img src="earth-icon.png" class="element-icon" alt="Earth Icon"> Earth: <span id="earth">0</span></h2>
-                <div class="resource-buttons">
-                    <button onclick="gather('earth')">Gather Earth</button>
-                    <button onclick="buyAutomation('earth')">Automate Earth ($50)</button>
-                </div>
-                <div class="progress" id="earth-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-
-            <!-- Air Resource -->
-            <div class="resource" id="air-resource">
-                <h2><img src="air-icon.png" class="element-icon" alt="Air Icon"> Air: <span id="air">0</span></h2>
-                <div class="resource-buttons">
-                    <button onclick="gather('air')">Gather Air</button>
-                    <button onclick="buyAutomation('air')">Automate Air ($50)</button>
-                </div>
-                <div class="progress" id="air-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-
-            <!-- Light Resource -->
-            <div class="resource" id="light-resource">
-                <h2><img src="light-icon.png" class="element-icon" alt="Light Icon"> Light: <span id="light">0</span></h2>
-                <div class="resource-buttons">
-                    <button onclick="gather('light')">Gather Light</button>
-                    <button onclick="buyAutomation('light')">Automate Light ($50)</button>
-                </div>
-                <div class="progress" id="light-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-
-            <!-- Dark Resource -->
-            <div class="resource" id="dark-resource">
-                <h2><img src="dark-icon.png" class="element-icon" alt="Dark Icon"> Dark: <span id="dark">0</span></h2>
-                <div class="resource-buttons">
-                    <button onclick="gather('dark')">Gather Dark</button>
-                    <button onclick="buyAutomation('dark')">Automate Dark ($50)</button>
-                </div>
-                <div class="progress" id="dark-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
-
-            <!-- Void Resource -->
-            <div class="resource" id="void-resource">
-                <h2><img src="void-icon.png" class="element-icon" alt="Void Icon"> Void: <span id="void">0</span></h2>
-                <div class="resource-buttons">
-                    <button onclick="gather('void')">Gather Void</button>
-                    <button onclick="buyAutomation('void')">Automate Void ($50)</button>
-                </div>
-                <div class="progress" id="void-progress">
-                    <div class="progress-bar"></div>
-                    <span>0%</span>
-                </div>
-            </div>
+  <main id="game" aria-label="Elemental Tycoon UI">
+    <!-- Header -->
+    <header>
+      <div class="topbar">
+        <div class="brand">
+          <span class="mark" aria-hidden="true"></span>
+          <h1>Elemental Tycoon</h1>
         </div>
-
-        <!-- Marketing Strategies Section -->
-        <section id="marketing">
-            <h2>Marketing Strategies</h2>
-            <div class="marketing-buttons">
-                <button onclick="buyMarketing('fire')">Promote Fire ($10)</button>
-                <button onclick="buyMarketing('water')">Promote Water ($10)</button>
-                <button onclick="buyMarketing('earth')">Promote Earth ($10)</button>
-                <button onclick="buyMarketing('air')">Promote Air ($10)</button>
-                <button onclick="buyMarketing('light')">Promote Light ($10)</button>
-                <button onclick="buyMarketing('dark')">Promote Dark ($10)</button>
-                <button onclick="buyMarketing('void')">Promote Void ($10)</button>
-            </div>
-        </section>
-        <div id="prestige">
-            <h2>Prestige System</h2>
-            <button onclick="prestige()">Prestige (Requires $100,000)</button>
-            <p>Prestige Multiplier: x<span id="prestige-multiplier">1</span></p>
+        <div class="stats-quick" role="status" aria-live="polite">
+          <span class="pill">💰 Total Money: <strong>$<span id="money">0</span></strong></span>
+          <span class="pill">💎 Essence: <strong><span id="essence">0</span></strong></span>
+          <span class="pill">✨ Prestige x<strong><span id="prestige-multiplier">1</span></strong></span>
         </div>
+      </div>
+    </header>
 
-        <!-- Bottom Sections -->
-        <section id="bottom-sections">
-            <div id="version-switching">
-                <h2>Version Switching</h2>
-                <button onclick="switchVersion('live')">Switch to Live Version</button>
-                <button onclick="switchVersion('alpha')">Switch to Alpha Version</button>
-                <button onclick="switchVersion('mobile')">Switch to Mobile Version</button>
-            </div>
-            <div id="reset">
-                <button onclick="deleteProgress()">Delete Progress</button>
-            </div>
-            <div id="jokes">
-                <h2>Jokes of The Day-disabled-for-good</h2>
-                <p id="joke-display">Click the button for a joke!</p>
-                <button onclick="getRandomJoke()">Get a Joke!</button>
-            </div>
-        </section>
-    </main>
-    <script src="script.js"></script>
+    <!-- Left Sidebar: compact element readout -->
+    <aside class="sidebar" aria-label="Resource overview">
+      <h2>Resources</h2>
+      <div class="element-list">
+        <div class="element-chip"><span class="ico" style="background:linear-gradient(180deg,#ff7a59,#ff3d3d)"></span><span class="name">Fire</span><span class="val" id="fire">0</span></div>
+        <div class="element-chip"><span class="ico" style="background:linear-gradient(180deg,#5bb8ff,#3484ff)"></span><span class="name">Water</span><span class="val" id="water">0</span></div>
+        <div class="element-chip"><span class="ico" style="background:linear-gradient(180deg,#9cc86b,#5daa3a)"></span><span class="name">Earth</span><span class="val" id="earth">0</span></div>
+        <div class="element-chip"><span class="ico" style="background:linear-gradient(180deg,#bfe2ff,#9cc8ff)"></span><span class="name">Air</span><span class="val" id="air">0</span></div>
+        <div class="element-chip"><span class="ico" style="background:linear-gradient(180deg,#fff3b0,#ffd166)"></span><span class="name">Light</span><span class="val" id="light">0</span></div>
+        <div class="element-chip"><span class="ico" style="background:linear-gradient(180deg,#7a7a9c,#3d3d6b)"></span><span class="name">Dark</span><span class="val" id="dark">0</span></div>
+        <div class="element-chip"><span class="ico" style="background:linear-gradient(180deg,#6a00f4,#1a0532)"></span><span class="name">Void</span><span class="val" id="void">0</span></div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <section class="content" aria-label="Main actions and production">
+      <div class="resources">
+        <!-- Fire -->
+        <article class="card resource" id="fire-resource">
+          <h3><img src="fire-icon.png" alt="" class="element-icon"/> Fire</h3>
+          <div class="actions">
+            <button class="btn-primary" onclick="gather('fire')">Gather Fire</button>
+            <button class="btn-ghost" onclick="buyAutomation('fire')">Automate Fire ($50)</button>
+          </div>
+          <div class="progress" id="fire-progress" aria-label="Fire progress" aria-live="polite">
+            <div class="bar" style="width:0%"></div>
+            <span class="pct">0%</span>
+          </div>
+        </article>
+
+        <!-- Water -->
+        <article class="card resource" id="water-resource">
+          <h3><img src="water-icon.png" alt="" class="element-icon"/> Water</h3>
+          <div class="actions">
+            <button class="btn-primary" onclick="gather('water')">Gather Water</button>
+            <button class="btn-ghost" onclick="buyAutomation('water')">Automate Water ($50)</button>
+          </div>
+          <div class="progress" id="water-progress">
+            <div class="bar" style="width:0%"></div>
+            <span class="pct">0%</span>
+          </div>
+        </article>
+
+        <!-- Earth -->
+        <article class="card resource" id="earth-resource">
+          <h3><img src="earth-icon.png" alt="" class="element-icon"/> Earth</h3>
+          <div class="actions">
+            <button class="btn-primary" onclick="gather('earth')">Gather Earth</button>
+            <button class="btn-ghost" onclick="buyAutomation('earth')">Automate Earth ($50)</button>
+          </div>
+          <div class="progress" id="earth-progress">
+            <div class="bar" style="width:0%"></div>
+            <span class="pct">0%</span>
+          </div>
+        </article>
+
+        <!-- Air -->
+        <article class="card resource" id="air-resource">
+          <h3><img src="air-icon.png" alt="" class="element-icon"/> Air</h3>
+          <div class="actions">
+            <button class="btn-primary" onclick="gather('air')">Gather Air</button>
+            <button class="btn-ghost" onclick="buyAutomation('air')">Automate Air ($50)</button>
+          </div>
+          <div class="progress" id="air-progress">
+            <div class="bar" style="width:0%"></div>
+            <span class="pct">0%</span>
+          </div>
+        </article>
+
+        <!-- Light -->
+        <article class="card resource" id="light-resource">
+          <h3><img src="light-icon.png" alt="" class="element-icon"/> Light</h3>
+          <div class="actions">
+            <button class="btn-primary" onclick="gather('light')">Gather Light</button>
+            <button class="btn-ghost" onclick="buyAutomation('light')">Automate Light ($50)</button>
+          </div>
+          <div class="progress" id="light-progress">
+            <div class="bar" style="width:0%"></div>
+            <span class="pct">0%</span>
+          </div>
+        </article>
+
+        <!-- Dark -->
+        <article class="card resource" id="dark-resource">
+          <h3><img src="dark-icon.png" alt="" class="element-icon"/> Dark</h3>
+          <div class="actions">
+            <button class="btn-primary" onclick="gather('dark')">Gather Dark</button>
+            <button class="btn-ghost" onclick="buyAutomation('dark')">Automate Dark ($50)</button>
+          </div>
+          <div class="progress" id="dark-progress">
+            <div class="bar" style="width:0%"></div>
+            <span class="pct">0%</span>
+          </div>
+        </article>
+
+        <!-- Void -->
+        <article class="card resource" id="void-resource">
+          <h3><img src="void-icon.png" alt="" class="element-icon"/> Void</h3>
+          <div class="actions">
+            <button class="btn-primary" onclick="gather('void')">Gather Void</button>
+            <button class="btn-ghost" onclick="buyAutomation('void')">Automate Void ($50)</button>
+          </div>
+          <div class="progress" id="void-progress">
+            <div class="bar" style="width:0%"></div>
+            <span class="pct">0%</span>
+          </div>
+        </article>
+      </div>
+
+      <!-- Prestige inside main content for visibility -->
+      <section class="card" id="prestige" aria-label="Prestige">
+        <div class="row" style="align-items:center;justify-content:space-between">
+          <div>
+            <h3 style="margin-bottom:6px">Prestige</h3>
+            <p class="badge">Multiplier: <strong style="margin-left:.3rem"><span data-bind="prestige-multiplier">1</span>x</strong></p>
+          </div>
+          <button class="btn-warning" onclick="prestige()">Prestige (Requires $100,000)</button>
+        </div>
+      </section>
+    </section>
+
+    <!-- Right Column: EPS + Marketing -->
+    <aside class="rightbar" aria-label="Analytics and boosts">
+      <section class="card eps" id="eps">
+        <h3>Elements per Second (EPS)</h3>
+        <div class="eps-row"><span class="eps-label">🔥 Fire</span><span class="eps-val" id="fire-eps">0</span></div>
+        <div class="eps-row"><span class="eps-label">💧 Water</span><span class="eps-val" id="water-eps">0</span></div>
+        <div class="eps-row"><span class="eps-label">🪨 Earth</span><span class="eps-val" id="earth-eps">0</span></div>
+        <div class="eps-row"><span class="eps-label">🌬️ Air</span><span class="eps-val" id="air-eps">0</span></div>
+        <div class="eps-row"><span class="eps-label">🔆 Light</span><span class="eps-val" id="light-eps">0</span></div>
+        <div class="eps-row"><span class="eps-label">🌑 Dark</span><span class="eps-val" id="dark-eps">0</span></div>
+        <div class="eps-row"><span class="eps-label">🕳️ Void</span><span class="eps-val" id="void-eps">0</span></div>
+      </section>
+
+      <section class="card marketing" id="marketing">
+        <h3 style="margin-bottom:8px">Marketing Boosts</h3>
+        <div class="grid">
+          <button onclick="buyMarketing('fire')">Promote Fire ($10)</button>
+          <button onclick="buyMarketing('water')">Promote Water ($10)</button>
+          <button onclick="buyMarketing('earth')">Promote Earth ($10)</button>
+          <button onclick="buyMarketing('air')">Promote Air ($10)</button>
+          <button onclick="buyMarketing('light')">Promote Light ($10)</button>
+          <button onclick="buyMarketing('dark')">Promote Dark ($10)</button>
+          <button onclick="buyMarketing('void')">Promote Void ($10)</button>
+        </div>
+      </section>
+    </aside>
+
+    <!-- Footer controls -->
+    <footer>
+      <section class="foot-group versions">
+        <h4>Version Switching</h4>
+        <div class="row">
+          <button class="btn-ghost" onclick="switchVersion('live')">Live Version</button>
+          <button class="btn-ghost" onclick="switchVersion('alpha')">Alpha Version</button>
+          <button class="btn-ghost" onclick="switchVersion('mobile')">Mobile Version</button>
+        </div>
+      </section>
+
+      <section class="foot-group">
+        <h4>Maintenance</h4>
+        <button class="btn-danger" onclick="deleteProgress()">Delete Progress</button>
+      </section>
+
+      <section class="foot-group" style="grid-column:3">
+        <details>
+          <summary><h4 style="display:inline">Joke of the Day</h4></summary>
+          <p id="joke-display" style="margin:.5rem 0 0.6rem">Click the button for a joke!</p>
+          <button onclick="getRandomJoke()">Get a Joke</button>
+        </details>
+      </section>
+    </footer>
+  </main>
+
+  <!-- Hooks to your existing game logic -->
+  <script src="script.js"></script>
+
+  <!-- Optional tiny bridge to update visual progress bars if your script sets widths/text -->
+  <script>
+    // If your existing code updates #x-progress .progress-bar & <span>,
+    // this helper keeps the new structure in sync (bar + .pct).
+    const mapProgress = id => {
+      const wrap = document.getElementById(id);
+      if(!wrap) return null;
+      const pct = wrap.querySelector('.pct');
+      const bar = wrap.querySelector('.bar');
+      return (value)=>{ // value as 0..100 or string like '34%'
+        const v = typeof value === 'number' ? Math.max(0, Math.min(100, value)) + '%' : value;
+        if (bar) bar.style.width = v;
+        if (pct) pct.textContent = v;
+      };
+    };
+    window.__progress = {
+      fire:  mapProgress('fire-progress'),
+      water: mapProgress('water-progress'),
+      earth: mapProgress('earth-progress'),
+      air:   mapProgress('air-progress'),
+      light: mapProgress('light-progress'),
+      dark:  mapProgress('dark-progress'),
+      void:  mapProgress('void-progress')
+    };
+
+    // Example usage from your game logic:
+    // window.__progress.fire && window.__progress.fire(42);
+
+    // Mirror prestige multiplier into the data-bind span so we avoid duplicate IDs.
+    const prestigeSrc = document.getElementById('prestige-multiplier');
+    const prestigeMirror = document.querySelector('[data-bind="prestige-multiplier"]');
+    if (prestigeSrc && prestigeMirror){
+      const sync = ()=> prestigeMirror.textContent = prestigeSrc.textContent;
+      const mo = new MutationObserver(sync); mo.observe(prestigeSrc,{childList:true,subtree:true}); sync();
+    }
+  </script>
 </body>
 </html>
