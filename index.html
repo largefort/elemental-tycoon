@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#0a0b0f"/>
   <title>Elemental Tycoon — New UI</title>
   <!-- System/UA tweak preserved -->
   <script>
@@ -10,10 +10,7 @@
         navigator.userAgent.toLowerCase().includes('firefox')) {
       document.documentElement.classList.add('linux-firefox');
     }
-  </script>
-
-  <!-- Design tokens + reset -->
-  <style>
+  </script>  <!-- Design tokens + reset -->  <style>
     :root{
       --bg: #0a0b0f;
       --panel: #11131a;
@@ -136,17 +133,49 @@
   elemental-icons.light, .elemental-icons.light{background:linear-gradient(180deg,#fff3b0,#ffd166)}
   elemental-icons.dark, .elemental-icons.dark{background:linear-gradient(180deg,#7a7a9c,#3d3d6b)}
   elemental-icons.void, .elemental-icons.void{background:linear-gradient(180deg,#6a00f4,#1a0532)}
+  /* non-element resource icons (for HUD, etc.) */
+  elemental-icons.coin, .elemental-icons.coin{background:linear-gradient(180deg,#ffd86b,#ff9a3d)}
+  elemental-icons.essence, .elemental-icons.essence{background:linear-gradient(180deg,#a0f0ff,#6bdcff)}
+  elemental-icons.eps, .elemental-icons.eps{background:linear-gradient(180deg,#9be7c4,#64d69a)}
   /* subtle glyph shine */
   elemental-icons::after, .elemental-icons::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(160deg,rgba(255,255,255,.18),rgba(255,255,255,0) 40%)}
 
   /* Floating HUD */
   .hud{position:fixed;right:16px;bottom:16px;z-index:60;background:var(--panel);border:1px solid rgba(255,255,255,.06);box-shadow:var(--shadow);border-radius:14px;padding:10px 12px;display:flex;gap:10px;align-items:center;backdrop-filter:blur(6px)}
+  .hud.min{padding:6px 8px}
+  .hud.min .chip:not(.primary){display:none}
+  .hud .toggle{margin-left:4px;border-radius:10px;padding:.45rem .55rem;background:#0e1421;border:1px solid rgba(255,255,255,.06)}
+  .hud .toggle[aria-pressed="true"]{background:linear-gradient(140deg,var(--brand),var(--brand-2));color:#071018;box-shadow:var(--ring)}
   .hud .chip{display:flex;gap:8px;align-items:center;background:var(--card);border:1px solid rgba(255,255,255,.06);padding:.45rem .6rem;border-radius:999px}
   .hud .val{font-weight:700}
   .hud .sep{opacity:.25}
   @media (max-width:900px){.hud{left:50%;right:auto;bottom:78px;transform:translateX(-50%);}}
-</style>
-</head>
+  /* Mobile polish */
+  :root{--safe-b: env(safe-area-inset-bottom, 0px);--safe-t: env(safe-area-inset-top, 0px)}
+  body{padding-top:var(--safe-t)}
+  button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+  @media (max-width:900px){
+    button{min-height:44px}
+    .actions button{flex:1}
+    .mobile-nav{padding:6px; margin-bottom:calc(var(--safe-b)); border-radius:16px 16px calc(12px + var(--safe-b)) calc(12px + var(--safe-b))}
+  }
+  /* Bottom sheet (mobile quick-buy) */
+  .fab{display:none;position:fixed;right:16px;bottom:calc(88px + var(--safe-b));z-index:55;border:0;border-radius:999px;padding:.9rem 1rem;background:linear-gradient(140deg,var(--brand),var(--brand-2));color:#071018;box-shadow:var(--shadow)}
+  @media (max-width:900px){.fab{display:inline-flex;align-items:center;gap:.5rem}}
+  .sheet-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.2s opacity;z-index:70}
+  .sheet{position:fixed;left:0;right:0;bottom:0;z-index:71;background:var(--panel);border-radius:18px 18px calc(12px + var(--safe-b)) calc(12px + var(--safe-b));box-shadow:0 -24px 60px rgba(0,0,0,.55);transform:translateY(100%);transition:.25s transform;padding:12px 12px calc(12px + var(--safe-b));border:1px solid rgba(255,255,255,.06)}
+  .sheet.open{transform:translateY(0)}
+  .sheet-header{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .sheet-title{display:flex;align-items:center;gap:10px;font-weight:700}
+  .sheet .handle{width:44px;height:5px;border-radius:999px;background:rgba(255,255,255,.15);margin:6px auto}
+  .sheet-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+  .sheet-card{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid rgba(255,255,255,.06);padding:.7rem .8rem;border-radius:12px}
+  .sheet-card .actions{margin:0;margin-left:auto}
+  .sheet-card button{min-height:40px}
+  .sheet-tabs{display:flex;gap:6px;margin-top:6px}
+  .sheet-tabs button{flex:1;background:#0e1421}
+  .sheet-tabs button[aria-selected="true"]{background:linear-gradient(140deg,var(--brand),var(--brand-2));color:#071018}
+</style></head>
 <body>
   <main id="game" aria-label="Elemental Tycoon UI">
     <!-- Header -->
@@ -162,202 +191,210 @@
           <span class="pill">✨ Prestige x<strong><span id="prestige-multiplier">1</span></strong></span>
         </div>
       </div>
-    </header>
-
-    <!-- Left Sidebar: compact element readout -->
-    <aside class="sidebar" aria-label="Resource overview">
-      <h2>Resources</h2>
-      <div class="element-list">
-        <div class=\"element-chip\"><elemental-icons class=\"fire sm\"></elemental-icons><span class=\"name\">Fire<\/span><span class="val" id="fire">0</span></div>
-        <div class=\"element-chip\"><elemental-icons class=\"water sm\"></elemental-icons><span class=\"name\">Water<\/span><span class="val" id="water">0</span></div>
-        <div class=\"element-chip\"><elemental-icons class=\"earth sm\"></elemental-icons><span class=\"name\">Earth<\/span><span class="val" id="earth">0</span></div>
-        <div class=\"element-chip\"><elemental-icons class=\"air sm\"></elemental-icons><span class=\"name\">Air<\/span><span class="val" id="air">0</span></div>
-        <div class=\"element-chip\"><elemental-icons class=\"light sm\"></elemental-icons><span class=\"name\">Light<\/span><span class="val" id="light">0</span></div>
-        <div class=\"element-chip\"><elemental-icons class=\"dark sm\"></elemental-icons><span class=\"name\">Dark<\/span><span class="val" id="dark">0</span></div>
-        <div class=\"element-chip\"><elemental-icons class=\"void sm\"></elemental-icons><span class=\"name\">Void<\/span><span class="val" id="void">0</span></div>
-      </div>
-    </aside>
-
-    <!-- Main Content -->
-    <section class="content" aria-label="Main actions and production">
-      <div class="resources">
-        <!-- Fire -->
-        <article class="card resource" id="fire-resource">
-          <h3><elemental-icons class="fire"></elemental-icons> Fire</h3>
-          <div class="actions">
-            <button class="btn-primary" onclick="gather('fire')">Gather Fire</button>
-            <button class="btn-ghost" onclick="buyAutomation('fire')">Automate Fire ($50)</button>
-          </div>
-          <div class="progress" id="fire-progress" aria-label="Fire progress" aria-live="polite">
-            <div class="bar" style="width:0%"></div>
-            <span class="pct">0%</span>
-          </div>
-        </article>
-
-        <!-- Water -->
-        <article class="card resource" id="water-resource">
-          <h3><elemental-icons class="water"></elemental-icons> Water</h3>
-          <div class="actions">
-            <button class="btn-primary" onclick="gather('water')">Gather Water</button>
-            <button class="btn-ghost" onclick="buyAutomation('water')">Automate Water ($50)</button>
-          </div>
-          <div class="progress" id="water-progress">
-            <div class="bar" style="width:0%"></div>
-            <span class="pct">0%</span>
-          </div>
-        </article>
-
-        <!-- Earth -->
-        <article class="card resource" id="earth-resource">
-          <h3><elemental-icons class="earth"></elemental-icons> Earth</h3>
-          <div class="actions">
-            <button class="btn-primary" onclick="gather('earth')">Gather Earth</button>
-            <button class="btn-ghost" onclick="buyAutomation('earth')">Automate Earth ($50)</button>
-          </div>
-          <div class="progress" id="earth-progress">
-            <div class="bar" style="width:0%"></div>
-            <span class="pct">0%</span>
-          </div>
-        </article>
-
-        <!-- Air -->
-        <article class="card resource" id="air-resource">
-          <h3><elemental-icons class="air"></elemental-icons> Air</h3>
-          <div class="actions">
-            <button class="btn-primary" onclick="gather('air')">Gather Air</button>
-            <button class="btn-ghost" onclick="buyAutomation('air')">Automate Air ($50)</button>
-          </div>
-          <div class="progress" id="air-progress">
-            <div class="bar" style="width:0%"></div>
-            <span class="pct">0%</span>
-          </div>
-        </article>
-
-        <!-- Light -->
-        <article class="card resource" id="light-resource">
-          <h3><elemental-icons class="light"></elemental-icons> Light</h3>
-          <div class="actions">
-            <button class="btn-primary" onclick="gather('light')">Gather Light</button>
-            <button class="btn-ghost" onclick="buyAutomation('light')">Automate Light ($50)</button>
-          </div>
-          <div class="progress" id="light-progress">
-            <div class="bar" style="width:0%"></div>
-            <span class="pct">0%</span>
-          </div>
-        </article>
-
-        <!-- Dark -->
-        <article class="card resource" id="dark-resource">
-          <h3><elemental-icons class="dark"></elemental-icons> Dark</h3>
-          <div class="actions">
-            <button class="btn-primary" onclick="gather('dark')">Gather Dark</button>
-            <button class="btn-ghost" onclick="buyAutomation('dark')">Automate Dark ($50)</button>
-          </div>
-          <div class="progress" id="dark-progress">
-            <div class="bar" style="width:0%"></div>
-            <span class="pct">0%</span>
-          </div>
-        </article>
-
-        <!-- Void -->
-        <article class="card resource" id="void-resource">
-          <h3><elemental-icons class="void"></elemental-icons> Void</h3>
-          <div class="actions">
-            <button class="btn-primary" onclick="gather('void')">Gather Void</button>
-            <button class="btn-ghost" onclick="buyAutomation('void')">Automate Void ($50)</button>
-          </div>
-          <div class="progress" id="void-progress">
-            <div class="bar" style="width:0%"></div>
-            <span class="pct">0%</span>
-          </div>
-        </article>
-      </div>
-
-      <!-- Prestige inside main content for visibility -->
-      <section class="card" id="prestige" aria-label="Prestige">
-        <div class="row" style="align-items:center;justify-content:space-between">
-          <div>
-            <h3 style="margin-bottom:6px">Prestige</h3>
-            <p class="badge">Multiplier: <strong style="margin-left:.3rem"><span data-bind="prestige-multiplier">1</span>x</strong></p>
-          </div>
-          <button class="btn-warning" onclick="prestige()">Prestige (Requires $100,000)</button>
-        </div>
-      </section>
-    </section>
-
-    <!-- Right Column: EPS + Marketing -->
-    <aside class="rightbar" aria-label="Analytics and boosts">
-      <section class="card eps" id="eps">
-        <h3>Elements per Second (EPS)</h3>
-        <div class=\"eps-row\"><span class=\"eps-label\"><elemental-icons class=\"fire sm\"></elemental-icons> Fire</span><span class="eps-val" id="fire-eps">0</span></div>
-        <div class=\"eps-row\"><span class=\"eps-label\"><elemental-icons class=\"water sm\"></elemental-icons> Water</span><span class="eps-val" id="water-eps">0</span></div>
-        <div class=\"eps-row\"><span class=\"eps-label\"><elemental-icons class=\"earth sm\"></elemental-icons> Earth</span><span class="eps-val" id="earth-eps">0</span></div>
-        <div class=\"eps-row\"><span class=\"eps-label\"><elemental-icons class=\"air sm\"></elemental-icons> Air</span><span class="eps-val" id="air-eps">0</span></div>
-        <div class=\"eps-row\"><span class=\"eps-label\"><elemental-icons class=\"light sm\"></elemental-icons> Light</span><span class="eps-val" id="light-eps">0</span></div>
-        <div class=\"eps-row\"><span class=\"eps-label\"><elemental-icons class=\"dark sm\"></elemental-icons> Dark</span><span class="eps-val" id="dark-eps">0</span></div>
-        <div class=\"eps-row\"><span class=\"eps-label\"><elemental-icons class=\"void sm\"></elemental-icons> Void</span><span class="eps-val" id="void-eps">0</span></div>
-      </section>
-
-      <section class="card marketing" id="marketing">
-        <h3 style="margin-bottom:8px">Marketing Boosts</h3>
-        <div class="grid">
-          <button onclick="buyMarketing('fire')">Promote Fire ($10)</button>
-          <button onclick="buyMarketing('water')">Promote Water ($10)</button>
-          <button onclick="buyMarketing('earth')">Promote Earth ($10)</button>
-          <button onclick="buyMarketing('air')">Promote Air ($10)</button>
-          <button onclick="buyMarketing('light')">Promote Light ($10)</button>
-          <button onclick="buyMarketing('dark')">Promote Dark ($10)</button>
-          <button onclick="buyMarketing('void')">Promote Void ($10)</button>
-        </div>
-      </section>
-    </aside>
-
-    <!-- Footer controls -->
-    <footer>
-      <section class="foot-group versions">
-        <h4>Version Switching</h4>
-        <div class="row">
-          <button class="btn-ghost" onclick="switchVersion('live')">Live Version</button>
-          <button class="btn-ghost" onclick="switchVersion('alpha')">Alpha Version</button>
-          <button class="btn-ghost" onclick="switchVersion('mobile')">Mobile Version</button>
-        </div>
-      </section>
-
-      <section class="foot-group">
-        <h4>Maintenance</h4>
-        <button class="btn-danger" onclick="deleteProgress()">Delete Progress</button>
-      </section>
-
-      <section class="foot-group" style="grid-column:3">
-        <details>
-          <summary><h4 style="display:inline">Joke of the Day</h4></summary>
-          <p id="joke-display" style="margin:.5rem 0 0.6rem">Click the button for a joke!</p>
-          <button onclick="getRandomJoke()">Get a Joke</button>
-        </details>
-      </section>
-    </footer>
-
-    <!-- Bottom navigation (mobile only) -->
-    <nav class="mobile-nav" role="tablist" aria-label="Primary">
-      <button id="tab-resources" role="tab" aria-controls="panel-resources" aria-selected="false" onclick="setTab('resources')">Resources</button>
-      <button id="tab-actions" role="tab" aria-controls="panel-actions" aria-selected="true" onclick="setTab('actions')">Actions</button>
-      <button id="tab-boosts" role="tab" aria-controls="panel-boosts" aria-selected="false" onclick="setTab('boosts')">Boosts</button>
-    </nav>
-    <!-- Floating HUD -->
-  <div class="hud" role="status" aria-live="polite">
-    <span class="chip">💰 <span class="val">$<span id="hud-money">0</span></span></span>
-    <span class="sep">•</span>
-    <span class="chip">💎 <span class="val"><span id="hud-essence">0</span> Essence</span></span>
-    <span class="sep">•</span>
-    <span class="chip">⚡ <span class="val"><span id="hud-eps">0</span> EPS</span></span>
+    </header><!-- Left Sidebar: compact element readout -->
+<aside class="sidebar" aria-label="Resource overview">
+  <h2>Resources</h2>
+  <div class="element-list">
+    <div class=\"element-chip\"><elemental-icons class=\"fire sm\"></elemental-icons><span class=\"name\">Fire<\/span><span class="val" id="fire">0</span></div>
+    <div class=\"element-chip\"><elemental-icons class=\"water sm\"></elemental-icons><span class=\"name\">Water<\/span><span class="val" id="water">0</span></div>
+    <div class=\"element-chip\"><elemental-icons class=\"earth sm\"></elemental-icons><span class=\"name\">Earth<\/span><span class="val" id="earth">0</span></div>
+    <div class=\"element-chip\"><elemental-icons class=\"air sm\"></elemental-icons><span class=\"name\">Air<\/span><span class="val" id="air">0</span></div>
+    <div class=\"element-chip\"><elemental-icons class=\"light sm\"></elemental-icons><span class=\"name\">Light<\/span><span class="val" id="light">0</span></div>
+    <div class=\"element-chip\"><elemental-icons class=\"dark sm\"></elemental-icons><span class=\"name\">Dark<\/span><span class="val" id="dark">0</span></div>
+    <div class=\"element-chip\"><elemental-icons class=\"void sm\"></elemental-icons><span class=\"name\">Void<\/span><span class="val" id="void">0</span></div>
   </div>
-</main>
+</aside>
 
-  <!-- Hooks to your existing game logic -->
-  <script src="script.js"></script>
+<!-- Main Content -->
+<section class="content" aria-label="Main actions and production">
+  <div class="resources">
+    <!-- Fire -->
+    <article class="card resource" id="fire-resource">
+      <h3><elemental-icons class="fire"></elemental-icons> Fire</h3>
+      <div class="actions">
+        <button class="btn-primary" onclick="gather('fire')">Gather Fire</button>
+        <button class="btn-ghost" onclick="buyAutomation('fire')">Automate Fire ($50)</button>
+      </div>
+      <div class="progress" id="fire-progress" aria-label="Fire progress" aria-live="polite">
+        <div class="bar" style="width:0%"></div>
+        <span class="pct">0%</span>
+      </div>
+    </article>
 
-  <!-- Optional tiny bridge to update visual progress bars if your script sets widths/text -->
-  <script>
+    <!-- Water -->
+    <article class="card resource" id="water-resource">
+      <h3><elemental-icons class="water"></elemental-icons> Water</h3>
+      <div class="actions">
+        <button class="btn-primary" onclick="gather('water')">Gather Water</button>
+        <button class="btn-ghost" onclick="buyAutomation('water')">Automate Water ($50)</button>
+      </div>
+      <div class="progress" id="water-progress">
+        <div class="bar" style="width:0%"></div>
+        <span class="pct">0%</span>
+      </div>
+    </article>
+
+    <!-- Earth -->
+    <article class="card resource" id="earth-resource">
+      <h3><elemental-icons class="earth"></elemental-icons> Earth</h3>
+      <div class="actions">
+        <button class="btn-primary" onclick="gather('earth')">Gather Earth</button>
+        <button class="btn-ghost" onclick="buyAutomation('earth')">Automate Earth ($50)</button>
+      </div>
+      <div class="progress" id="earth-progress">
+        <div class="bar" style="width:0%"></div>
+        <span class="pct">0%</span>
+      </div>
+    </article>
+
+    <!-- Air -->
+    <article class="card resource" id="air-resource">
+      <h3><elemental-icons class="air"></elemental-icons> Air</h3>
+      <div class="actions">
+        <button class="btn-primary" onclick="gather('air')">Gather Air</button>
+        <button class="btn-ghost" onclick="buyAutomation('air')">Automate Air ($50)</button>
+      </div>
+      <div class="progress" id="air-progress">
+        <div class="bar" style="width:0%"></div>
+        <span class="pct">0%</span>
+      </div>
+    </article>
+
+    <!-- Light -->
+    <article class="card resource" id="light-resource">
+      <h3><elemental-icons class="light"></elemental-icons> Light</h3>
+      <div class="actions">
+        <button class="btn-primary" onclick="gather('light')">Gather Light</button>
+        <button class="btn-ghost" onclick="buyAutomation('light')">Automate Light ($50)</button>
+      </div>
+      <div class="progress" id="light-progress">
+        <div class="bar" style="width:0%"></div>
+        <span class="pct">0%</span>
+      </div>
+    </article>
+
+    <!-- Dark -->
+    <article class="card resource" id="dark-resource">
+      <h3><elemental-icons class="dark"></elemental-icons> Dark</h3>
+      <div class="actions">
+        <button class="btn-primary" onclick="gather('dark')">Gather Dark</button>
+        <button class="btn-ghost" onclick="buyAutomation('dark')">Automate Dark ($50)</button>
+      </div>
+      <div class="progress" id="dark-progress">
+        <div class="bar" style="width:0%"></div>
+        <span class="pct">0%</span>
+      </div>
+    </article>
+
+    <!-- Void -->
+    <article class="card resource" id="void-resource">
+      <h3><elemental-icons class="void"></elemental-icons> Void</h3>
+      <div class="actions">
+        <button class="btn-primary" onclick="gather('void')">Gather Void</button>
+        <button class="btn-ghost" onclick="buyAutomation('void')">Automate Void ($50)</button>
+      </div>
+      <div class="progress" id="void-progress">
+        <div class="bar" style="width:0%"></div>
+        <span class="pct">0%</span>
+      </div>
+    </article>
+  </div>
+
+  <!-- Prestige inside main content for visibility -->
+  <section class="card" id="prestige" aria-label="Prestige">
+    <div class="row" style="align-items:center;justify-content:space-between">
+      <div>
+        <h3 style="margin-bottom:6px">Prestige</h3>
+        <p class="badge">Multiplier: <strong style="margin-left:.3rem"><span data-bind="prestige-multiplier">1</span>x</strong></p>
+      </div>
+      <button class="btn-warning" onclick="prestige()">Prestige (Requires $100,000)</button>
+    </div>
+  </section>
+</section>
+
+<!-- Right Column: EPS + Marketing -->
+<aside class="rightbar" aria-label="Analytics and boosts">
+  <section class="card eps" id="eps">
+    <h3>Elements per Second (EPS)</h3>
+    <div class=\"eps-row\"><span class=\"eps-label\"><elemental-icons class=\"fire sm\"></elemental-icons> Fire</span><span class="eps-val" id="fire-eps">0</span></div>
+    <div class=\"eps-row\"><span class=\"eps-label\"><elemental-icons class=\"water sm\"></elemental-icons> Water</span><span class="eps-val" id="water-eps">0</span></div>
+    <div class=\"eps-row\"><span class=\"eps-label\"><elemental-icons class=\"earth sm\"></elemental-icons> Earth</span><span class="eps-val" id="earth-eps">0</span></div>
+    <div class=\"eps-row\"><span class=\"eps-label\"><elemental-icons class=\"air sm\"></elemental-icons> Air</span><span class="eps-val" id="air-eps">0</span></div>
+    <div class=\"eps-row\"><span class=\"eps-label\"><elemental-icons class=\"light sm\"></elemental-icons> Light</span><span class="eps-val" id="light-eps">0</span></div>
+    <div class=\"eps-row\"><span class=\"eps-label\"><elemental-icons class=\"dark sm\"></elemental-icons> Dark</span><span class="eps-val" id="dark-eps">0</span></div>
+    <div class=\"eps-row\"><span class=\"eps-label\"><elemental-icons class=\"void sm\"></elemental-icons> Void</span><span class="eps-val" id="void-eps">0</span></div>
+  </section>
+
+  <section class="card marketing" id="marketing">
+    <h3 style="margin-bottom:8px">Marketing Boosts</h3>
+    <div class="grid">
+      <button onclick="buyMarketing('fire')">Promote Fire ($10)</button>
+      <button onclick="buyMarketing('water')">Promote Water ($10)</button>
+      <button onclick="buyMarketing('earth')">Promote Earth ($10)</button>
+      <button onclick="buyMarketing('air')">Promote Air ($10)</button>
+      <button onclick="buyMarketing('light')">Promote Light ($10)</button>
+      <button onclick="buyMarketing('dark')">Promote Dark ($10)</button>
+      <button onclick="buyMarketing('void')">Promote Void ($10)</button>
+    </div>
+  </section>
+</aside>
+
+<!-- Footer controls -->
+<footer>
+  <section class="foot-group versions">
+    <h4>Version Switching</h4>
+    <div class="row">
+      <button class="btn-ghost" onclick="switchVersion('live')">Live Version</button>
+      <button class="btn-ghost" onclick="switchVersion('alpha')">Alpha Version</button>
+      <button class="btn-ghost" onclick="switchVersion('mobile')">Mobile Version</button>
+    </div>
+  </section>
+
+  <section class="foot-group">
+    <h4>Maintenance</h4>
+    <button class="btn-danger" onclick="deleteProgress()">Delete Progress</button>
+  </section>
+
+  <section class="foot-group" style="grid-column:3">
+    <details>
+      <summary><h4 style="display:inline">Joke of the Day</h4></summary>
+      <p id="joke-display" style="margin:.5rem 0 0.6rem">Click the button for a joke!</p>
+      <button onclick="getRandomJoke()">Get a Joke</button>
+    </details>
+  </section>
+</footer>
+
+<!-- Bottom navigation (mobile only) -->
+<nav class="mobile-nav" role="tablist" aria-label="Primary">
+  <button id="tab-resources" role="tab" aria-controls="panel-resources" aria-selected="false" onclick="setTab('resources')">Resources</button>
+  <button id="tab-actions" role="tab" aria-controls="panel-actions" aria-selected="true" onclick="setTab('actions')">Actions</button>
+  <button id="tab-boosts" role="tab" aria-controls="panel-boosts" aria-selected="false" onclick="setTab('boosts')">Boosts</button>
+</nav>
+<!-- Floating HUD -->
+
+  <div class="hud" role="status" aria-live="polite">
+    <span class="chip primary"><elemental-icons class="coin sm"></elemental-icons> <span class="val">$<span id="hud-money">0</span></span></span>
+    <span class="sep">•</span>
+    <span class="chip"><elemental-icons class="essence sm"></elemental-icons> <span class="val"><span id="hud-essence">0</span> Essence</span></span>
+    <span class="sep">•</span>
+    <span class="chip"><elemental-icons class="eps sm"></elemental-icons> <span class="val"><span id="hud-eps">0</span> EPS</span></span>
+    <button class="toggle" type="button" aria-pressed="false" aria-label="Toggle HUD details" title="Toggle HUD details" onclick="toggleHUD()">▾</button>
+  </div>
+  <!-- Mobile FAB for quick-buy -->
+  <button class="fab" type="button" onclick="Sheet.open()">⚡ Quick Buy</button>  <!-- Bottom Sheet (mobile) -->  <div class="sheet-backdrop" onclick="Sheet.close()"></div>
+  <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" aria-hidden="true">
+    <div class="handle" aria-hidden="true"></div>
+    <div class="sheet-header">
+      <div class="sheet-title" id="sheet-title"><elemental-icons class="eps sm"></elemental-icons> Quick Buy</div>
+      <button class="btn-ghost" onclick="Sheet.close()">Close</button>
+    </div>
+    <div class="sheet-tabs" role="tablist">
+      <button id="sheet-tab-automate" role="tab" aria-selected="true" onclick="Sheet.setTab('automate')">Automate</button>
+      <button id="sheet-tab-promote" role="tab" aria-selected="false" onclick="Sheet.setTab('promote')">Promote</button>
+    </div>
+    <div class="sheet-grid" id="sheet-grid"></div>
+  </section>
+</main>  <!-- Hooks to your existing game logic -->  <script src="script.js"></script>  <!-- Optional tiny bridge to update visual progress bars if your script sets widths/text -->  <script>
     // If your existing code updates #x-progress .progress-bar & <span>,
     // this helper keeps the new structure in sync (bar + .pct).
     const mapProgress = id => {
@@ -391,8 +428,7 @@
       const sync = ()=> prestigeMirror.textContent = prestigeSrc.textContent;
       const mo = new MutationObserver(sync); mo.observe(prestigeSrc,{childList:true,subtree:true}); sync();
     }
-  </script>
-  <script>
+  </script>  <script>
     // Mobile bottom-nav tab logic
     (function(){
       const root = document.documentElement;
@@ -409,8 +445,7 @@
       // default to actions on load (compact mode)
       if(!root.dataset.tab){ root.dataset.tab = 'actions'; }
     })();
-  </script>
-  <script>
+  </script>  <script>
     // HUD syncing & EPS aggregation
     (function(){
       const $ = s => document.querySelector(s);
@@ -443,6 +478,228 @@
       setInterval(syncHUD, 500);
       syncHUD();
     })();
-  </script>
-</body>
-</html>
+  </script>  <script>
+    // HUD syncing & EPS aggregation (existing)
+    (function(){
+      const $ = s => document.querySelector(s);
+      const hudMoney = $('#hud-money');
+      const hudEss   = $('#hud-essence');
+      const hudEPS   = $('#hud-eps');
+      const money    = $('#money');
+      const essence  = $('#essence');
+
+      const syncHUD = () => {
+        if (money && hudMoney)   hudMoney.textContent = money.textContent;
+        if (essence && hudEss)   hudEss.textContent   = essence.textContent;
+        const ids = ['fire','water','earth','air','light','dark','void'];
+        let total = 0;
+        for (const k of ids){
+          const el = document.getElementById(`${k}-eps`);
+          if (!el) continue;
+          const v = parseFloat((el.textContent||'0').replace(/[^0-9.+-e]/g,''));
+          if (!Number.isNaN(v)) total += v;
+        }
+        if (hudEPS) hudEPS.textContent = (Math.round(total * 100)/100).toString();
+      };
+
+      const mo = new MutationObserver(syncHUD);
+      if (money)  mo.observe(money, {childList:true,subtree:true});
+      if (essence)mo.observe(essence,{childList:true,subtree:true});
+      setInterval(syncHUD, 500);
+      syncHUD();
+    })();
+
+    // HUD compact/expanded toggle with persistence
+    (function(){
+      const hud = document.querySelector('.hud');
+      const btn = document.querySelector('.hud .toggle');
+      const KEY = 'et_hud_min';
+      function apply(state){
+        const isMin = state === '1';
+        hud.classList.toggle('min', isMin);
+        btn.setAttribute('aria-pressed', String(!isMin));
+        btn.textContent = isMin ? '▸' : '▾';
+      }
+      window.toggleHUD = function(){
+        const next = hud.classList.contains('min') ? '0' : '1';
+        localStorage.setItem(KEY,next);
+        apply(next);
+      };
+      apply(localStorage.getItem(KEY) || '0');
+    })();
+  </script>  <script>
+    // ===== Mobile support: press & hold to Gather =====
+    (function(){
+      function addHoldAction(el, onFire){
+        let t, running=false;
+        const start=(e)=>{running=true; onFire(); navigator.vibrate && navigator.vibrate(8);
+          // small ramp for nicer feel
+          let delay=280; const step=()=>{ if(!running) return; onFire(); t=setTimeout(step, Math.max(60, delay)); delay=Math.max(60, delay-40); };
+          t=setTimeout(step, delay);
+        };
+        const stop=()=>{running=false; clearTimeout(t)};
+        el.addEventListener('touchstart', start, {passive:true});
+        el.addEventListener('mousedown', start);
+        ['touchend','touchcancel','mouseup','mouseleave','blur'].forEach(evt=>el.addEventListener(evt, stop));
+      }
+      // Bind to all Gather buttons
+      document.querySelectorAll('[onclick^="gather("]')?.forEach(btn=>{
+        const match = btn.getAttribute('onclick').match(/gather'([^']+)'/);
+        if (!match) return; const key=match[1];
+        addHoldAction(btn, ()=> window.gather && window.gather(key));
+      });
+    })();
+
+    // ===== Mobile support: swipe to switch bottom tabs =====
+    (function(){
+      const root=document.documentElement; let sx=0, sy=0, dx=0, dy=0, tracking=false;
+      const order=['resources','actions','boosts'];
+      const idxOf=()=> Math.max(0, order.indexOf(root.dataset.tab||'actions'));
+      const set=(i)=> window.setTab && window.setTab(order[(i+order.length)%order.length]);
+      window.addEventListener('touchstart', (e)=>{ if(e.touches.length!==1) return; tracking=true; sx=e.touches[0].clientX; sy=e.touches[0].clientY; dx=dy=0; }, {passive:true});
+      window.addEventListener('touchmove', (e)=>{ if(!tracking) return; dx=e.touches[0].clientX-sx; dy=e.touches[0].clientY-sy; }, {passive:true});
+      window.addEventListener('touchend', ()=>{
+        if(!tracking) return; tracking=false;
+        if (Math.abs(dx)>50 && Math.abs(dy)<40){
+          const i=idxOf(); set(dx<0? i+1 : i-1);
+          navigator.vibrate && navigator.vibrate(10);
+        }
+      }, {passive:true});
+    })();
+
+    // ===== Light haptics on key actions =====
+    (function(){
+      const vibe=(ms=10)=> navigator.vibrate && navigator.vibrate(ms);
+      const hook=(selector)=> document.querySelectorAll(selector).forEach(b=>b.addEventListener('click', ()=>vibe(8)));
+      hook('[onclick^="buyAutomation("]');
+      hook('[onclick^="buyMarketing("]');
+      const prestigeBtn = document.querySelector('#prestige button');
+      if (prestigeBtn) prestigeBtn.addEventListener('click', ()=>vibe(20));
+      // Bottom nav
+      ['#tab-resources','#tab-actions','#tab-boosts'].forEach(id=>{ const el=document.querySelector(id); el && el.addEventListener('click', ()=>vibe(6)); });
+    })();
+
+    // ===== Optional PWA registration (works if you later provide real files) =====
+    (function(){
+      if ('serviceWorker' in navigator){
+        // Minimal SW to enable offline shell if you add it later
+        const swCode = `self.addEventListener('install',e=>self.skipWaiting()); self.addEventListener('activate',e=>clients.claim());`;
+        const blob = new Blob([swCode], {type:'text/javascript'});
+        const url = URL.createObjectURL(blob);
+        navigator.serviceWorker.register(url).catch(()=>{});
+      }
+    })();
+  </script>  <script>
+    // ===== Double-tap to Automate (on resource cards) =====
+    (function(){
+      const cards = document.querySelectorAll('.resource');
+      const lastTap = new Map();
+      cards.forEach(card=>{
+        const id = card.id.replace('-resource','');
+        card.addEventListener('click', (e)=>{
+          // ignore clicks on buttons inside (they already have actions)
+          if (e.target.closest('button')) return;
+          const now = performance.now();
+          const lt = lastTap.get(card) || 0;
+          if (now - lt < 300){
+            window.buyAutomation && window.buyAutomation(id);
+            navigator.vibrate && navigator.vibrate(12);
+          }
+          lastTap.set(card, now);
+        });
+        // Touch double-tap support
+        card.addEventListener('touchend', (e)=>{
+          const now = performance.now();
+          const lt = lastTap.get(card) || 0;
+          if (now - lt < 300){
+            window.buyAutomation && window.buyAutomation(id);
+            navigator.vibrate && navigator.vibrate(12);
+          }
+          lastTap.set(card, now);
+        }, {passive:true});
+      });
+    })();
+
+    // ===== Bottom Sheet generator =====
+    const Sheet = (function(){
+      const backdrop = document.querySelector('.sheet-backdrop');
+      const sheet    = document.querySelector('.sheet');
+      const grid     = document.getElementById('sheet-grid');
+      const tabAuto  = document.getElementById('sheet-tab-automate');
+      const tabPromo = document.getElementById('sheet-tab-promote');
+      const elems = [
+        ['fire','Fire'],['water','Water'],['earth','Earth'],['air','Air'],['light','Light'],['dark','Dark'],['void','Void']
+      ];
+      function render(mode){
+        grid.innerHTML = '';
+        elems.forEach(([key,label])=>{
+          const card = document.createElement('div');
+          card.className = 'sheet-card';
+          const icon = document.createElement('elemental-icons');
+          icon.className = key + ' sm';
+          const name = document.createElement('span');
+          name.textContent = label;
+          const actions = document.createElement('div');
+          actions.className = 'actions';
+          const btn = document.createElement('button');
+          btn.textContent = mode === 'automate' ? 'Automate ($50)' : 'Promote ($10)';
+          btn.onclick = ()=> mode === 'automate' ? window.buyAutomation && window.buyAutomation(key) : window.buyMarketing && window.buyMarketing(key);
+          actions.appendChild(btn);
+          card.append(icon,name,actions);
+          grid.appendChild(card);
+        });
+      }
+      function setTab(mode){
+        tabAuto.setAttribute('aria-selected', String(mode==='automate'));
+        tabPromo.setAttribute('aria-selected', String(mode==='promote'));
+        render(mode);
+      }
+      function open(){
+        sheet.classList.add('open');
+        sheet.setAttribute('aria-hidden','false');
+        backdrop.style.opacity = '1';
+        backdrop.style.pointerEvents = 'auto';
+        setTab(tabAuto.getAttribute('aria-selected')==='true' ? 'automate' : 'promote');
+      }
+      function close(){
+        sheet.classList.remove('open');
+        sheet.setAttribute('aria-hidden','true');
+        backdrop.style.opacity = '0';
+        backdrop.style.pointerEvents = 'none';
+      }
+      return {open, close, setTab};
+    })();
+
+    // ===== PWA: dynamic manifest + offline SW =====
+    (function(){
+      // Manifest
+      const manifest = {
+        name: 'Elemental Tycoon',
+        short_name: 'Tycoon',
+        display: 'standalone',
+        background_color: '#0a0b0f',
+        theme_color: '#0a0b0f',
+        start_url: './',
+        icons:[
+          { src: 'icon-192.png', sizes:'192x192', type:'image/png' },
+          { src: 'icon-512.png', sizes:'512x512', type:'image/png' }
+        ]
+      };
+      const blob = new Blob([JSON.stringify(manifest)], {type:'application/manifest+json'});
+      const url  = URL.createObjectURL(blob);
+      const link = document.createElement('link');
+      link.rel = 'manifest'; link.href = url; document.head.appendChild(link);
+
+      // Service worker with basic cache-first for shell
+      if ('serviceWorker' in navigator){
+        const sw = `const CACHE='et-shell-v1';
+self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(['./','./index.html','./script.js'])))});
+self.addEventListener('activate',e=>self.clients.claim());
+self.addEventListener('fetch',e=>{const u=new URL(e.request.url); if(e.request.method!=='GET') return; e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(resp=>{const copy=resp.clone(); caches.open(CACHE).then(c=>c.put(e.request,copy)); return resp;}).catch(()=>r))) });`;
+        const swBlob = new Blob([sw], {type:'text/javascript'});
+        const swUrl  = URL.createObjectURL(swBlob);
+        navigator.serviceWorker.register(swUrl).catch(()=>{});
+      }
+    })();
+  </script></body>
+  </html>
